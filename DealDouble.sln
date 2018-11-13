@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealDouble.Entities", "Deal
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealDouble.Data", "DealDouble.Data\DealDouble.Data.csproj", "{BC544C1B-F6AF-415B-B73C-433350D887B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealDouble.Services", "DealDouble.Services\DealDouble.Services.csproj", "{E507758E-F0F1-4185-902A-94A49CAA2EBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{BC544C1B-F6AF-415B-B73C-433350D887B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC544C1B-F6AF-415B-B73C-433350D887B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC544C1B-F6AF-415B-B73C-433350D887B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E507758E-F0F1-4185-902A-94A49CAA2EBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E507758E-F0F1-4185-902A-94A49CAA2EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E507758E-F0F1-4185-902A-94A49CAA2EBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E507758E-F0F1-4185-902A-94A49CAA2EBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
