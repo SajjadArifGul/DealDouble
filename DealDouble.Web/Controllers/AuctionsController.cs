@@ -17,13 +17,20 @@ namespace DealDouble.Web.Controllers
 
             var auctions = service.GetAllAuctions();
 
-            return View(auctions);
+            if(Request.IsAjaxRequest())
+            {
+                return PartialView(auctions);
+            }
+            else
+            {
+                return View(auctions);
+            }
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         [HttpPost]
@@ -33,7 +40,7 @@ namespace DealDouble.Web.Controllers
 
             service.SaveAuction(auction);
 
-            return View();
+            return RedirectToAction("Index");
         }
         
         [HttpGet]
@@ -43,7 +50,7 @@ namespace DealDouble.Web.Controllers
 
             var auction = service.GetAuctionByID(ID);
             
-            return View(auction);
+            return PartialView(auction);
         }
 
         [HttpPost]
@@ -53,10 +60,9 @@ namespace DealDouble.Web.Controllers
 
             service.UpdateAuction(auction);
 
-            return View(auction);
+            return RedirectToAction("Index");
         }
-
-
+        
         [HttpGet]
         public ActionResult Delete(int ID)
         {
