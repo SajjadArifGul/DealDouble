@@ -3,38 +3,43 @@
 </h2>
 
 <form id="createForm" method="post" action="Auctions/Create/">
-	<label>
-		Title
-	</label>
-	<input name="Title"/>
 
-	<br />
+	<div class="form-group">
+		<label>
+			Title
+		</label>
+		<input class="form-control" name="Title" />
+	</div>
 
-	<label>
-		Description
-	</label>
-	<input name="Description"/>
+	<div class="form-group">
+		<label>
+			Description
+		</label>
+		<input class="form-control"  name="Description" />
+	</div>
 
-	<br />
-	<label>
-		ActualAmount
-	</label>
-	<input name="ActualAmount"/>
+	<div class="form-group">
+		<label>
+			ActualAmount
+		</label>
+		<input class="form-control"  name="ActualAmount" />
+	</div>
 
-	<br />
-	<label>
-		StartingTime
-	</label>
-	<input name="StartingTime" />
+	<div class="form-group">
+		<label>
+			StartingTime
+		</label>
+		<input class="form-control" name="StartingTime" />
+	</div>
 
-	<br />
-	<label>
-		EndingTime
-	</label>
-	<input name="EndingTime"/>
+	<div class="form-group">
+		<label>
+			EndingTime
+		</label>
+		<input class="form-control" name="EndingTime" />
+	</div>
 
-	<br />
-	<button type="button" id="saveButton">
+	<button class="btn btn-success" type="button" id="saveButton">
 		Save
 	</button>
 </form>
