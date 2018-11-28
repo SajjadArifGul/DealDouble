@@ -1,5 +1,6 @@
 ﻿using DealDouble.Entities;
 using DealDouble.Services;
+using DealDouble.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,22 +12,25 @@ namespace DealDouble.Web.Controllers
     public class AuctionsController : Controller
     {
         AuctionsService service = new AuctionsService();
-
+        
         [HttpGet]
         public ActionResult Index()
         {
+            AuctionsListingViewModel model = new AuctionsListingViewModel();
+
+            model.PageTitle = "Auctions";
+            model.PageDescription = "Auction Listing Page";
             
+            return View(model);
+        }
+        
+        public ActionResult Listing()
+        {
+            AuctionsListingViewModel model = new AuctionsListingViewModel();
+            
+            model.Auctions = service.GetAllAuctions();
 
-            var auctions = service.GetAllAuctions();
-
-            if(Request.IsAjaxRequest())
-            {
-                return PartialView(auctions);
-            }
-            else
-            {
-                return View(auctions);
-            }
+            return PartialView(model);
         }
 
         [HttpGet]
@@ -38,18 +42,14 @@ namespace DealDouble.Web.Controllers
         [HttpPost]
         public ActionResult Create(Auction auction)
         {
-            
-
             service.SaveAuction(auction);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Listing");
         }
         
         [HttpGet]
         public ActionResult Edit(int ID)
         {
-            
-
             var auction = service.GetAuctionByID(ID);
             
             return PartialView(auction);
@@ -58,31 +58,17 @@ namespace DealDouble.Web.Controllers
         [HttpPost]
         public ActionResult Edit(Auction auction)
         {
-            
-
             service.UpdateAuction(auction);
 
-            return RedirectToAction("Index");
-        }
-        
-        [HttpGet]
-        public ActionResult Delete(int ID)
-        {
-            
-
-            var auction = service.GetAuctionByID(ID);
-
-            return View(auction);
+            return RedirectToAction("Listing");
         }
 
         [HttpPost]
         public ActionResult Delete(Auction auction)
         {
-            
-
             service.DeleteAuction(auction);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Listing");
         }
         
         [HttpGet]

@@ -1,59 +1,68 @@
 ﻿@model DealDouble.Entities.Auction
 
-<h2>
-	Edit Auction
-</h2>
-
-<form id="editForm" method="post">
-	<input type="hidden" name="ID" value="@Model.ID" />
-
-	<label>
-		Title
-	</label>
-	<input name="Title" value="@Model.Title" />
-
-	<br />
-
-	<label>
-		Description
-	</label>
-	<input name="Description" value="@Model.Description" />
-
-	<br />
-	<label>
-		ActualAmount
-	</label>
-	<input name="ActualAmount" value="@Model.ActualAmount" />
-
-	<br />
-	<label>
-		StartingTime
-	</label>
-	<input name="StartingTime" value="@Model.StartingTime" />
-
-	<br />
-	<label>
-		EndingTime
-	</label>
-	<input name="EndingTime" value="@Model.EndingTime" />
-
-	<br />
-	<button id="saveButton" type="button">
-		Save
+<div class="modal-header">
+	<h5 class="modal-title">Edit Auction</h5>
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
 	</button>
-</form>
+</div>
+<form id="editForm" method="post">
+	<div class="modal-body">
+		<input type="hidden" name="ID" value="@Model.ID" />
 
+		<div class="form-group">
+			<label>
+				Title
+			</label>
+			<input class="form-control" name="Title" value="@Model.Title" />
+		</div>
+
+		<div class="form-group">
+			<label>
+				Description
+			</label>
+			<input class="form-control" name="Description" value="@Model.Description" />
+		</div>
+
+		<div class="form-group">
+			<label>
+				ActualAmount
+			</label>
+			<input class="form-control" name="ActualAmount" value="@Model.ActualAmount" />
+		</div>
+
+		<div class="form-group">
+			<label>
+				StartingTime
+			</label>
+			<input class="form-control" name="StartingTime" value="@Model.StartingTime" />
+		</div>
+
+		<div class="form-group">
+			<label>
+				EndingTime
+			</label>
+			<input class="form-control" name="EndingTime" value="@Model.EndingTime" />
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		<button class="btn btn-success" type="button" id="saveButton">
+			Save
+		</button>
+	</div>
+</form>
 
 <script>
 	$("#saveButton").click(function () {
 		$.ajax({
-			url: "Auctions/Edit/",
+			url: "@Url.Action("Edit", "Auctions")",
 			method: "post",
 			data: $("#editForm").serialize()
 		})
 		.done(function (response) {
-			debugger;
 			$("#listingArea").html(response);
+			$('#formModal').modal('toggle');
 		});
 	});
 </script>
