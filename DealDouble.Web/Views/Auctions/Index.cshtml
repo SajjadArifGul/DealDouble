@@ -6,6 +6,7 @@
 		<div class="float-right">
 			<button class="btn btn-success" id="createButton">Create New Auction</button>
 		</div>
+
 		<div id="listingArea">
 			@{Html.RenderAction("Listing");}
 		</div>
@@ -53,7 +54,7 @@
 	$("#mDeleteButton").click(function () {
 		$.ajax({
 			url: "@Url.Action("Delete", "Auctions")",
-			method: "post",
+			type: "post",
 			data: {
 				ID: $(this).attr("data-recordID")
 			}

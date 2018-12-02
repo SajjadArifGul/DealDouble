@@ -40,8 +40,31 @@ namespace DealDouble.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Auction auction)
+        public ActionResult Create(CreateAuctionViewModel model)
         {
+            Auction auction = new Auction();
+            auction.Title = model.Title;
+            auction.Description = model.Description;
+            auction.ActualAmount = model.ActualAmount;
+            auction.StartingTime = model.StartingTime;
+            auction.EndingTime = model.EndingTime;
+            
+            //LINQ
+            var pictureIDs = model.AuctionPictures
+                                        .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                        .Select(ID=> int.Parse(ID)).ToList();
+
+            auction.AuctionPictures = new List<AuctionPicture>();
+            auction.AuctionPictures.AddRange(pictureIDs.Select(x=> new AuctionPicture() { PictureID = x }).ToList());
+
+            //foreach (var picID in pictureIDs)
+            //{
+            //    var auctionPicture = new AuctionPicture();
+            //    auctionPicture.PictureID = picID;
+
+            //    auction.AuctionPictures.Add(auctionPicture);
+            //}
+
             service.SaveAuction(auction);
 
             return RedirectToAction("Listing");
@@ -74,9 +97,14 @@ namespace DealDouble.Web.Controllers
         [HttpGet]
         public ActionResult Details(int ID)
         {
-            var auction = service.GetAuctionByID(ID);
+            AuctionDetailsViewModel model = new AuctionDetailsViewModel();
+            
+            model.Auction = service.GetAuctionByID(ID);
 
-            return View(auction);
+            model.PageTitle = "Auctions Details: " + model.Auction.Title;
+            model.PageDescription = model.Auction.Description.Substring(0, 10);
+
+            return View(model);
         }
     }
 }
