@@ -38,6 +38,9 @@
 	</div>
 </div>
 
+<div id="imageTemplate" style="display:none">
+	<img class='image img-fluid' src='' />
+</div>
 
 <script>
 	$("#createButton").click(function () {
@@ -64,5 +67,11 @@
 			$('#deleteModal').modal('toggle');
 		});
 	});
+
+	function RemoveImagesOnClick() {
+		$("#picturesArea .image").click(function () {
+			$(this).remove();
+		});
+	}
 
 </script>
