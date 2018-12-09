@@ -16,22 +16,32 @@ namespace DealDouble.Web.Controllers
         CategoriesService categoriesService = new CategoriesService();
 
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(int? categoryID, string searchTerm, int? pageNo)
         {
             AuctionsListingViewModel model = new AuctionsListingViewModel();
 
             model.PageTitle = "Auctions";
             model.PageDescription = "Auction Listing Page";
-            
+
+            model.CategoryID = categoryID;
+            model.SearchTerm = searchTerm;
+            model.PageNo = pageNo;
+
             return View(model);
         }
         
-        public ActionResult Listing()
+        public ActionResult Listing(int? categoryID, string searchTerm, int? pageNo)
         {
+            var pageSize = 1;
+
             AuctionsListingViewModel model = new AuctionsListingViewModel();
             
-            model.Auctions = auctionsService.GetAllAuctions();
+            model.Auctions = auctionsService.SearchAuctions(categoryID, searchTerm, pageNo, pageSize);
 
+            var totalAuctions = auctionsService.GetAuctionCount();
+
+            model.Pager = new Pager(totalAuctions, pageNo, pageSize);
+            
             return PartialView(model);
         }
 
@@ -46,38 +56,51 @@ namespace DealDouble.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(CreateAuctionViewModel model)
+        public JsonResult Create(CreateAuctionViewModel model)
         {
-            Auction auction = new Auction();
-            auction.Title = model.Title;
-            auction.CategoryID = model.CategoryID;
-            auction.Description = model.Description;
-            auction.ActualAmount = model.ActualAmount;
-            auction.StartingTime = model.StartingTime;
-            auction.EndingTime = model.EndingTime;
-            
-            //check if we have AuctionPictureIDs posted back from form
-            if (!string.IsNullOrEmpty(model.AuctionPictures))
+            JsonResult result = new JsonResult();
+
+            if (ModelState.IsValid)
             {
-                //LINQ
-                var pictureIDs = model.AuctionPictures
-                                            .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                            .Select(ID => int.Parse(ID)).ToList();
+                Auction auction = new Auction();
 
-                auction.AuctionPictures = new List<AuctionPicture>();
-                auction.AuctionPictures.AddRange(pictureIDs.Select(x => new AuctionPicture() { PictureID = x }).ToList());
+                auction.Title = model.Title;
+                auction.CategoryID = model.CategoryID;
+                auction.Description = model.Description;
+                auction.ActualAmount = model.ActualAmount;
+                auction.StartingTime = model.StartingTime;
+                auction.EndingTime = model.EndingTime;
+
+                //check if we have AuctionPictureIDs posted back from form
+                if (!string.IsNullOrEmpty(model.AuctionPictures))
+                {
+                    //LINQ
+                    var pictureIDs = model.AuctionPictures
+                                                .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                                .Select(ID => int.Parse(ID)).ToList();
+
+                    auction.AuctionPictures = new List<AuctionPicture>();
+                    auction.AuctionPictures.AddRange(pictureIDs.Select(x => new AuctionPicture() { PictureID = x }).ToList());
+                }
+
+                //foreach (var picID in pictureIDs)
+                //{
+                //    var auctionPicture = new AuctionPicture();
+                //    auctionPicture.PictureID = picID;
+
+                //    auction.AuctionPictures.Add(auctionPicture);
+                //}
+
+                auctionsService.SaveAuction(auction);
+
+                result.Data = new { Success = true };
             }
-            //foreach (var picID in pictureIDs)
-            //{
-            //    var auctionPicture = new AuctionPicture();
-            //    auctionPicture.PictureID = picID;
+            else
+            {
+                result.Data = new { Success = false, Error = "Unable to save Auction. Please enter valid values." };
+            }
 
-            //    auction.AuctionPictures.Add(auctionPicture);
-            //}
-
-            auctionsService.SaveAuction(auction);
-
-            return RedirectToAction("Listing");
+            return result;
         }
         
         [HttpGet]

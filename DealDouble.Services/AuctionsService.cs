@@ -17,6 +17,37 @@ namespace DealDouble.Services
             return context.Auctions.ToList();
         }
 
+        public List<Auction> SearchAuctions(int? categoryID, string searchTerm, int? pageNo, int pageSize)
+        {
+            DealDoubleContext context = new DealDoubleContext();
+
+            var auctions = context.Auctions.AsQueryable();
+
+            if (categoryID.HasValue && categoryID.Value > 0)
+            {
+               auctions = auctions.Where(x => x.CategoryID == categoryID.Value);
+            }
+
+            if(!string.IsNullOrEmpty(searchTerm))
+            {
+                auctions = auctions.Where(x => x.Title.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            pageNo = pageNo ?? 1;
+            //pageNo = pageNo.HasValue ? pageNo.Value : 1;
+
+            var skipCount = (pageNo.Value - 1) * pageSize;
+
+            return auctions.OrderByDescending(x=>x.CategoryID).Skip(skipCount).Take(pageSize).ToList();
+        }
+
+        public int GetAuctionCount()
+        {
+            DealDoubleContext context = new DealDoubleContext();
+
+            return context.Auctions.Count();
+        }
+
         public List<Auction> GetPromotedAuctions()
         {
             DealDoubleContext context = new DealDoubleContext();
