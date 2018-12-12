@@ -41,11 +41,23 @@ namespace DealDouble.Services
             return auctions.OrderByDescending(x=>x.CategoryID).Skip(skipCount).Take(pageSize).ToList();
         }
 
-        public int GetAuctionCount()
+        public int GetAuctionCount(int? categoryID, string searchTerm)
         {
             DealDoubleContext context = new DealDoubleContext();
 
-            return context.Auctions.Count();
+            var auctions = context.Auctions.AsQueryable();
+
+            if (categoryID.HasValue && categoryID.Value > 0)
+            {
+                auctions = auctions.Where(x => x.CategoryID == categoryID.Value);
+            }
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                auctions = auctions.Where(x => x.Title.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            return auctions.Count();
         }
 
         public List<Auction> GetPromotedAuctions()
@@ -76,8 +88,14 @@ namespace DealDouble.Services
         {
             DealDoubleContext context = new DealDoubleContext();
 
-            context.Entry(auction).State = System.Data.Entity.EntityState.Modified;
+            var exitingAuction = context.Auctions.Find(auction.ID);
 
+            context.AuctionPictures.RemoveRange(exitingAuction.AuctionPictures);
+
+            context.Entry(exitingAuction).CurrentValues.SetValues(auction);
+
+            context.AuctionPictures.AddRange(auction.AuctionPictures);
+            
             context.SaveChanges();
         }
 

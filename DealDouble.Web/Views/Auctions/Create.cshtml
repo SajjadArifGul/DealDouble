@@ -77,22 +77,25 @@
 
 
 <script>
-	//$("#createForm").validate({
-	//	rules: {
-	//		Title: {
-	//			required: true,
-	//			minlength: 15,
-	//			maxlength: 150
-	//		}
-	//	},
-	//	messages: {
-	//		Title: {
-	//			required: "Title is required.",
-	//			minlength: "Minimum Length is 15",
-	//			maxlength: "Maximum Length is 150"
-	//		}
-	//	}
-	//});
+
+	$('input[name="StartingTime"]').daterangepicker();
+
+	$("#createForm").validate({
+		rules: {
+			Title: {
+				required: true,
+				minlength: 15,
+				maxlength: 150
+			}
+		},
+		messages: {
+			Title: {
+				required: "Title is required.",
+				minlength: "Minimum Length is 15",
+				maxlength: "Maximum Length is 150"
+			}
+		}
+	});
 
 	$("#saveButton").click(function () {
 		debugger;
