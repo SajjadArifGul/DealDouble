@@ -168,6 +168,12 @@ namespace DealDouble.Web.Controllers
             
             model.Auction = auctionsService.GetAuctionByID(ID);
 
+            model.BidsAmount = model.Auction.ActualAmount + model.Auction.Bids.Sum(x => x.BidAmount);
+
+            var latestBidder = model.Auction.Bids.OrderByDescending(x => x.Timestamp).FirstOrDefault();
+
+            model.LatestBidder = latestBidder != null ? latestBidder.User : null;
+
             model.PageTitle = "Auctions Details: " + model.Auction.Title;
             model.PageDescription = model.Auction.Description.Substring(0, 10);
 

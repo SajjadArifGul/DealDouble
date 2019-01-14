@@ -82,6 +82,14 @@
     <Compile Include="Migrations\201812121559513_updatedStuff.Designer.cs">
       <DependentUpon>201812121559513_updatedStuff.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901131331008_BidEntity.cs" />
+    <Compile Include="Migrations\201901131331008_BidEntity.Designer.cs">
+      <DependentUpon>201901131331008_BidEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901131415298_BidEntity-Amount.cs" />
+    <Compile Include="Migrations\201901131415298_BidEntity-Amount.Designer.cs">
+      <DependentUpon>201901131415298_BidEntity-Amount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -113,6 +121,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812121559513_updatedStuff.resx">
       <DependentUpon>201812121559513_updatedStuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901131331008_BidEntity.resx">
+      <DependentUpon>201901131331008_BidEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901131415298_BidEntity-Amount.resx">
+      <DependentUpon>201901131415298_BidEntity-Amount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -63,7 +63,7 @@ namespace DealDouble.Web.Models
         public bool RememberMe { get; set; }
     }
 
-    public class RegisterViewModel
+    public class RegisterViewModel : PageViewModel
     {
         [Required]
         [EmailAddress]
