@@ -62,14 +62,14 @@
 
 			@foreach (var auction in Model.AllAuctions)
 			{
-				<div class="col-lg-3 col-md-6 mb-4">
+				<div data-id="@auction.ID" class="col-lg-3 col-md-6 mb-4">
 					<div class="card h-100">
 						<a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
 						<div class="card-body">
 							<h4 class="card-title">
 								<a href="@Url.Action("Details", "Auctions", new { ID = auction.ID })">@auction.Title</a>
 							</h4>
-							<h5>$@auction.ActualAmount</h5>
+							<h5 class="bidAmount">$@auction.ActualAmount</h5>
 							<p class="card-text">
 								@auction.Description
 							</p>
@@ -86,3 +86,29 @@
 
 	</div>
 </div>
+
+<script>
+	var bidTimer;
+	var i = 0;
+
+	$(document).ready(function () {
+		bidTimer = setInterval(updateBids, 3000);
+	});
+
+	function updateBids() {
+		$.ajax({
+			url: "@Url.Action("UpdateAuctions", "Auctions")",
+			method: "get",
+			data: {
+				AuctionIDs: '@string.Join(",", Model.PromotedAuctions.Select(x=>x.ID).ToList())'
+			}
+		}).done(function (response) {
+			$.each(response, function (key, value) {
+				i++;
+				console.log(key, value);
+
+				$(".bidAmount", "[data-id = " + value.ID + "]").html(value.BidAmount + '' + i);
+			});
+		});
+	}
+</script>

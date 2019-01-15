@@ -179,5 +179,15 @@ namespace DealDouble.Web.Controllers
 
             return View(model);
         }
+        
+        public JsonResult UpdateAuctions(string AuctionIDs)
+        {
+            JsonResult result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            
+            result.Data = auctionsService.GetAllAuctions().Select(x=> new { ID = x.ID, BidAmount = x.ActualAmount + x.Bids.Sum(y=>y.BidAmount) });
+
+            return result;
+        }
     }
 }
