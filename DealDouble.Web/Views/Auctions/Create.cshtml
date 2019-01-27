@@ -77,8 +77,10 @@
 
 
 <script>
-
-	$('input[name="StartingTime"]').daterangepicker();
+    
+    $('input[name="StartingTime"]').daterangepicker({
+        "singleDatePicker": true,
+    });
 
 	$("#createForm").validate({
 		rules: {

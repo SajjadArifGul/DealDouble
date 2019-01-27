@@ -90,6 +90,10 @@
     <Compile Include="Migrations\201901131415298_BidEntity-Amount.Designer.cs">
       <DependentUpon>201901131415298_BidEntity-Amount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901262322185_CommentsTable.cs" />
+    <Compile Include="Migrations\201901262322185_CommentsTable.Designer.cs">
+      <DependentUpon>201901262322185_CommentsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -127,6 +131,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901131415298_BidEntity-Amount.resx">
       <DependentUpon>201901131415298_BidEntity-Amount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901262322185_CommentsTable.resx">
+      <DependentUpon>201901262322185_CommentsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
