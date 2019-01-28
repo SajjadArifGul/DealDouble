@@ -10,6 +10,8 @@ namespace DealDouble.Entities
     {
         public string Text { get; set; }
 
+        public int Rating { get; set; }
+
         public string UserID { get; set; }
 
         public DateTime TimeStamp { get; set; }
