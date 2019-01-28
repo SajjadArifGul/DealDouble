@@ -60,30 +60,41 @@
 
 		<div class="row">
 
-			@foreach (var auction in Model.AllAuctions)
-            {
-                var picURL = auction.AuctionPictures != null && auction.AuctionPictures.Count > 0 ?
-                                 "/Content/images/" + auction.AuctionPictures.First().Picture.URL : "http://placehold.it/700x400";
+			<div class="col-lg-12">
+			@for (int i = 1; i <= Model.AllAuctions.Count; i++)
+			{
+				i--;
+				
+				<div class="card-deck mb-4">
 
-				<div data-id="@auction.ID" class="col-lg-3 col-md-6 mb-4">
-					<div class="card h-100">
-						<a href="#"><img class="card-img-top" src="@picURL" alt=""></a>
-						<div class="card-body">
-							<h4 class="card-title">
-								<a href="@Url.Action("Details", "Auctions", new { ID = auction.ID })">@auction.Title</a>
-							</h4>
-							<h5 class="bidAmount">$@auction.ActualAmount</h5>
-							<p class="card-text">
-								@auction.Description
-							</p>
+					@foreach (var auction in Model.AllAuctions)
+					{
+						var picURL = auction.AuctionPictures != null && auction.AuctionPictures.Count > 0 ?
+										 "/Content/images/" + auction.AuctionPictures.First().Picture.URL : "http://placehold.it/700x400";
+
+						<div data-id="@auction.ID" class="col-lg-3 col-md-6 mb-4">
+							<div class="card h-100">
+								<div class="card-header">
+									<a href="#"><img class="card-img-top" src="@picURL" alt=""></a>
+								</div>
+
+								<div class="card-body">
+									<h4 class="card-title">
+										<a href="@Url.Action("Details", "Auctions", new { ID = auction.ID })">@auction.Title</a>
+									</h4>
+									<h5 class="bidAmount">
+										$@auction.ActualAmount
+									</h5>
+									<p class="card-text">
+										@auction.Description
+									</p>
+								</div>
+							</div>
 						</div>
-						<div class="card-footer">
-							<small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-						</div>
-					</div>
+					}
 				</div>
 			}
-			
+			</div>
 		</div>
 		<!-- /.row -->
 
