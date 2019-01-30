@@ -165,20 +165,23 @@ namespace DealDouble.Web.Controllers
         public ActionResult Details(int ID)
         {
             AuctionDetailsViewModel model = new AuctionDetailsViewModel();
-            model.EntityID = (int)EntityEnums.Auction;
 
             model.Auction = auctionsService.GetAuctionByID(ID);
+
+            if (model.Auction == null) return HttpNotFound();
 
             model.BidsAmount = model.Auction.ActualAmount + model.Auction.Bids.Sum(x => x.BidAmount);
 
             var latestBidder = model.Auction.Bids.OrderByDescending(x => x.Timestamp).FirstOrDefault();
 
             model.LatestBidder = latestBidder != null ? latestBidder.User : null;
-
-            model.Comments = sharedService.GetComments((int)EntityEnums.Auction, model.Auction.ID);
-
+            
             model.PageTitle = "Auctions Details: " + model.Auction.Title;
-            model.PageDescription = model.Auction.Description.Substring(0, 10);
+            model.PageDescription = model.Auction.Summary;
+
+            model.EntityID = (int)EntityEnums.Auction;
+            model.RecordID = model.Auction.ID;
+            model.Comments = sharedService.GetComments(model.EntityID, model.RecordID);
 
             return View(model);
         }

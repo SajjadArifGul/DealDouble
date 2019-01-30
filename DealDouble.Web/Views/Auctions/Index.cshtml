@@ -21,9 +21,9 @@
                         <option value="@category.ID" @selected>@category.Name</option>
                     }
                 </select>
-                <button type="submit" class="form-control btn btn-primary">Search</button>
-                <a href="@Url.Action("Index", "Auctions")" role="button" class="form-control btn btn-primary">Reset</a>
-                <button type="button" class="form-control btn btn-success" id="createButton">Create New Auction</button>
+                <button type="submit" class="form-control btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                <a href="@Url.Action("Index", "Auctions")" role="button" class="form-control btn btn-primary"><i class="fas fa-redo-alt"></i> Reset</a>
+                <button type="button" class="form-control btn btn-success" id="createButton"><i class="fas fa-plus"></i> Create New Auction</button>
             </div>
             <input type="hidden" name="page" value="1">
             <input type="hidden" name="items" value="10">
@@ -63,8 +63,6 @@
 <div id="imageTemplate" style="display:none">
     <img class='image img-thumbnail' src='' style="width: 200px; height: 200px;" />
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js"></script>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>

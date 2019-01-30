@@ -26,15 +26,12 @@ namespace DealDouble.Web.ViewModels
         public List<Auction> PromotedAuctions { get; set; }
     }
 
-    public class AuctionDetailsViewModel : PageViewModel
+    public class AuctionDetailsViewModel : CommentablePageViewModel
     {
         public Auction Auction { get; set; }
-
-        public List<Comment> Comments { get; set; }
-
+        
         public decimal BidsAmount { get; set; }
         public DealDoubleUser LatestBidder { get; set; }
-        public int EntityID { get; internal set; }
     }
 
 

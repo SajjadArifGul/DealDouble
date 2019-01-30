@@ -47,7 +47,7 @@
 
                                 <div class="card">
                                     <a href="@Url.Action("Details", "Auctions", new { ID = auction.ID })">
-                                        <img class="card-img-top" src="@picURL" alt="@auction.Title">
+                                        <img class="card-img-top" src="@picURL" alt="@auction.Title" style="height:300px;">
                                     </a>
                                     <hr />
                                     <div class="card-body">
@@ -55,7 +55,7 @@
                                             <a href="@Url.Action("Details", "Auctions", new { ID = auction.ID })">@auction.Title</a>
                                         </h5>
                                         <p class="card-text">
-                                            @(!string.IsNullOrEmpty(auction.Description) && auction.Description.Length >= 200 ? auction.Description.Substring(0, 200) : auction.Description)
+                                            @(!string.IsNullOrEmpty(auction.Summary) && auction.Summary.Length >= 200 ? auction.Summary.Substring(0, 200) : auction.Summary)
                                         </p>
                                     </div>
                                     <div class="card-footer">

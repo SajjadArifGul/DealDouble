@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DealDouble.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +10,14 @@ namespace DealDouble.Web.ViewModels
     {
         public string PageTitle { get; set; }
         public string PageDescription { get; set; }
+    }
+
+    public class CommentablePageViewModel : PageViewModel
+    {
+        public int EntityID { get; set; }
+        public int RecordID { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 
     /// <summary>
