@@ -9,6 +9,7 @@ namespace DealDouble.Entities
     public class Category : BaseEntity
     {
         public string Name { get; set; }
+        public string Summary { get; set; }
         public string Description { get; set; }
 
         public virtual List<Auction> Auctions { get; set; }

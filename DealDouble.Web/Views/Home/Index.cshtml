@@ -46,7 +46,10 @@
                                                  "/Content/images/" + auction.AuctionPictures.First().Picture.URL : "http://placehold.it/700x400";
 
                                 <div class="card">
-                                    <a href="#"><img class="card-img-top" src="@picURL" alt="@auction.Title"></a>
+                                    <a href="@Url.Action("Details", "Auctions", new { ID = auction.ID })">
+                                        <img class="card-img-top" src="@picURL" alt="@auction.Title">
+                                    </a>
+                                    <hr />
                                     <div class="card-body">
                                         <h5 class="card-title">
                                             <a href="@Url.Action("Details", "Auctions", new { ID = auction.ID })">@auction.Title</a>
@@ -55,9 +58,9 @@
                                             @(!string.IsNullOrEmpty(auction.Description) && auction.Description.Length >= 200 ? auction.Description.Substring(0, 200) : auction.Description)
                                         </p>
                                     </div>
-                                    <div class="card-footer align-items-center">
+                                    <div class="card-footer">
                                         <span class="text-muted float-left">$@auction.ActualAmount</span>
-                                        <button type="button" class="btn btn-primary btn-sm float-right" id="btnBidNow">Bid Now</button>
+                                        <button data-id="@auction.ID" type="button" class="btnBidNow btn btn-primary btn-sm float-right" id="btnBidNow">Bid Now</button>
                                     </div>
                                 </div>
 
@@ -94,5 +97,26 @@
 				$(".bidAmount", "[data-id = " + value.ID + "]").html(value.BidAmount + '' + i);
 			});
 		});
-	}
+    }
+
+    $(".btnBidNow").click(function () {
+		$.ajax({
+			url: "@Url.Action("Bid", "Bids")",
+			type: "post",
+            data: {
+                ID: $(this).attr("data-id")
+			}
+		})
+		.done(function (response) {
+			if (response.Success) {
+				window.location.reload();
+			}
+			else {
+				swal("Error!", response.Message, "error");
+			}
+		})
+		.fail(function () {
+			swal("Error!", "Error Occured. Please try again later.", "error");
+		});
+	});
 </script>

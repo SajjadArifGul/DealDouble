@@ -12,7 +12,6 @@ namespace DealDouble.Web.Controllers
     public class AuctionsController : Controller
     {
         AuctionsService auctionsService = new AuctionsService();
-
         CategoriesService categoriesService = new CategoriesService();
         SharedService sharedService = new SharedService();
 
