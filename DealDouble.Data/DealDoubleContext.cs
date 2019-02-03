@@ -13,6 +13,7 @@ namespace DealDouble.Data
     {
         public DealDoubleContext() : base("name=DealDoubleConnectionString")
         {
+            Database.SetInitializer<DealDoubleContext>(new DealDoubleDBInitializer());
         }
 
         public DbSet<Category> Categories { get; set; }
@@ -21,11 +22,15 @@ namespace DealDouble.Data
         public DbSet<AuctionPicture> AuctionPictures { get; set; }
         public DbSet<Bid> Bids { get; set; }
         public DbSet<Comment> Comments { get; set; }
-
-
+        
         public static DealDoubleContext Create()
         {
             return new DealDoubleContext();
         }
+
+
+        //CreateDatabaseIfNotExist -- Default
+        //DropCreateDatabaseIfModelChanges
+        //DropCreateDatabaseAlways
     }
 }

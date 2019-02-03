@@ -67,6 +67,7 @@ namespace DealDouble.Web.Controllers
 
                 auction.Title = model.Title;
                 auction.CategoryID = model.CategoryID;
+                auction.Summary = model.Summary;
                 auction.Description = model.Description;
                 auction.ActualAmount = model.ActualAmount;
                 auction.StartingTime = model.StartingTime;

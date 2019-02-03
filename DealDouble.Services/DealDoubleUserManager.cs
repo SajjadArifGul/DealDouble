@@ -22,6 +22,7 @@ namespace DealDouble.Services
         public static DealDoubleUserManager Create(IdentityFactoryOptions<DealDoubleUserManager> options, IOwinContext context)
         {
             var manager = new DealDoubleUserManager(new UserStore<DealDoubleUser>(context.Get<DealDoubleContext>()));
+            
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<DealDoubleUser>(manager)
             {

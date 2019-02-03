@@ -35,7 +35,7 @@ namespace DealDouble.Web.Controllers
             vModel.AllAuctions.AddRange(auctions);
             vModel.AllAuctions.AddRange(auctions);
 
-            vModel.AllAuctions.RemoveAt(0);
+            //vModel.AllAuctions.RemoveAt(0);
 
             vModel.PromotedAuctions = service.GetPromotedAuctions();
             
