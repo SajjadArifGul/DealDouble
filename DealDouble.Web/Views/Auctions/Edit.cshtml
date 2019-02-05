@@ -1,91 +1,108 @@
 ﻿@model DealDouble.Web.ViewModels.CreateAuctionViewModel
 
 <div class="modal-header">
-	<h5 class="modal-title">Edit Auction</h5>
-	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		<span aria-hidden="true">&times;</span>
-	</button>
+    <h5 class="modal-title">Edit Auction</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
 <form id="editForm" method="post">
-	<div class="modal-body">
-		<input type="hidden" name="ID" value="@Model.ID" />
+    <div class="modal-body">
+        <input type="hidden" name="ID" value="@Model.ID" />
 
-		<div class="form-group">
-			<label>
-				Title
-			</label>
-			<input class="form-control" name="Title" value="@Model.Title" />
-		</div>
+        <div class="form-group">
+            <label>
+                Title
+            </label>
+            <input class="form-control" name="Title" value="@Model.Title" />
+        </div>
 
-		<div class="form-group">
-			<label>
-				Category
-			</label>
-			<select class="form-control" name="CategoryID">
-				@foreach (var category in Model.Categories)
-				{
-					var selected = category.ID == Model.CategoryID ? "selected" : string.Empty;
+        <div class="form-group">
+            <label>
+                Category
+            </label>
+            <select class="form-control" name="CategoryID">
+                @foreach (var category in Model.Categories)
+                {
+                    var selected = category.ID == Model.CategoryID ? "selected" : string.Empty;
 
-					<option value="@category.ID" @selected>@category.Name</option>
-				}
-			</select>
-		</div>
+                    <option value="@category.ID" @selected>@category.Name</option>
+                }
+            </select>
+        </div>
 
-		<div class="form-group">
-			<label>
-				Description
-			</label>
-			<input class="form-control" name="Description" value="@Model.Description" />
-		</div>
+        <div class="form-group">
+            <label>
+                Summary
+            </label>
+            <textarea class="form-control" name="Summary" placeholder="Add Summary." rows="3">@Model.Summary</textarea>
+        </div>
 
-		<div class="form-group">
-			<label>
-				ActualAmount
-			</label>
-			<input class="form-control" name="ActualAmount" value="@Model.ActualAmount" />
-		</div>
+        <div class="form-group">
+            <label>
+                Description
+            </label>
+            <textarea class="form-control" name="Description" placeholder="Add Description." rows="10">@Model.Description</textarea>
+        </div>
 
-		<div class="form-group">
-			<label>
-				StartingTime
-			</label>
-			<input class="form-control" name="StartingTime" value="@Model.StartingTime" />
-		</div>
+        <div class="form-group">
+            <label>
+                ActualAmount
+            </label>
+            <input class="form-control" name="ActualAmount" value="@Model.ActualAmount" />
+        </div>
 
-		<div class="form-group">
-			<label>
-				EndingTime
-			</label>
-			<input class="form-control" name="EndingTime" value="@Model.EndingTime" />
-		</div>
+        <div class="form-group">
+            <label>
+                Starting Time
+            </label>
+            <input class="form-control" name="StartingTime" value="@Model.StartingTime" />
+        </div>
 
-		<div class="form-group">
-			<label>
-				Select Pictures
-			</label>
-			<input id="auctionPictures" class="form-control" name="AuctionPictures" type="file" multiple />
-			<div id="picturesArea" class="mt-2">
-				@if(Model.AuctionPicturesList != null && Model.AuctionPicturesList.Count > 0)
-				{
-					foreach (var picture in Model.AuctionPicturesList)
-					{
-						<img class='image img-thumbnail' src='/content/images/@picture.Picture.URL' data-id="@picture.PictureID" style="width: 200px; height: 200px;"/>
-					}
-				}
-			</div>
-			<input type="hidden" name="AuctionPictures" id="pictureIDs" />
-		</div>
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		<button class="btn btn-success" type="button" id="saveButton">
-			Save
-		</button>
-	</div>
+        <div class="form-group">
+            <label>
+                Ending Time
+            </label>
+            <input class="form-control" name="EndingTime" value="@Model.EndingTime" />
+        </div>
+
+        <div class="form-group">
+            <label>
+                Select Pictures
+            </label>
+            <input id="auctionPictures" class="form-control" name="AuctionPictures" type="file" multiple />
+            <div id="picturesArea" class="mt-2">
+                @if (Model.AuctionPicturesList != null && Model.AuctionPicturesList.Count > 0)
+                {
+                    foreach (var picture in Model.AuctionPicturesList)
+                    {
+                        <img class='image img-thumbnail' src='/content/images/@picture.Picture.URL' data-id="@picture.PictureID" style="width: 200px; height: 200px;" />
+                    }
+                }
+            </div>
+            <input type="hidden" name="AuctionPictures" id="pictureIDs" />
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button class="btn btn-success" type="button" id="saveButton">
+            Save
+        </button>
+    </div>
 </form>
 
 <script>
-	RemoveImagesOnClick();
+
+    $('input[name="StartingTime"]').daterangepicker({
+        "singleDatePicker": true,
+    });
+    $('input[name="EndingTime"]').daterangepicker({
+        "singleDatePicker": true,
+    });
+
+    CKEDITOR.replace('Description');
+
+    RemoveImagesOnClick();
 
 	$("#saveButton").click(function () {
 
@@ -99,6 +116,8 @@
 
 		$("#pictureIDs").val(imageIDs.join());
 
+        updateEditFields();
+
 		$.ajax({
 			url: "@Url.Action("Edit", "Auctions")",
 			method: "post",
@@ -109,7 +128,7 @@
 			$('#formModal').modal('toggle');
 		});
 	});
-		
+
 	$("#auctionPictures").change(function () {
 
 		var pictures = this.files;

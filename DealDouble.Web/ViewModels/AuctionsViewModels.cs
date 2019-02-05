@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace DealDouble.Web.ViewModels
 {
@@ -54,6 +55,7 @@ namespace DealDouble.Web.ViewModels
 
         [Required]
         [MinLength(20)]
+        [AllowHtml]
         public string Description { get; set; }
         
         [Required]
