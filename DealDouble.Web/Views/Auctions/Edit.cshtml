@@ -82,6 +82,9 @@
             </div>
             <input type="hidden" name="AuctionPictures" id="pictureIDs" />
         </div>
+
+        <div id="formErrors" class="form-group bg-danger" style="display:none">
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -104,29 +107,88 @@
 
     RemoveImagesOnClick();
 
-	$("#saveButton").click(function () {
 
-		var imageIDs = [];
+    $("#createForm").validate({
+        errorClass: "alert alert-danger",
+        errorElement: "div",
+        rules: {
+            Title: {
+                required: true,
+                minlength: 15,
+                maxlength: 150
+            },
+            CategoryID: {
+                required: true
+            },
+            Summary: {
+                required: true,
+                minlength: 20,
+                maxlength: 200
+            },
+            Description: {
+                required: true,
+                minlength: 20
+            },
+            ActualAmount: {
+                required: true,
+                range: [1, 10000000]
+            },
+        },
+        messages: {
+            Title: {
+                required: "Title is required.",
+                minlength: "Minimum Length is 15.",
+                maxlength: "Maximum Length is 150."
+            },
+            CategoryID: {
+                required: "Please select a category."
+            },
+            Summary: {
+                required: "Summary is required.",
+                minlength: "Minimum Length is 20.",
+                maxlength: "Maximum Length is 200."
+            },
+            Description: {
+                required: "Description is required.",
+                minlength: "Minimum Length is 20.",
+            },
+            ActualAmount: {
+                required: "ActualAmount is required.",
+                range: "ActualAmount must be between 1 to 10000000.",
+            },
+        },
+        highlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+        }
+    });
 
-		$("#picturesArea .image").each(function () {
-			var imageID = $(this).attr("data-id");
-
-			imageIDs.push(imageID);
-		});
-
-		$("#pictureIDs").val(imageIDs.join());
-
+    $("#saveButton").click(function () {
         updateEditFields();
 
-		$.ajax({
-			url: "@Url.Action("Edit", "Auctions")",
-			method: "post",
-			data: $("#editForm").serialize()
-		})
-		.done(function (response) {
-			$("#listingArea").html(response);
-			$('#formModal').modal('toggle');
-		});
+        if ($("#createForm").valid()) {
+            $(".modal-loader").show();
+
+            var imageIDs = [];
+
+            $("#picturesArea .image").each(function () {
+                var imageID = $(this).attr("data-id");
+
+                imageIDs.push(imageID);
+            });
+
+            $("#pictureIDs").val(imageIDs.join());
+
+            $.ajax({
+                url: "@Url.Action("Edit", "Auctions")",
+                method: "post",
+                data: $("#editForm").serialize()
+            })
+            .done(function (response) {
+                $(".modal-loader").hide();
+                $("#listingArea").html(response);
+                $('#formModal').modal('toggle');
+            });
+        }
 	});
 
 	$("#auctionPictures").change(function () {

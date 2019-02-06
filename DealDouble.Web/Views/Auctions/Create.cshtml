@@ -76,6 +76,9 @@
         </div>
     </div>
     <div class="modal-footer">
+        <div class="modal-loader float-left" style="display:none">
+            <img style="width: 38px;" src="https://gifimage.net/wp-content/uploads/2018/04/loader-gif-transparent-background-11.gif" />
+        </div>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button class="btn btn-success" type="button" id="saveButton">
             Save
@@ -151,7 +154,9 @@
     $("#saveButton").click(function () {
         updateEditFields();
 
-		if ($("#createForm").valid()) {
+        if ($("#createForm").valid()) {
+            $(".modal-loader").show();
+
 			var imageIDs = [];
 
 			$("#picturesArea .image").each(function () {
@@ -168,6 +173,7 @@
 				data: $("#createForm").serialize()
 			})
 			.done(function (response) {
+                $(".modal-loader").hide();
 				if (response.Success) {
 					ReloadListing();
 					$('#formModal').modal('toggle');

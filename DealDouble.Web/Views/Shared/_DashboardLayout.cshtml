@@ -19,11 +19,19 @@
 </head>
 <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Deal Double</a>
-        <input class="form-control form-control-dark w-100 bg-dark" value="Hi @User.Identity.Name" disabled>
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
+            <i class="fas fa-check-double"></i>
+            Deal Double
+        </a>
+        <b class="my-auto float-left text-secondary">
+            Hi @User.Identity.Name!
+        </b>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                <a id="btnLogOff" class="nav-link" href="#">LogOff</a>
+                <a id="btnLogOff" class="nav-link" href="#">
+                    <i class="fas fa-sign-out-alt"></i>
+                    LogOff
+                </a>
             </li>
         </ul>
     </nav>
@@ -33,75 +41,57 @@
             <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                 <div class="sidebar-sticky">
 
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Front End</span>
-                        <a class="d-flex align-items-center text-muted" href="#">
-                            <span data-feather="plus-circle"></span>
-                        </a>
-                    </h6>
-                    <ul class="nav flex-column mb-2">
+                    <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Index", "Home")">
-                                <span data-feather="file-text"></span>
+                                <i class="fas fa-home"></i>
                                 Home
                             </a>
                         </li>
-                    </ul>
-
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Control Panel</span>
-                        <a class="d-flex align-items-center text-muted" href="#">
-                            <span data-feather="plus-circle"></span>
-                        </a>
-                    </h6>
-
-                    <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link active" href="@Url.Action("Index", "Dashboard")">
-                                <span data-feather="home"></span>
+                                <i class="fas fa-user-shield"></i>
                                 Dashboard <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Index", "Categories" )">
-                                <span data-feather="file"></span>
+                                <i class="fas fa-sitemap"></i>
                                 Categories
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Index", "Auctions" )">
-                                <span data-feather="file"></span>
+                                <i class="fab fa-shirtsinbulk"></i>
                                 Auctions
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "Bids")">
-                                <span data-feather="file"></span>
+                            <a class="nav-link" href="@Url.Action("Index", "Bids" )">
+                                <i class="fas fa-business-time"></i>
                                 Bids
                             </a>
                         </li>
-                    </ul>
-
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Users Menu</span>
-                        <a class="d-flex align-items-center text-muted" href="#">
-                            <span data-feather="plus-circle"></span>
-                        </a>
-                    </h6>
-                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Comments", "Dashboard")">
+                                <i class="fas fa-comments"></i>
+                                Comments
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Users", "Dashboard")">
-                                <span data-feather="file-text"></span>
+                                <i class="fas fa-users"></i>
                                 Users
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Roles", "Dashboard")">
-                                <span data-feather="file-text"></span>
+                                <i class="fas fa-users-cog"></i>
                                 Roles
                             </a>
                         </li>
                     </ul>
+
                 </div>
             </nav>
 
