@@ -45,24 +45,31 @@
                                 var picURL = auction.AuctionPictures != null && auction.AuctionPictures.Count > 0 ?
                                                  "/Content/images/" + auction.AuctionPictures.First().Picture.URL : "http://placehold.it/700x400";
 
-                                <div class="card">
-                                    <a href="@Url.Action("Details", "Auctions", new { ID = auction.ID })">
-                                        <img class="card-img-top" src="@picURL" alt="@auction.Title" style="height:300px;">
-                                    </a>
-                                    <hr />
-                                    <div class="card-body">
-                                        <h5 class="card-title">
-                                            <a href="@Url.Action("Details", "Auctions", new { ID = auction.ID })">@auction.Title</a>
-                                        </h5>
-                                        <p class="card-text">
-                                            @(!string.IsNullOrEmpty(auction.Summary) && auction.Summary.Length >= 200 ? auction.Summary.Substring(0, 200) : auction.Summary)
-                                        </p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <span class="text-muted float-left">$@auction.ActualAmount</span>
-                                        <button data-id="@auction.ID" type="button" class="btnBidNow btn btn-primary btn-sm float-right" id="btnBidNow">Bid Now</button>
-                                    </div>
+                            <div class="card">
+                                <a href="@Url.Action("Details", "Auctions", new { ID = auction.ID })">
+                                    <img class="card-img-top" src="@picURL" alt="@auction.Title" style="height:300px;">
+                                </a>
+                                <hr />
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <a href="@Url.Action("Details", "Auctions", new { ID = auction.ID })">@auction.Title</a>
+                                    </h5>
+                                    <p class="card-text">
+                                        @(!string.IsNullOrEmpty(auction.Summary) && auction.Summary.Length >= 200 ? auction.Summary.Substring(0, 200) : auction.Summary)
+                                    </p>
                                 </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <a href="@Url.Action("Index", "Auctions", new { categoryID = auction.CategoryID })" class="card-link">
+                                            @auction.Category.Name
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="card-footer">
+                                    <span class="text-muted float-left">$@auction.ActualAmount</span>
+                                    <button data-id="@auction.ID" type="button" class="btnBidNow btn btn-primary btn-sm float-right" id="btnBidNow">Bid Now</button>
+                                </div>
+                            </div>
 
                                 i++;
                             }

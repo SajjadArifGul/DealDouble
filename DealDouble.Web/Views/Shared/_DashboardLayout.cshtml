@@ -1,4 +1,6 @@
-﻿@{
+﻿@using DealDouble.Web.Code.Enums;
+@model DealDouble.Web.ViewModels.PageViewModel
+@{
     Layout = null;
 }
 
@@ -49,43 +51,43 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="@Url.Action("Index", "Dashboard")">
+                            <a data-page="@((int)Pages.Dashboard)" class="nav-link active" href="@Url.Action("Index", "Dashboard")">
                                 <i class="fas fa-user-shield"></i>
-                                Dashboard <span class="sr-only">(current)</span>
+                                Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "Categories" )">
+                            <a data-page="@((int)Pages.Categories)" class="nav-link" href="@Url.Action("Index", "Categories" )">
                                 <i class="fas fa-sitemap"></i>
                                 Categories
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "Auctions" )">
+                            <a data-page="@((int)Pages.Auctions)" class="nav-link" href="@Url.Action("Index", "Auctions" )">
                                 <i class="fab fa-shirtsinbulk"></i>
                                 Auctions
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "Bids" )">
+                            <a data-page="@((int)Pages.Bids)" class="nav-link" href="@Url.Action("Index", "Bids" )">
                                 <i class="fas fa-business-time"></i>
                                 Bids
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Comments", "Dashboard")">
+                            <a data-page="@((int)Pages.Comments)" class="nav-link" href="@Url.Action("Comments", "Dashboard")">
                                 <i class="fas fa-comments"></i>
                                 Comments
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Users", "Dashboard")">
+                            <a data-page="@((int)Pages.Users)" class="nav-link" href="@Url.Action("Users", "Dashboard")">
                                 <i class="fas fa-users"></i>
                                 Users
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Roles", "Dashboard")">
+                            <a data-page="@((int)Pages.Roles)" class="nav-link" href="@Url.Action("Roles", "Dashboard")">
                                 <i class="fas fa-users-cog"></i>
                                 Roles
                             </a>
@@ -111,9 +113,21 @@
     <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        $(document).ready(function () {
+            activatePageLink();
+        });
+
         $("#btnLogOff").click(function () {
             $("#logOffForm").submit();
         });
+
+        function activatePageLink() {
+            $(".nav-link").removeClass("active");
+
+            var activePage = $("#activePage").val();
+
+            $("a.nav-link[data-page=@((int)Model.Page)]").addClass("active");
+        }
 
         function updateEditFields() {
             for (instance in CKEDITOR.instances) {

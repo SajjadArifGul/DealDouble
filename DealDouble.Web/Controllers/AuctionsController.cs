@@ -1,5 +1,6 @@
 ﻿using DealDouble.Entities;
 using DealDouble.Services;
+using DealDouble.Web.Code.Enums;
 using DealDouble.Web.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace DealDouble.Web.Controllers
         {
             AuctionsListingViewModel model = new AuctionsListingViewModel();
 
+            model.Page = Pages.Auctions;
             model.PageTitle = "Auctions";
             model.PageDescription = "Auction Listing Page";
 

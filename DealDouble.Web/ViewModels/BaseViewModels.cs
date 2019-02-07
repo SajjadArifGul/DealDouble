@@ -1,4 +1,5 @@
 ﻿using DealDouble.Entities;
+using DealDouble.Web.Code.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ namespace DealDouble.Web.ViewModels
 {
     public class PageViewModel
     {
+        public Pages Page { get; set; }
         public string PageTitle { get; set; }
         public string PageDescription { get; set; }
     }

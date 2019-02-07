@@ -1,8 +1,10 @@
-﻿using System;
+﻿using DealDouble.Web.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DealDouble.Web.Code.Enums;
 
 namespace DealDouble.Web.Controllers
 {
@@ -11,7 +13,10 @@ namespace DealDouble.Web.Controllers
         // GET: Dashboard
         public ActionResult Index()
         {
-            return View();
+            PageViewModel model = new PageViewModel();
+
+            model.Page = Pages.Dashboard;
+            return View(model);
         }
     }
 }

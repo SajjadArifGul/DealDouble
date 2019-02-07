@@ -1,5 +1,6 @@
 ﻿using DealDouble.Entities;
 using DealDouble.Services;
+using DealDouble.Web.Code.Enums;
 using DealDouble.Web.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace DealDouble.Web.Controllers
         {
             CategoriesListingViewModel model = new CategoriesListingViewModel();
 
+            model.Page = Pages.Categories;
             model.PageTitle = "Categories";
             model.PageDescription = "Categories Listing Page";
 
