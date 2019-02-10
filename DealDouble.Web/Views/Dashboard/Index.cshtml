@@ -1,4 +1,4 @@
-﻿
+﻿@model DealDouble.Web.ViewModels.DashboardViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
@@ -12,31 +12,31 @@
     <hr class="my-4">
 </div>
 
-<div class="card-deck">
+<div class="card-deck text-primary">
     <div class="card text-center ">
         <h1 class="card-title display-2 align-middle">
-            45098
+            @Model.UserCount
         </h1>
         <div class="card-footer display-4">
-            Users
+            <a href="@Url.Action("Users", "Dasboard")">Users</a>
         </div>
     </div>
 
     <div class="card text-center ">
         <h1 class="card-title display-2 align-middle">
-            432
+            @Model.AuctionsCount
         </h1>
         <div class="card-footer display-4">
-            Auctions
+            <a href="@Url.Action("Users", "Dasboard")">Auctions</a>
         </div>
     </div>
 
     <div class="card text-center ">
         <h1 class="card-title display-2 align-middle">
-            765432
+            @Model.BidsCount
         </h1>
         <div class="card-footer display-4">
-            Bids
+            <a href="@Url.Action("Index", "Bids")">Bids</a>
         </div>
     </div>
 </div>

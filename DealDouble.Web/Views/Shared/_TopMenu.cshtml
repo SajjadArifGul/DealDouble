@@ -2,7 +2,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="@Url.Action("Index", "Home")">
-            <i class="fas fa-check-double"></i>
+            @*<img src="~/Content/images/site/deal-double-logo-svg.svg" width="30" height="30" class="d-inline-block align-top" alt="">*@
+            <i class="fas fa-check-double mr-1"></i>
             Deal Double
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,14 +12,14 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link border-right" href="#">
                         <i class="fab fa-shirtsinbulk"></i>
                         Auctions
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-sitemap"></i>
+                    <a class="nav-link border-right" href="#">
+                        <i class="fas fa-tags"></i>
                         Categories
                     </a>
                 </li>
@@ -28,7 +29,7 @@
                     if (User.IsInRole("Administrator"))
                     {
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
+                            <a class="nav-link border-right" href="@Url.Action("Index", "Dashboard")">
                                 <i class="fas fa-user-shield"></i>
                                 Dashboard
                             </a>
@@ -45,7 +46,10 @@
                 else
                 {
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Login", "Account")">Login</a>
+                        <a class="nav-link" href="@Url.Action("Login", "Account")">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Login
+                        </a>
                     </li>
                 }
             </ul>
