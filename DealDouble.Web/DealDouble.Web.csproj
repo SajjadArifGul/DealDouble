@@ -221,6 +221,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Code\Enums\Pages.cs" />
+    <Compile Include="Code\Extensions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuctionsController.cs" />
     <Compile Include="Controllers\BidsController.cs" />
@@ -252,6 +253,7 @@
     <Content Include="Content\css\dashboard.css" />
     <Content Include="Content\css\shop-homepage.css" />
     <Content Include="Content\images\site\deal-double-logo-svg.svg" />
+    <Content Include="Content\images\site\user-default-avatar.png" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.min.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-reboot.css" />

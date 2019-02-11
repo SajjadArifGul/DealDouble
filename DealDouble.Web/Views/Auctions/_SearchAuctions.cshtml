@@ -1,4 +1,6 @@
-﻿@model DealDouble.Web.ViewModels.AuctionsListingViewModel
+﻿@using DealDouble.Web.Code;
+@model DealDouble.Web.ViewModels.AuctionsListingViewModel
+
 
 <div class="row">
     <div id="auctionsList" class="col-lg-12">
@@ -18,13 +20,14 @@
 										 "/Content/images/" + auction.AuctionPictures.First().Picture.URL : "http://placehold.it/700x400";
 
                         <div class="card @classes" relf-item="@groupItem">
-                            <a href="@Url.Action("Details", "Auctions", new { ID = auction.ID })">
+                            <a href="@Url.Action("Details", "Auctions", new { category = auction.Category.Name.ToLower().SanitizeString(), ID = auction.ID })">
                                 <img class="card-img-top" src="@picURL" alt="@auction.Title" style="height:300px;">
                             </a>
                             <hr />
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    <a href="@Url.Action("Details", "Auctions", new { ID = auction.ID })">@auction.Title</a>
+                                    <a href="@Url.Action("Details", "Auctions", new { category = auction.Category.Name.ToLower().SanitizeString(), ID = auction.ID })">@auction.Title</a>
+									<span class="badge badge-success text-white">New</span>
                                 </h5>
                                 <p class="card-text">
                                     @(!string.IsNullOrEmpty(auction.Summary) && auction.Summary.Length >= 200 ? auction.Summary.Substring(0, 200) : auction.Summary)
@@ -33,7 +36,7 @@
                             <ul class="list-group list-group-flush ">
                                 <li class="list-group-item border-bottom-0">
                                     <i class="fas fa-tags mr-1"></i>
-                                    <a href="@Url.Action("Index", "Home", new { categoryID = auction.CategoryID })" class="card-link">
+                                    <a href="#" class="card-link categoryLink" data-id="@auction.CategoryID">
                                         @auction.Category.Name
                                     </a>
                                 </li>
@@ -129,5 +132,9 @@
     	if (!$(this).hasClass("disabled")) {
             searchAuctions($("#sltCategories").val(), $("#txtSearchTerm").val(), $(this).attr("data-page"));
         }
+    });
+
+    $(".categoryLink").click(function () {
+    	searchAuctions($(this).attr("data-id"));
     });
 </script>

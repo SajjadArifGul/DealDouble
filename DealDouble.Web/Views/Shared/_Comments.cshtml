@@ -7,7 +7,7 @@
 <div class="card card-outline-secondary my-4">
 	<div class="card-header @(!haveComments ? "border-bottom-0" : string.Empty)">
 		<h5 class="mb-0">
-			@(haveComments ? Model.Comments.Count : 0 ) Comments
+			@string.Format("{0} {1}", haveComments ? Model.Comments.Count : 0, haveComments && Model.Comments.Count > 1 ? "Comments" : "Comment")
 		</h5>
 	</div>
 
@@ -20,12 +20,12 @@
 
 				<div class="row">
 					<div class="col-md-2">
-						<img src="https://griffonagedotcom.files.wordpress.com/2016/07/profile-modern-2e.jpg" class="img rounded-circle img-fluid" style="height:105px; width:105px;" />
+						<img src="~/Content/images/site/user-default-avatar.png" class="img rounded-circle img-fluid" style="height:105px; width:105px;" />
 					</div>
 					<div class="col-md-10">
 						<p>
 							<a class="float-left" href="#">
-								<strong>@comment.UserID</strong>
+								<strong>@comment.User.UserName</strong>
 							</a>
 							<span class="float-right mb-2">
 								@comment.TimeStamp

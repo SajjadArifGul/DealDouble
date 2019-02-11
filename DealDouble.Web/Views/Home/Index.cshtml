@@ -29,12 +29,12 @@
 				<span class="sr-only">Next</span>
 			</a>
 		</div>
-		<div class="row">
+		<div id="auctions" class="row">
 			<div class="col-lg-12">
 				<div class="border p-2">
 					<div class="float-left">
 						<select id="sltCategories" class="form-control">
-							<option value="0" selected>Browse Categories</option>
+							<option value="0" selected>All Categories</option>
                             @if (Model.Categories != null)
 							{
 								foreach (var category in Model.Categories)
