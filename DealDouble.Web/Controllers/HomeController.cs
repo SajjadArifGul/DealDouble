@@ -13,36 +13,19 @@ namespace DealDouble.Web.Controllers
         AuctionsService service = new AuctionsService();
         CategoriesService categoriesService = new CategoriesService();
 
-        public ActionResult Index()
+        public ActionResult Index(int? categoryID, string searchTerm, int? pageNo)
         {
-            AuctionsViewModel vModel = new AuctionsViewModel();
+            AuctionsViewModel model = new AuctionsViewModel();
 
-            vModel.PageTitle = "Home Page";
-            vModel.PageDescription = "This is Home Page";
+            model.PageTitle = "Home Page";
+            model.PageDescription = "This is Home Page";
 
-            vModel.Categories = categoriesService.GetAllCategories();
+            model.CategoryID = categoryID;
+            model.SearchTerm = searchTerm;
 
-            var auctions = service.GetAllAuctions();
-
-            vModel.AllAuctions = new List<Entities.Auction>();
-            vModel.AllAuctions.AddRange(auctions);
-            vModel.AllAuctions.AddRange(auctions);
-            vModel.AllAuctions.AddRange(auctions);
-            vModel.AllAuctions.AddRange(auctions);
-            vModel.AllAuctions.AddRange(auctions);
-            vModel.AllAuctions.AddRange(auctions);
-            vModel.AllAuctions.AddRange(auctions);
-            vModel.AllAuctions.AddRange(auctions);
-            vModel.AllAuctions.AddRange(auctions);
-            vModel.AllAuctions.AddRange(auctions);
-            vModel.AllAuctions.AddRange(auctions);
-            vModel.AllAuctions.AddRange(auctions);
-
-            //vModel.AllAuctions.RemoveAt(0);
-
-            vModel.PromotedAuctions = service.GetPromotedAuctions();
+            model.Categories = categoriesService.GetAllCategories();
             
-            return View(vModel);
+            return View(model);
         }
 
         public ActionResult About()

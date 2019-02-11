@@ -11,15 +11,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link border-right" href="#">
-                        <i class="fab fa-shirtsinbulk"></i>
+                <li class="nav-item p-2">
+                    <a class="nav-link" href="#">
+                        <i class="fab fa-shirtsinbulk m-1"></i>
                         Auctions
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link border-right" href="#">
-                        <i class="fas fa-tags"></i>
+                <li class="nav-item p-2">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-tags m-1"></i>
                         Categories
                     </a>
                 </li>
@@ -28,26 +28,26 @@
                 {
                     if (User.IsInRole("Administrator"))
                     {
-                        <li class="nav-item">
-                            <a class="nav-link border-right" href="@Url.Action("Index", "Dashboard")">
-                                <i class="fas fa-user-shield"></i>
+                        <li class="nav-item p-2">
+                            <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
+                                <i class="fas fa-user-shield m-1"></i>
                                 Dashboard
                             </a>
                         </li>
                     }
 
-                    <li class="nav-item">
+                    <li class="nav-item p-2 ">
                         <a id="btnLogOff" class="nav-link" href="#">
-                            <i class="fas fa-sign-out-alt"></i>
+                            <i class="fas fa-sign-out-alt m-1"></i>
                             LogOff
                         </a>
                     </li>
                 }
                 else
                 {
-                    <li class="nav-item">
+                    <li class="nav-item p-2">
                         <a class="nav-link" href="@Url.Action("Login", "Account")">
-                            <i class="fas fa-sign-in-alt"></i>
+                            <i class="fas fa-sign-in-alt m-1"></i>
                             Login
                         </a>
                     </li>

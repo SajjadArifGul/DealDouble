@@ -3,7 +3,7 @@
 <div class="row">
 	<div class="col-lg-12">
 
-		<div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+		<div id="carouselExampleIndicators" class="carousel slide my-2 mt-4" data-ride="carousel">
 			<ol class="carousel-indicators">
 				<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
 				<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -36,17 +36,18 @@
 						<select id="sltCategories" class="form-control">
 							<option value="0" selected>Browse Categories</option>
                             @if (Model.Categories != null)
-                            {
-                                foreach (var category in Model.Categories)
-                                {
-							        <option value="@category.ID">@category.Name</option>
+							{
+								foreach (var category in Model.Categories)
+								{
+									var selected = Model.CategoryID == category.ID ? "selected" : string.Empty;
+							        <option value="@category.ID" @selected>@category.Name</option>
                                 }
                             }                            
 						</select>
 					</div>
 					<div class="float-right">
 						<form class="form-inline">
-							<input id="txtSearchTerm" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+							<input id="txtSearchTerm" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value="@Model.SearchTerm">
 							<button id="btnSearchTerm" class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
 						</form>
 					</div>
@@ -54,8 +55,9 @@
 				</div>
 			</div>
 		</div>
+
         <div id="auctionsArea">
-            @{ Html.RenderAction("SearchAuctions", "Auctions"); }
+            @{ Html.RenderAction("SearchAuctions", "Auctions", new { searchTerm = Model.SearchTerm, categoryID = Model.CategoryID }); }
         </div>
 	</div>
 </div>
@@ -73,10 +75,14 @@
     });
 
     $("#sltCategories").change(function () {
+    	$("#txtSearchTerm").val("");
         searchAuctions($(this).val());
     });
 
     function searchAuctions(categoryID, searchTerm, pageNo) {
+    	$("#auctionsList").hide();
+    	$("#loadingList").show();
+
         $.ajax({
 			url: "@Url.Action("SearchAuctions", "Auctions")",
 			method: "post",
@@ -90,7 +96,7 @@
 		});
     }
 
-	function updateBids() {
+	@*function updateBids() {
 		$.ajax({
 			url: "@Url.Action("UpdateAuctions", "Auctions")",
 			method: "get",
@@ -105,7 +111,7 @@
 				$(".bidAmount", "[data-id = " + value.ID + "]").html(value.BidAmount + '' + i);
 			});
 		});
-	}
+	}*@
 
 	$(".btnBidNow").click(function () {
 		$.ajax({

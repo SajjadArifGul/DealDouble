@@ -1,22 +1,23 @@
 ﻿@model DealDouble.Web.ViewModels.AuctionsListingViewModel
 
 <div class="row">
-    <div class="col-lg-12">
+    <div id="auctionsList" class="col-lg-12">
         @if (Model.Auctions != null && Model.Auctions.Count > 0)
-        {
-            for (int i = 1; i <= Model.Auctions.Count; i++)
-            {
-                i--;
-
-                var classes = i == 0 ? "border-top-0 rounded-0" : string.Empty;
+		{
+			for (int i = 1; i <= Model.Auctions.Count; i++)
+			{
+				i--;
+				var groupItem = 0;
+				var classes = i == 0 ? "border-top-0 rounded-0" : string.Empty;
 
                 <div class="card-group mb-4">
                     @foreach (var auction in Model.Auctions.Skip(i).Take(3))
-                    {
-                        var picURL = auction.AuctionPictures != null && auction.AuctionPictures.Count > 0 ?
-                                         "/Content/images/" + auction.AuctionPictures.First().Picture.URL : "http://placehold.it/700x400";
+					{
+						groupItem++;
+						var picURL = auction.AuctionPictures != null && auction.AuctionPictures.Count > 0 ?
+										 "/Content/images/" + auction.AuctionPictures.First().Picture.URL : "http://placehold.it/700x400";
 
-                        <div class="card @classes">
+                        <div class="card @classes" relf-item="@groupItem">
                             <a href="@Url.Action("Details", "Auctions", new { ID = auction.ID })">
                                 <img class="card-img-top" src="@picURL" alt="@auction.Title" style="height:300px;">
                             </a>
@@ -32,7 +33,7 @@
                             <ul class="list-group list-group-flush ">
                                 <li class="list-group-item border-bottom-0">
                                     <i class="fas fa-tags mr-1"></i>
-                                    <a href="@Url.Action("Index", "Auctions", new { categoryID = auction.CategoryID })" class="card-link">
+                                    <a href="@Url.Action("Index", "Home", new { categoryID = auction.CategoryID })" class="card-link">
                                         @auction.Category.Name
                                     </a>
                                 </li>
@@ -51,6 +52,12 @@
 
                         i++;
                     }
+
+					@for (int cardItem = groupItem; cardItem < 3; cardItem++)
+					{
+						<div class="card @classes" relf-item="@groupItem">
+						</div>
+					}
                 </div>
             }
 
@@ -108,11 +115,18 @@
             </div>
         }
     </div>
+	<div id="loadingList" class="col-lg-12" style="display:none">
+		<div class="border-top-0 rounded-0 p-2 border">
+			<div class="alert alert-primary m-0" role="alert">
+				Loading...
+			</div>
+		</div>
+	</div>
 </div>
 
 <script>
     $(".page-link").click(function () {
-        if (!$(this).hasClass("disabled")) {
+    	if (!$(this).hasClass("disabled")) {
             searchAuctions($("#sltCategories").val(), $("#txtSearchTerm").val(), $(this).attr("data-page"));
         }
     });

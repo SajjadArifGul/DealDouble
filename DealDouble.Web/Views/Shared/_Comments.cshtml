@@ -1,11 +1,11 @@
 ﻿@model DealDouble.Web.ViewModels.CommentablePageViewModel
 
 @{
-	var haveComments = Model.Comments != null && Model.Comments.Count > 0;	
+	var haveComments = Model.Comments != null && Model.Comments.Count > 0;
 }
 
 <div class="card card-outline-secondary my-4">
-	<div class="card-header">
+	<div class="card-header @(!haveComments ? "border-bottom-0" : string.Empty)">
 		<h5 class="mb-0">
 			@(haveComments ? Model.Comments.Count : 0 ) Comments
 		</h5>
@@ -38,14 +38,14 @@
 						</p>
 						<span class="text-warning">
 							@for (int i = 1; i <= comment.Rating; i++)
-							{
+								{
 								<i class="fas fa-star"></i>
-							}
+								}
 
 							@for (int i = 1; i <= defaultStars; i++)
-							{
+								{
 								<i class="far fa-star"></i>
-							}
+								}
 						</span>
 
 					</div>
@@ -63,27 +63,26 @@
 
 		@if (User.Identity.IsAuthenticated)
 		{
+			<form id="commentForm">
+				<input type="hidden" name="EntityID" value="@Model.EntityID" />
+				<input type="hidden" name="RecordID" value="@Model.RecordID" />
 
-		<form id="commentForm">
-			<input type="hidden" name="EntityID" value="@Model.EntityID" />
-			<input type="hidden" name="RecordID" value="@Model.RecordID" />
+				<div class="form-group">
+					<input type="hidden" name="Rating" id="ratingsValue" value="1" />
 
-			<div class="form-group">
-				<input type="hidden" name="Rating" id="ratingsValue" value="1" />
+					<textarea class="form-control" rows="3" name="Text" placeholder="Write your comment here."></textarea>
+				</div>
 
-				<textarea class="form-control" rows="3" name="Text" placeholder="Write your comment here."></textarea>
-			</div>
+				<span class="text-warning float-right">
+					<i class="ratingStar fas fa-star" data-value="1"></i>
+					<i class="ratingStar far fa-star" data-value="2"></i>
+					<i class="ratingStar far fa-star" data-value="3"></i>
+					<i class="ratingStar far fa-star" data-value="4"></i>
+					<i class="ratingStar far fa-star" data-value="5"></i>
+				</span>
 
-			<span class="text-warning float-right">
-				<i class="ratingStar fas fa-star" data-value="1"></i>
-				<i class="ratingStar far fa-star" data-value="2"></i>
-				<i class="ratingStar far fa-star" data-value="3"></i>
-				<i class="ratingStar far fa-star" data-value="4"></i>
-				<i class="ratingStar far fa-star" data-value="5"></i>
-			</span>
-
-			<button class="btn btn-success float-left" id="btnComment" type="button">Leave your Comment</button>
-		</form>
+				<button class="btn btn-success float-left" id="btnComment" type="button">Leave your Comment</button>
+			</form>
 		}
 		else
 		{
@@ -156,5 +155,5 @@
 		$thisStar.addClass("fas").removeClass("far");
 		$thisStar.prevAll(".ratingStar").addClass("fas").removeClass("far");
 		$("#ratingsValue").val($thisStar.attr("data-value"));
-	});	
+	});
 </script>

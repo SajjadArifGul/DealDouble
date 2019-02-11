@@ -108,7 +108,7 @@
     RemoveImagesOnClick();
 
 
-    $("#createForm").validate({
+    $("#editForm").validate({
         errorClass: "alert alert-danger",
         errorElement: "div",
         rules: {
@@ -165,7 +165,7 @@
     $("#saveButton").click(function () {
         updateEditFields();
 
-        if ($("#createForm").valid()) {
+        if ($("#editForm").valid()) {
             $(".modal-loader").show();
 
             var imageIDs = [];

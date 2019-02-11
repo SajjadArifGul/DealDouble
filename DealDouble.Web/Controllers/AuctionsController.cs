@@ -50,18 +50,13 @@ namespace DealDouble.Web.Controllers
 
         public ActionResult SearchAuctions(int? categoryID, string searchTerm, int? pageNo)
         {
-            var pageSize = 3;
+            var pageSize = 6;
 
             AuctionsListingViewModel model = new AuctionsListingViewModel();
 
             model.Auctions = auctionsService.SearchAuctions(categoryID, searchTerm, pageNo, pageSize);
-
-            model.Auctions.AddRange(model.Auctions);
-            model.Auctions.AddRange(model.Auctions);
-            model.Auctions.AddRange(model.Auctions);
-            model.Auctions.AddRange(model.Auctions);
-
-            var totalAuctions = 100;// auctionsService.GetAuctionCount(categoryID, searchTerm);
+            
+            var totalAuctions = auctionsService.GetAuctionCount(categoryID, searchTerm);
 
             model.Pager = new Pager(totalAuctions, pageNo, pageSize);
 

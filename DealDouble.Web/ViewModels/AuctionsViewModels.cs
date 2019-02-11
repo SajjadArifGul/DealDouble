@@ -12,9 +12,8 @@ namespace DealDouble.Web.ViewModels
     {
         public List<Category> Categories { get; set; }
 
-        public List<Auction> AllAuctions { get; set; }
-
-        public List<Auction> PromotedAuctions { get; set; }
+        public int? CategoryID { get; set; }
+        public string SearchTerm { get; set; }        
     }
 
     public class AuctionsListingViewModel : PageViewModel
