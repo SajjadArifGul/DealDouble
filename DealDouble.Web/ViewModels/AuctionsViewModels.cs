@@ -8,6 +8,15 @@ using System.Web.Mvc;
 
 namespace DealDouble.Web.ViewModels
 {
+    public class AuctionsViewModel : PageViewModel
+    {
+        public List<Category> Categories { get; set; }
+
+        public List<Auction> AllAuctions { get; set; }
+
+        public List<Auction> PromotedAuctions { get; set; }
+    }
+
     public class AuctionsListingViewModel : PageViewModel
     {
         public List<Auction> Auctions { get; set; }
@@ -18,13 +27,6 @@ namespace DealDouble.Web.ViewModels
         public int? PageNo { get; internal set; }
 
         public List<Category> Categories { get; set; }
-    }
-
-    public class AuctionsViewModel : PageViewModel
-    {
-        public List<Auction> AllAuctions { get; set; }
-
-        public List<Auction> PromotedAuctions { get; set; }
     }
 
     public class AuctionDetailsViewModel : CommentablePageViewModel

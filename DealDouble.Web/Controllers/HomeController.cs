@@ -11,6 +11,7 @@ namespace DealDouble.Web.Controllers
     public class HomeController : Controller
     {
         AuctionsService service = new AuctionsService();
+        CategoriesService categoriesService = new CategoriesService();
 
         public ActionResult Index()
         {
@@ -18,6 +19,8 @@ namespace DealDouble.Web.Controllers
 
             vModel.PageTitle = "Home Page";
             vModel.PageDescription = "This is Home Page";
+
+            vModel.Categories = categoriesService.GetAllCategories();
 
             var auctions = service.GetAllAuctions();
 

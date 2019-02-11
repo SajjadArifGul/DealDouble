@@ -33,80 +33,30 @@
 			<div class="col-lg-12">
 				<div class="border p-2">
 					<div class="float-left">
-						<select class="form-control">
-							<option selected>Browse Categories</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
+						<select id="sltCategories" class="form-control">
+							<option value="0" selected>Browse Categories</option>
+                            @if (Model.Categories != null)
+                            {
+                                foreach (var category in Model.Categories)
+                                {
+							        <option value="@category.ID">@category.Name</option>
+                                }
+                            }                            
 						</select>
 					</div>
 					<div class="float-right">
 						<form class="form-inline">
-							<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-							<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+							<input id="txtSearchTerm" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+							<button id="btnSearchTerm" class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
 						</form>
 					</div>
 					<div class="clearfix"></div>
 				</div>
 			</div>
 		</div>
-
-		<div class="row">
-			<div class="col-lg-12">
-				@if (Model.AllAuctions != null && Model.AllAuctions.Count > 0)
-				{
-					for (int i = 1; i <= Model.AllAuctions.Count; i++)
-					{
-						i--;
-
-						var classes = i == 0 ? "border-top-0 rounded-0" : string.Empty;
-
-						<div class="card-group mb-4">
-							@foreach (var auction in Model.AllAuctions.Skip(i).Take(3))
-							{
-								var picURL = auction.AuctionPictures != null && auction.AuctionPictures.Count > 0 ?
-												 "/Content/images/" + auction.AuctionPictures.First().Picture.URL : "http://placehold.it/700x400";
-
-								<div class="card @classes">
-									<a href="@Url.Action("Details", "Auctions", new { ID = auction.ID })">
-										<img class="card-img-top" src="@picURL" alt="@auction.Title" style="height:300px;">
-									</a>
-									<hr />
-									<div class="card-body">
-										<h5 class="card-title">
-											<a href="@Url.Action("Details", "Auctions", new { ID = auction.ID })">@auction.Title</a>
-										</h5>
-										<p class="card-text">
-											@(!string.IsNullOrEmpty(auction.Summary) && auction.Summary.Length >= 200 ? auction.Summary.Substring(0, 200) : auction.Summary)
-										</p>
-									</div>
-									<ul class="list-group list-group-flush ">
-										<li class="list-group-item border-bottom-0">
-											<i class="fas fa-tags mr-1"></i>
-											<a href="@Url.Action("Index", "Auctions", new { categoryID = auction.CategoryID })" class="card-link">
-												@auction.Category.Name
-											</a>
-										</li>
-									</ul>
-									<div class="card-footer">
-										<span class="text-muted float-left">
-											<i class="fas fa-money-bill mr-1"></i>
-											$@auction.ActualAmount
-										</span>
-										<button data-id="@auction.ID" type="button" class="btnBidNow btn btn-primary btn-sm float-right" id="btnBidNow">
-											<i class="fas fa-hand-holding-usd mr-1"></i>
-											Bid Now
-										</button>
-									</div>
-								</div>
-
-								i++;
-							}
-						</div>
-					}
-				}
-			</div>
-		</div>
+        <div id="auctionsArea">
+            @{ Html.RenderAction("SearchAuctions", "Auctions"); }
+        </div>
 	</div>
 </div>
 
@@ -115,8 +65,30 @@
 	var i = 0;
 
 	$(document).ready(function () {
-		bidTimer = setInterval(updateBids, 3000);
-	});
+		//bidTimer = setInterval(updateBids, 3000);
+    });
+
+    $("#btnSearchTerm").click(function () {
+        searchAuctions($("#sltCategories").val(), $("#txtSearchTerm").val());
+    });
+
+    $("#sltCategories").change(function () {
+        searchAuctions($(this).val());
+    });
+
+    function searchAuctions(categoryID, searchTerm, pageNo) {
+        $.ajax({
+			url: "@Url.Action("SearchAuctions", "Auctions")",
+			method: "post",
+			data: {
+                categoryID: categoryID,
+                searchTerm: searchTerm,
+                pageNo: pageNo
+			}
+        }).done(function (response) {
+            $("#auctionsArea").html(response);
+		});
+    }
 
 	function updateBids() {
 		$.ajax({

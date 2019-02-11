@@ -32,20 +32,40 @@ namespace DealDouble.Web.Controllers
 
             return View(model);
         }
-        
+
         public ActionResult Listing(int? categoryID, string searchTerm, int? pageNo)
         {
             var pageSize = 3;
 
             AuctionsListingViewModel model = new AuctionsListingViewModel();
-            
+
             model.Auctions = auctionsService.SearchAuctions(categoryID, searchTerm, pageNo, pageSize);
 
             var totalAuctions = auctionsService.GetAuctionCount(categoryID, searchTerm);
 
             model.Pager = new Pager(totalAuctions, pageNo, pageSize);
-            
+
             return PartialView(model);
+        }
+
+        public ActionResult SearchAuctions(int? categoryID, string searchTerm, int? pageNo)
+        {
+            var pageSize = 3;
+
+            AuctionsListingViewModel model = new AuctionsListingViewModel();
+
+            model.Auctions = auctionsService.SearchAuctions(categoryID, searchTerm, pageNo, pageSize);
+
+            model.Auctions.AddRange(model.Auctions);
+            model.Auctions.AddRange(model.Auctions);
+            model.Auctions.AddRange(model.Auctions);
+            model.Auctions.AddRange(model.Auctions);
+
+            var totalAuctions = 100;// auctionsService.GetAuctionCount(categoryID, searchTerm);
+
+            model.Pager = new Pager(totalAuctions, pageNo, pageSize);
+
+            return PartialView("_SearchAuctions", model);
         }
 
         [HttpGet]
