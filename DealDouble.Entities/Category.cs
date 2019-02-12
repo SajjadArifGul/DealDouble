@@ -8,10 +8,12 @@ namespace DealDouble.Entities
 {
     public class Category : BaseEntity
     {
+        public int? ParentCategoryID { get; set; }
         public string Name { get; set; }
         public string Summary { get; set; }
         public string Description { get; set; }
 
+        public virtual Category ParentCategory { get; set; }
         public virtual List<Auction> Auctions { get; set; }
     }
 }

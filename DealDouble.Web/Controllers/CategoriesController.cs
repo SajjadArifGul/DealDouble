@@ -39,7 +39,9 @@ namespace DealDouble.Web.Controllers
         public ActionResult Create()
         {
             CategoryViewModel model = new CategoryViewModel();
-            
+
+            model.Categories = categoriesService.GetAllCategories();
+
             return PartialView(model);
         }
 
@@ -47,6 +49,12 @@ namespace DealDouble.Web.Controllers
         public ActionResult Create(CategoryViewModel model)
         {
             Category category = new Category();
+
+            if(model.ParentCategoryID > 0)
+            {
+                category.ParentCategoryID = model.ParentCategoryID;
+            }
+
             category.Name = model.Name;
             category.Description = model.Description;
             

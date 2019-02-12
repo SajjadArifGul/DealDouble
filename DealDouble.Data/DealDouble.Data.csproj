@@ -103,6 +103,10 @@
     <Compile Include="Migrations\201901300637304_addedSummaryEtc.Designer.cs">
       <DependentUpon>201901300637304_addedSummaryEtc.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902120743076_parentCategory.cs" />
+    <Compile Include="Migrations\201902120743076_parentCategory.Designer.cs">
+      <DependentUpon>201902120743076_parentCategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -149,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901300637304_addedSummaryEtc.resx">
       <DependentUpon>201901300637304_addedSummaryEtc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902120743076_parentCategory.resx">
+      <DependentUpon>201902120743076_parentCategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

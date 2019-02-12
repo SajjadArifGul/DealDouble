@@ -24,10 +24,13 @@ namespace DealDouble.Web.ViewModels
 
     public class CategoryViewModel : PageViewModel
     {
+        public int ParentCategoryID { get; set; }
         public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 
         public List<Auction> Auctions { get; set; }
+
+        public List<Category> Categories { get; set; }
     }
 }
