@@ -8,143 +8,113 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Dashboard</title>
 
+    <link href="~/Content/css/dashboard.css" rel="stylesheet" />    
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-    <!-- Custom styles for this template -->
-    <link href="~/Content/css/dashboard.css" rel="stylesheet" />
-
-    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+	<script src="~/Content/vendor/jquery/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
+
 <body>
-    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
-            <i class="fas fa-check-double"></i>
-            Deal Double
-        </a>
-        <b class="my-auto px-3 float-left text-secondary">
-            Hi @User.Identity.Name!
-        </b>
-        <ul class="navbar-nav px-3">
-            <li class="nav-item text-nowrap">
-                <a id="btnLogOff" class="nav-link" href="#">
-                    <i class="fas fa-sign-out-alt"></i>
-                    LogOff
-                </a>
-            </li>
-        </ul>
-    </nav>
+	<div class="d-flex" id="wrapper">
+		<div class="bg-light border-right" id="sidebar-wrapper">
+			<div class="sidebar-heading bold">
+				<i class="mr-1 fas fa-check-double"></i>
+				Deal Double
+			</div>
+			<div class="list-group list-group-flush">
+				<a class="list-group-item list-group-item-action" href="@Url.Action("Index", "Home")">
+					<i class="mr-1 fas fa-home"></i>
+					Home
+				</a>
+				<a data-page="@((int)Pages.Dashboard)" class="list-group-item list-group-item-action active" href="@Url.Action("Index", "Dashboard")">
+					<i class="fas fa-user-shield"></i>
+					Dashboard
+				</a>
+				<a data-page="@((int)Pages.Categories)" class="list-group-item list-group-item-action" href="@Url.Action("Index", "Categories" )">
+					<i class="mr-1 fas fa-sitemap"></i>
+					Categories
+				</a>
+				<a data-page="@((int)Pages.Auctions)" class="list-group-item list-group-item-action" href="@Url.Action("Index", "Auctions" )">
+					<i class="mr-1 fab fa-shirtsinbulk"></i>
+					Auctions
+				</a>
+				<a data-page="@((int)Pages.Bids)" class="list-group-item list-group-item-action" href="@Url.Action("Index", "Bids" )">
+					<i class="mr-1 fas fa-business-time"></i>
+					Bids
+				</a>
+				<a data-page="@((int)Pages.Comments)" class="list-group-item list-group-item-action" href="@Url.Action("Comments", "Dashboard")">
+					<i class="mr-1 fas fa-comments"></i>
+					Comments
+				</a>
+				<a data-page="@((int)Pages.Users)" class="list-group-item list-group-item-action" href="@Url.Action("Users", "Dashboard")">
+					<i class="mr-1 fas fa-users"></i>
+					Users
+				</a>
+				<a data-page="@((int)Pages.Roles)" class="list-group-item list-group-item-action" href="@Url.Action("Roles", "Dashboard")">
+					<i class="mr-1 fas fa-users-cog"></i>
+					Roles
+				</a>
+			</div>
+		</div>
 
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
+		<!-- Page Content -->
+		<div id="page-content-wrapper">
 
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "Home")">
-                                <i class="fas fa-home"></i>
-                                Home
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-page="@((int)Pages.Dashboard)" class="nav-link active" href="@Url.Action("Index", "Dashboard")">
-                                <i class="fas fa-user-shield"></i>
-                                Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-page="@((int)Pages.Categories)" class="nav-link" href="@Url.Action("Index", "Categories" )">
-                                <i class="fas fa-sitemap"></i>
-                                Categories
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-page="@((int)Pages.Auctions)" class="nav-link" href="@Url.Action("Index", "Auctions" )">
-                                <i class="fab fa-shirtsinbulk"></i>
-                                Auctions
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-page="@((int)Pages.Bids)" class="nav-link" href="@Url.Action("Index", "Bids" )">
-                                <i class="fas fa-business-time"></i>
-                                Bids
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-page="@((int)Pages.Comments)" class="nav-link" href="@Url.Action("Comments", "Dashboard")">
-                                <i class="fas fa-comments"></i>
-                                Comments
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-page="@((int)Pages.Users)" class="nav-link" href="@Url.Action("Users", "Dashboard")">
-                                <i class="fas fa-users"></i>
-                                Users
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-page="@((int)Pages.Roles)" class="nav-link" href="@Url.Action("Roles", "Dashboard")">
-                                <i class="fas fa-users-cog"></i>
-                                Roles
-                            </a>
-                        </li>
-                    </ul>
+			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+				<button class="btn btn-primary" id="menu-toggle">
+					<i class="fas fa-bars"></i>
+				</button>
 
-                </div>
-            </nav>
+				<b class="my-auto px-3 float-left text-secondary">
+					Hi @User.Identity.Name!
+				</b>
 
-            <main role="main" class="mt-4 col-md-9 ml-sm-auto col-lg-10 px-4">
-                @RenderBody()
-            </main>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
 
-        </div>
-    </div>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+						<li class="nav-item text-nowrap">
+							<a id="btnLogOff" class="nav-link" href="#">
+								<i class="mr-1 fas fa-sign-out-alt"></i>
+								LogOff
+							</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
 
+			<div class="container-fluid mt-2">
+				@RenderBody()
+			</div>
+		</div>
+	</div>
 
+	<input type="hidden" id="activePage" value="@((int)Model.Page)" />
     <form id="logOffForm" method="post" action="@Url.Action("LogOff", "Account")">
         @Html.AntiForgeryToken()
     </form>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			activatePageLink();
+		});
+	</script>
 
-    <script>
-        $(document).ready(function () {
-            activatePageLink();
-        });
-
-        $("#btnLogOff").click(function () {
-            $("#logOffForm").submit();
-        });
-
-        function activatePageLink() {
-            $(".nav-link").removeClass("active");
-
-            var activePage = $("#activePage").val();
-
-            $("a.nav-link[data-page=@((int)Model.Page)]").addClass("active");
-        }
-
-        function updateEditFields() {
-            for (instance in CKEDITOR.instances) {
-                CKEDITOR.instances[instance].updateElement();
-            }
-        }
-    </script>
-
-    @RenderSection("Scripts", required: false)
-
+	<script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="~/Content/js/dashboard.js"></script>
 
     <script src="https://cdn.ckeditor.com/4.11.2/standard-all/ckeditor.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js"></script>
 
 </body>
 </html>

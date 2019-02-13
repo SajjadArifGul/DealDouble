@@ -26,7 +26,6 @@ namespace DealDouble.Web.Controllers
 
             model.CategoryID = categoryID;
             model.SearchTerm = searchTerm;
-            model.PageNo = pageNo;
 
             model.Categories = categoriesService.GetAllCategories();
 

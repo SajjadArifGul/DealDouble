@@ -4,12 +4,13 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<div class="jumbotron">
-    <h1 class="display-4">Hello, @User.Identity.Name!</h1>
-    <p class="lead">
-        Welcome to Deal Double Dashboard. Below are a few demographics of Deal Double.
-    </p>
-    <hr class="my-4">
+<div class="jumbotron jumbotron-fluid">
+	<div class="container">
+		<h1 class="display-4">Hello, @User.Identity.Name!</h1>
+		<p class="lead">
+			Welcome to Deal Double Dashboard. Below are a few demographics of Deal Double.
+		</p>
+	</div>
 </div>
 
 <div class="card-deck text-primary">

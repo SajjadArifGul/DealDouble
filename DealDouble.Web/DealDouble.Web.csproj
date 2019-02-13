@@ -255,6 +255,8 @@
     <Content Include="Content\css\site.css" />
     <Content Include="Content\images\site\deal-double-logo-svg.svg" />
     <Content Include="Content\images\site\user-default-avatar.png" />
+    <Content Include="Content\js\dashboard.js" />
+    <Content Include="Content\js\site.js" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.min.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-reboot.css" />

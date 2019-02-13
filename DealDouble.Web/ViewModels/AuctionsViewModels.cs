@@ -23,7 +23,6 @@ namespace DealDouble.Web.ViewModels
         public string SearchTerm { get; set; }
 
         public Pager Pager { get; set; }
-        public int? PageNo { get; internal set; }
 
         public List<Category> Categories { get; set; }
     }

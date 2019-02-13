@@ -6,14 +6,18 @@ using System.Web;
 
 namespace DealDouble.Web.ViewModels
 {
-    public class CategoriesListingViewModel : PageViewModel
-    {
-        public List<Category> Categories { get; set; }
-    }
-
     public class CategoriesViewModel : PageViewModel
     {
         public List<Category> AllCategories { get; set; }
+    }
+
+    public class CategoriesListingViewModel : PageViewModel
+    {
+        public List<Category> Categories { get; set; }
+
+        public string SearchTerm { get; set; }
+
+        public Pager Pager { get; set; }
     }
 
     public class CategoryDetailsViewModel : PageViewModel
