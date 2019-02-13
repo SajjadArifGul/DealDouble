@@ -28,7 +28,9 @@
 					@category.Description
 				</td>
 				<td>
-					@category.Auctions.Count()
+					<a class="link" href="@Url.Action("Index", "Home", new { categoryID = category.ID })" role="button">
+						@category.Auctions.Count()
+					</a>
 				</td>
 				<td>
 					<button class="editButton btn btn-primary" data-id="@category.ID">

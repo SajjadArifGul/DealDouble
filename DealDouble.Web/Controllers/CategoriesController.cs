@@ -70,10 +70,13 @@ namespace DealDouble.Web.Controllers
 
             var category = categoriesService.GetCategoryByID(ID);
 
+            model.ParentCategoryID = category.ParentCategoryID.HasValue ? category.ParentCategoryID.Value : 0;
             model.ID = category.ID;
             model.Name = category.Name;
             model.Description = category.Description;
-            
+
+            model.Categories = categoriesService.GetAllCategories();
+
             return PartialView(model);
         }
 
@@ -81,6 +84,12 @@ namespace DealDouble.Web.Controllers
         public ActionResult Edit(CategoryViewModel model)
         {
             Category category = new Category();
+
+            if (model.ParentCategoryID > 0)
+            {
+                category.ParentCategoryID = model.ParentCategoryID;
+            }
+
             category.ID = model.ID;
             category.Name = model.Name;
             category.Description = model.Description;

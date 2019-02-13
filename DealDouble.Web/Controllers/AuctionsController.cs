@@ -92,7 +92,6 @@ namespace DealDouble.Web.Controllers
                 //check if we have AuctionPictureIDs posted back from form
                 if (!string.IsNullOrEmpty(model.AuctionPictures))
                 {
-                    //LINQ
                     var pictureIDs = model.AuctionPictures
                                                 .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                                                 .Select(ID => int.Parse(ID)).ToList();
@@ -100,15 +99,7 @@ namespace DealDouble.Web.Controllers
                     auction.AuctionPictures = new List<AuctionPicture>();
                     auction.AuctionPictures.AddRange(pictureIDs.Select(x => new AuctionPicture() { PictureID = x }).ToList());
                 }
-
-                //foreach (var picID in pictureIDs)
-                //{
-                //    var auctionPicture = new AuctionPicture();
-                //    auctionPicture.PictureID = picID;
-
-                //    auction.AuctionPictures.Add(auctionPicture);
-                //}
-
+                
                 auctionsService.SaveAuction(auction);
 
                 result.Data = new { Success = true };
