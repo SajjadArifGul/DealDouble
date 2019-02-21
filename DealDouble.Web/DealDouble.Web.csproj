@@ -395,6 +395,8 @@
     <Content Include="Views\Auctions\_SearchAuctions.cshtml" />
     <Content Include="Views\Help\Index.cshtml" />
     <Content Include="Views\Help\_LayoutHelp.cshtml" />
+    <Content Include="Views\Dashboard\Users.cshtml" />
+    <Content Include="Views\Dashboard\_UserListing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

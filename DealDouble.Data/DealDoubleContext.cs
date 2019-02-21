@@ -11,7 +11,7 @@ namespace DealDouble.Data
 {
     public class DealDoubleContext : IdentityDbContext<DealDoubleUser>
     {
-        public DealDoubleContext() : base("name=DealDoubleProductionConnectionString")
+        public DealDoubleContext() : base("name=DealDoubleConnectionString")
         {
             Database.SetInitializer<DealDoubleContext>(new DealDoubleDBInitializer());
         }
