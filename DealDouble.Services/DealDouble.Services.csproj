@@ -89,7 +89,6 @@
     <Compile Include="BidsService.cs" />
     <Compile Include="CategoriesService.cs" />
     <Compile Include="AuctionsService.cs" />
-    <Compile Include="DealDoubleRolesManager.cs" />
     <Compile Include="DealDoubleSignInManager.cs" />
     <Compile Include="DealDoubleUserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
