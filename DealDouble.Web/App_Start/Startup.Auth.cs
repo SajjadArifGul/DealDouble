@@ -1,14 +1,12 @@
-﻿using System;
+﻿using DealDouble.Data;
+using DealDouble.Entities;
+using DealDouble.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
 using Owin;
-using DealDouble.Web.Models;
-using DealDouble.Data;
-using DealDouble.Services;
-using DealDouble.Entities;
+using System;
 
 namespace DealDouble.Web
 {
@@ -22,6 +20,7 @@ namespace DealDouble.Web
 
             app.CreatePerOwinContext<DealDoubleUserManager>(DealDoubleUserManager.Create);
             app.CreatePerOwinContext<DealDoubleSignInManager>(DealDoubleSignInManager.Create);
+            app.CreatePerOwinContext<DealDoubleRoleManager>(DealDoubleRoleManager.Create);
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
