@@ -10,36 +10,46 @@ namespace DealDouble.Web.Controllers
 {
     public class HomeController : Controller
     {
-        AuctionsService service = new AuctionsService();
+        AuctionsService auctionsService = new AuctionsService();
         CategoriesService categoriesService = new CategoriesService();
 
-        public ActionResult Index(int? categoryID, string searchTerm, int? pageNo)
+        public ActionResult Index()
         {
-            AuctionsViewModel model = new AuctionsViewModel();
+            PageViewModel model = new PageViewModel();
 
             model.PageTitle = "Home Page";
             model.PageDescription = "This is Home Page";
 
-            model.CategoryID = categoryID;
-            model.SearchTerm = searchTerm;
-
-            model.Categories = categoriesService.GetAllCategories();
-            
             return View(model);
         }
 
-        public ActionResult About()
+        public ActionResult Search(int? categoryID, string q, int? pageNo, bool isPartial = false)
         {
-            ViewBag.Message = "Your home application description page.";
+            var pageSize = 6;
 
-            return View();
-        }
+            AuctionsListingViewModel model = new AuctionsListingViewModel();
+            model.PageTitle = "Search Auctions";
+            model.PageDescription = "Search Latest Auctions on DealDouble";
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+            model.CategoryID = categoryID;
+            model.SearchTerm = q;
+            model.isPartial = isPartial;
 
-            return View();
+            model.Categories = categoriesService.GetAllCategories();
+            model.Auctions = auctionsService.SearchAuctions(model.CategoryID, model.SearchTerm, pageNo, pageSize);
+
+            var totalAuctions = auctionsService.GetAuctionCount(categoryID, q);
+
+            model.Pager = new Pager(totalAuctions, pageNo, pageSize);
+
+            if(model.isPartial)
+            {
+                return PartialView(model);
+            }
+            else
+            {
+                return View(model);
+            }
         }
     }
 }

@@ -1,0 +1,166 @@
+﻿@using DealDouble.Web.Code;
+@model DealDouble.Web.ViewModels.AuctionsListingViewModel
+
+<div class="row">
+    <div class="col-lg-12">
+
+        @if (!Model.isPartial)
+        {
+            <h1 class="display-4">
+                @Model.PageTitle
+            </h1>
+            <p class="lead">
+                @Model.PageDescription
+            </p>
+        }
+
+        <div class="border p-2">
+            <div class="float-left">
+                <select id="sltCategories" class="form-control">
+                    <option data-url="@Url.Action("Search", "Home")" value="0">All Categories</option>
+                    @if (Model.Categories != null)
+                    {
+                        foreach (var category in Model.Categories)
+                        {
+                            var selected = Model.CategoryID == category.ID ? "selected" : string.Empty;
+                            <option data-url="@Url.Action("Search", "Home", new { categoryID = category.ID })" value="@category.ID" @selected>@category.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="float-right">
+                <form class="form-inline" action="@Url.Action("Search", "Home", new { categoryID = Model.CategoryID })">
+                    <input name="categoryID" value="@Model.CategoryID" type="hidden">
+                    <input name="q" value="@Model.SearchTerm" type="search" placeholder="Search Auctions" class="form-control mr-sm-2" required>
+                    <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Search</button>
+                </form>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div id="auctionsList" class="col-lg-12">
+        @if (Model.Auctions != null && Model.Auctions.Count > 0)
+        {
+            for (int i = 1; i <= Model.Auctions.Count; i++)
+            {
+                i--;
+                var groupItem = 0;
+                var classes = i == 0 ? "border-top-0 rounded-0" : string.Empty;
+
+                <div class="card-group mb-4">
+                    @foreach (var auction in Model.Auctions.Skip(i).Take(3))
+                    {
+                        groupItem++;
+                        var picURL = auction.AuctionPictures != null && auction.AuctionPictures.Count > 0 ?
+                                         "/Content/images/" + auction.AuctionPictures.First().Picture.URL : "http://placehold.it/700x400";
+
+                        <div class="card @classes" relf-item="@groupItem">
+                            <a href="@Url.Action("Details", "Auctions", new { category = auction.Category.Name.ToLower().SanitizeString(), ID = auction.ID })">
+                                <img class="card-img-top" src="@picURL" alt="@auction.Title" style="height:300px;">
+                            </a>
+                            <hr />
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="@Url.Action("Details", "Auctions", new { category = auction.Category.Name.ToLower().SanitizeString(), ID = auction.ID })">@auction.Title</a>
+                                    <span class="badge badge-success text-white">New</span>
+                                </h5>
+                                <p class="card-text">
+                                    @(!string.IsNullOrEmpty(auction.Summary) && auction.Summary.Length >= 200 ? auction.Summary.Substring(0, 200) : auction.Summary)
+                                </p>
+                            </div>
+                            <ul class="list-group list-group-flush ">
+                                <li class="list-group-item border-bottom-0">
+                                    <i class="fas fa-tags mr-1"></i>
+                                    <a href="@Url.Action("Search", "Home", new { categoryID = auction.Category.ID })" class="card-link">
+                                        @auction.Category.Name
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="card-footer">
+                                <span class="text-muted float-left">
+                                    <i class="fas fa-money-bill mr-1"></i>
+                                    $@auction.ActualAmount
+                                </span>
+                                <button data-id="@auction.ID" type="button" class="btnBidNow btn btn-primary btn-sm float-right">
+                                    <i class="fas fa-hand-holding-usd mr-1"></i>
+                                    Bid Now
+                                </button>
+                            </div>
+                        </div>
+
+                        i++;
+                    }
+
+                    @for (int cardItem = groupItem; cardItem < 3; cardItem++)
+                    {
+                        <div class="card border-0" relf-item="@groupItem">
+                        </div>
+                    }
+                </div>
+            }
+
+            if (Model.Pager != null && Model.Pager.TotalPages > 1)
+            {
+                <nav>
+                    <ul class="pagination justify-content-center">
+
+                        @if (Model.Pager.CurrentPage == 1)
+                        {
+                            <li class="page-item disabled">
+                                <span class="page-link disabled">Previous</span>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a href="@Url.Action("Search", "Home", new { pageNo = Model.Pager.CurrentPage - 1, q = !string.IsNullOrEmpty(Model.SearchTerm) ? Model.SearchTerm : string.Empty, categoryID = Model.CategoryID.HasValue && Model.CategoryID.Value > 0 ? Model.CategoryID.ToString() : string.Empty })">
+                                    <span class="page-link">Previous</span>
+                                </a>
+                            </li>
+                        }
+
+                        @for (int page = Model.Pager.StartPage; page < Model.Pager.EndPage + 1; page++)
+                        {
+                            var active = page == Model.Pager.CurrentPage ? "active" : string.Empty;
+
+                            <li class="page-item @active">
+                                <a href="@Url.Action("Search", "Home", new { pageNo = page , q = !string.IsNullOrEmpty(Model.SearchTerm) ? Model.SearchTerm : string.Empty, categoryID = Model.CategoryID.HasValue && Model.CategoryID.Value > 0 ? Model.CategoryID.ToString() : string.Empty })">
+                                    <span class="page-link">@page</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Model.Pager.CurrentPage == Model.Pager.EndPage)
+                        {
+                            <li class="page-item disabled">
+                                <span class="page-link disabled">Next</span>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a href="@Url.Action("Search", "Home", new { pageNo = Model.Pager.CurrentPage + 1, q = !string.IsNullOrEmpty(Model.SearchTerm) ? Model.SearchTerm : string.Empty, categoryID = Model.CategoryID.HasValue && Model.CategoryID.Value > 0 ? Model.CategoryID.ToString() : string.Empty })">
+                                    <span class="page-link">Next</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
+        }
+        else
+        {
+            <div class="border-top-0 rounded-0 p-2 border">
+                <div class="alert alert-warning m-0" role="alert">
+                    Sorry. No Auctions available.
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    $("#sltCategories").change(function () {
+        window.location.href = $(this).children("option:selected").attr("data-url");
+    });
+</script>

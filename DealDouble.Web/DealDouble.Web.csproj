@@ -397,6 +397,7 @@
     <Content Include="Views\Help\_LayoutHelp.cshtml" />
     <Content Include="Views\Dashboard\Users.cshtml" />
     <Content Include="Views\Dashboard\UsersListing.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

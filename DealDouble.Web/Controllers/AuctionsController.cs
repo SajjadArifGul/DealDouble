@@ -46,21 +46,8 @@ namespace DealDouble.Web.Controllers
 
             return PartialView(model);
         }
-
-        public ActionResult SearchAuctions(int? categoryID, string searchTerm, int? pageNo)
-        {
-            var pageSize = 6;
-
-            AuctionsListingViewModel model = new AuctionsListingViewModel();
-
-            model.Auctions = auctionsService.SearchAuctions(categoryID, searchTerm, pageNo, pageSize);
-            
-            var totalAuctions = auctionsService.GetAuctionCount(categoryID, searchTerm);
-
-            model.Pager = new Pager(totalAuctions, pageNo, pageSize);
-
-            return PartialView("_SearchAuctions", model);
-        }
+        
+        #region  CRUD Ops
 
         [HttpGet]
         public ActionResult Create()
@@ -195,7 +182,9 @@ namespace DealDouble.Web.Controllers
 
             return View(model);
         }
-        
+
+        #endregion
+
         public JsonResult UpdateAuctions(string AuctionIDs)
         {
             JsonResult result = new JsonResult();
