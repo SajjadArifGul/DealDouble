@@ -9,7 +9,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<div class="card mt-4">
+		<div class="card">
 
 			@if (Model.Auction.AuctionPictures != null && Model.Auction.AuctionPictures.Count > 0)
 			{
@@ -91,8 +91,9 @@
 		@{ Html.RenderPartial("_Comments"); }
 	</div>
 
-	<div class="col-lg-4">
-	</div>
+    <div class="col-lg-4">
+        
+    </div>
 </div>
 
 <script>

@@ -19,14 +19,27 @@ namespace DealDouble.Web.ViewModels
         public string SearchTerm { get; set; }
         public string RoleID { get; set; }
         public List<IdentityRole> Roles { get; set; }
-        public int? PageNo { get; internal set; }
+        public int? PageNo { get; set; }
     }
     
     public class UsersListingViewModel : PageViewModel
     {
         public List<DealDoubleUser> Users { get; set; }
         public Pager Pager { get; set; }
-        public string RoleID { get; internal set; }
-        public string SearchTerm { get; internal set; }
+        public string RoleID { get; set; }
+        public string SearchTerm { get; set; }
+    }
+
+    public class RolesViewModel : PageViewModel
+    {
+        public string SearchTerm { get; set; }
+        public int? PageNo { get; set; }
+    }
+
+    public class RolesListingViewModel : PageViewModel
+    {
+        public List<IdentityRole> Roles { get; set; }
+        public Pager Pager { get; set; }
+        public string SearchTerm { get; set; }
     }
 }

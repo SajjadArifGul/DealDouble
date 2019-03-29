@@ -32,7 +32,12 @@
                 <form class="form-inline" action="@Url.Action("Search", "Home", new { categoryID = Model.CategoryID })">
                     <input name="categoryID" value="@Model.CategoryID" type="hidden">
                     <input name="q" value="@Model.SearchTerm" type="search" placeholder="Search Auctions" class="form-control mr-sm-2" required>
-                    <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Search</button>
+                    
+
+                    <div class="btn-group" role="group">
+                        <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Search</button>
+                        <a href="@Url.Action("Search", "Home")" class="btn btn-outline-success my-2 my-sm-0">Reset</a>
+                    </div>
                 </form>
             </div>
             <div class="clearfix"></div>

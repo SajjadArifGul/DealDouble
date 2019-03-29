@@ -85,7 +85,7 @@ namespace DealDouble.Web.Controllers
         
         public ActionResult UsersListing(string roleID, string searchTerm, int? pageNo)
         {
-            var pageSize = 3;
+            var pageSize = 1;
 
             UsersListingViewModel model = new UsersListingViewModel();
             
@@ -101,7 +101,7 @@ namespace DealDouble.Web.Controllers
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
-                users = users.Where(x => x.Email.ToLower().Contains(searchTerm.ToLower()));
+                users = users.Where(x => x.Email.ToLower().Contains(searchTerm.ToLower()) || x.UserName.ToLower().Contains(searchTerm.ToLower()));
             }
 
             pageNo = pageNo ?? 1;
@@ -114,5 +114,44 @@ namespace DealDouble.Web.Controllers
 
             return PartialView(model);
         }
+        
+        public ActionResult Roles(string searchTerm, int? pageNo)
+        {
+            RolesViewModel model = new RolesViewModel();
+            model.PageTitle = "Roles";
+            model.PageDescription = "Roles Listing Page";
+
+            model.SearchTerm = searchTerm;
+            model.PageNo = pageNo;
+            
+            return View(model);
+        }
+
+        public ActionResult RolesListing(string searchTerm, int? pageNo)
+        {
+            var pageSize = 1;
+
+            RolesListingViewModel model = new RolesListingViewModel();
+
+            model.SearchTerm = searchTerm;
+
+            var roles = RoleManager.Roles;
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                roles = roles.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            pageNo = pageNo ?? 1;
+
+            var skipCount = (pageNo.Value - 1) * pageSize;
+
+            model.Roles = roles.OrderBy(x => x.Name).Skip(skipCount).Take(pageSize).ToList();
+
+            model.Pager = new Pager(roles.Count(), pageNo, pageSize);
+
+            return PartialView(model);
+        }
+
     }
 }
