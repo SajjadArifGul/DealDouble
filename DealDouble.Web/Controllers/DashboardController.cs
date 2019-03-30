@@ -9,6 +9,7 @@ using DealDouble.Services;
 using Microsoft.AspNet.Identity.EntityFramework;
 using DealDouble.Entities;
 using Microsoft.AspNet.Identity.Owin;
+using System.Threading.Tasks;
 
 namespace DealDouble.Web.Controllers
 {
@@ -53,8 +54,7 @@ namespace DealDouble.Web.Controllers
                 _roleManager = value;
             }
         }
-
-
+        
         public ActionResult Index()
         {
             DashboardViewModel model = new DashboardViewModel();
@@ -85,7 +85,7 @@ namespace DealDouble.Web.Controllers
         
         public ActionResult UsersListing(string roleID, string searchTerm, int? pageNo)
         {
-            var pageSize = 1;
+            var pageSize = 10;
 
             UsersListingViewModel model = new UsersListingViewModel();
             
@@ -114,7 +114,23 @@ namespace DealDouble.Web.Controllers
 
             return PartialView(model);
         }
-        
+
+        [HttpGet]
+        public async Task<ActionResult> UsersDetails(string userID)
+        {
+            UserDetailsViewModel model = new UserDetailsViewModel();
+
+            var user = await UserManager.FindByIdAsync(userID);
+
+            if(user != null)
+            {
+                model.User = user;
+            }
+
+            return View(model);
+        }
+
+
         public ActionResult Roles(string searchTerm, int? pageNo)
         {
             RolesViewModel model = new RolesViewModel();
@@ -129,7 +145,7 @@ namespace DealDouble.Web.Controllers
 
         public ActionResult RolesListing(string searchTerm, int? pageNo)
         {
-            var pageSize = 1;
+            var pageSize = 10;
 
             RolesListingViewModel model = new RolesListingViewModel();
 

@@ -30,6 +30,12 @@ namespace DealDouble.Web.ViewModels
         public string SearchTerm { get; set; }
     }
 
+
+    public class UserDetailsViewModel : PageViewModel
+    {
+        public DealDoubleUser User { get; set; }
+    }
+
     public class RolesViewModel : PageViewModel
     {
         public string SearchTerm { get; set; }

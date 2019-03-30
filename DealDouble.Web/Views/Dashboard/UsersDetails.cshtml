@@ -1,0 +1,17 @@
+﻿@model DealDouble.Web.ViewModels.UserDetailsViewModel
+@{
+    ViewBag.Title = "UsersDetails";
+}
+
+@if (Model != null && Model.User != null)
+{
+    <h2>
+        @Model.User.UserName
+    </h2>
+}
+else
+{
+    <div class="alert alert-danger" role="alert">
+       No User found.
+    </div>
+}
