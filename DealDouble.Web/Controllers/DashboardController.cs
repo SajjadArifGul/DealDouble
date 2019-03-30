@@ -1,15 +1,11 @@
-﻿using DealDouble.Web.ViewModels;
-using System;
-using System.Collections.Generic;
+﻿using DealDouble.Services;
+using DealDouble.Web.Code.Enums;
+using DealDouble.Web.ViewModels;
+using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using DealDouble.Web.Code.Enums;
-using DealDouble.Services;
-using Microsoft.AspNet.Identity.EntityFramework;
-using DealDouble.Entities;
-using Microsoft.AspNet.Identity.Owin;
-using System.Threading.Tasks;
 
 namespace DealDouble.Web.Controllers
 {
@@ -115,8 +111,7 @@ namespace DealDouble.Web.Controllers
             return PartialView(model);
         }
 
-        [HttpGet]
-        public async Task<ActionResult> UsersDetails(string userID)
+        public async Task<ActionResult> UsersDetails(string userID, bool isPartial = false)
         {
             UserDetailsViewModel model = new UserDetailsViewModel();
 
@@ -127,7 +122,33 @@ namespace DealDouble.Web.Controllers
                 model.User = user;
             }
 
-            return View(model);
+            if(isPartial || Request.IsAjaxRequest())
+            {
+                return PartialView("_UsersDetails", model);
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+
+        public async Task<ActionResult> UsersRoles(string userID)
+        {
+            UserRolesViewModel model = new UserRolesViewModel();
+
+            model.AvailableRoles = RoleManager.Roles.ToList();
+
+            if(string.IsNullOrEmpty(userID))
+            {
+                var user = await UserManager.FindByIdAsync(userID);
+
+                if(user != null)
+                {
+                    model.UserRoles = user.Roles.Select(userRole => model.AvailableRoles.FirstOrDefault(role => role.Id == userRole.RoleId)).ToList();
+                }
+            }
+
+            return PartialView("_UsersRoles", model);
         }
 
 

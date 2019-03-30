@@ -401,6 +401,8 @@
     <Content Include="Views\Dashboard\Roles.cshtml" />
     <Content Include="Views\Dashboard\RolesListing.cshtml" />
     <Content Include="Views\Dashboard\UsersDetails.cshtml" />
+    <Content Include="Views\Dashboard\_UsersDetails.cshtml" />
+    <Content Include="Views\Dashboard\_UsersRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

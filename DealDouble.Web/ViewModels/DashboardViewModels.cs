@@ -29,11 +29,16 @@ namespace DealDouble.Web.ViewModels
         public string RoleID { get; set; }
         public string SearchTerm { get; set; }
     }
-
-
+    
     public class UserDetailsViewModel : PageViewModel
     {
         public DealDoubleUser User { get; set; }
+    }
+
+    public class UserRolesViewModel : PageViewModel
+    {
+        public List<IdentityRole> AvailableRoles { get; set; }
+        public List<IdentityRole> UserRoles { get; set; }
     }
 
     public class RolesViewModel : PageViewModel
