@@ -60,7 +60,12 @@ namespace DealDouble.Web.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+
+            LoginViewModel model = new LoginViewModel();
+            model.PageTitle = "Login to Account";
+            model.PageDescription = "Login to Account on DealDouble";
+
+            return View(model);
         }
 
         //
@@ -141,7 +146,11 @@ namespace DealDouble.Web.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            RegisterViewModel model = new RegisterViewModel();
+            model.PageTitle = "Register Account";
+            model.PageDescription = "Register Account on DealDouble";
+
+            return View(model);
         }
 
         //
@@ -174,6 +183,9 @@ namespace DealDouble.Web.Controllers
                 }
                 AddErrors(result);
             }
+
+            model.PageTitle = "Register Account";
+            model.PageDescription = "Register Account on DealDouble";
 
             // If we got this far, something failed, redisplay form
             return View(model);
