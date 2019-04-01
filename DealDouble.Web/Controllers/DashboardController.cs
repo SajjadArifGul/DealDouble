@@ -1,5 +1,6 @@
 ﻿using DealDouble.Services;
 using DealDouble.Web.Code.Enums;
+using DealDouble.Web.Models;
 using DealDouble.Web.ViewModels;
 using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
@@ -132,6 +133,58 @@ namespace DealDouble.Web.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<JsonResult> UpdateUserDetails(UserDetailsViewModel model)
+        {
+            JsonResult jResult = new JsonResult();
+            
+            if (model != null)
+            {
+                var user = await UserManager.FindByIdAsync(model.ID);
+
+                if (user != null)
+                {
+                    user.FullName = model.FullName;
+                    user.Country = model.Country;
+                    user.City = model.City;
+                    user.Address = model.Address;
+
+                    var result = await UserManager.UpdateAsync(user);
+
+                    jResult.Data = new { Success = result.Succeeded };
+
+                    return jResult;
+                }
+            }
+
+            jResult.Data = new { Success = false };
+            return jResult;        
+        }
+
+        public async Task<JsonResult> DeleteUserDetails(string userID)
+        {
+            JsonResult jResult = new JsonResult();
+            jResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            if (!string.IsNullOrEmpty(userID))
+            {
+                var user = await UserManager.FindByIdAsync(userID);
+
+                if (user != null)
+                {
+                    var result = await UserManager.DeleteAsync(user);
+
+                    jResult.Data = new { Success = result.Succeeded };
+
+                    return jResult;
+                }
+            }
+
+            jResult.Data = new { Success = false };
+            return jResult;
+        }
+
+
         public async Task<ActionResult> UsersRoles(string userID)
         {
             UserRolesViewModel model = new UserRolesViewModel();
@@ -150,8 +203,7 @@ namespace DealDouble.Web.Controllers
 
             return PartialView("_UsersRoles", model);
         }
-
-
+        
         public async Task<ActionResult> AssignUserRole(string userID, string roleID)
         {
             if(!string.IsNullOrEmpty(userID) && !string.IsNullOrEmpty(roleID))

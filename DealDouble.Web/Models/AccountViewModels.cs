@@ -64,6 +64,8 @@ namespace DealDouble.Web.Models
 
     public class RegisterViewModel : PageViewModel
     {
+        public string ID { get; set; }
+
         [MaxLength(20, ErrorMessage = "The FullName must be at most 20 characters long.")]
         [Required]
         public string FullName { get; set; }

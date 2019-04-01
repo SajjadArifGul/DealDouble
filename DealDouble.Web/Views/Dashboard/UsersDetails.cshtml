@@ -39,31 +39,40 @@
                             <a class="user-link nav-link active" data-href="@Url.Action("UsersDetails", "Dashboard", new { userID = Model.User.Id })">Info</a>
                         </li>
                         <li class="nav-item">
-                            <a class="user-link nav-link" href="#" data-href="@Url.Action("UsersRoles", "Dashboard", new { userID = Model.User.Id })">Roles</a>
+                            <a class="user-link nav-link" data-href="@Url.Action("UsersRoles", "Dashboard", new { userID = Model.User.Id })">Roles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="user-link nav-link" href="#" data-href="@Url.Action("UsersBids", "Dashboard", new { userID = Model.User.Id })">Bids</a>
+                            <a class="user-link nav-link" data-href="@Url.Action("UsersBids", "Dashboard", new { userID = Model.User.Id })">Bids</a>
                         </li>
                         <li class="nav-item">
-                            <a class="user-link nav-link" href="#" data-href="@Url.Action("UsersComments", "Dashboard", new { userID = Model.User.Id })">Comments</a>
+                            <a class="user-link nav-link" data-href="@Url.Action("UsersComments", "Dashboard", new { userID = Model.User.Id })">Comments</a>
                         </li>
                     </ul>
                 </div>
-                <div class="card-body" id="response-holder">
-                    @{
-                        Html.RenderPartial("_UsersDetails", Model);
-                    }
+                <div class="card-body">
+					<div class="d-flex justify-content-center">
+						<div class="spinner-border m-5" role="status" id="dtLoader" style="display:none">
+							<span class="sr-only">Loading...</span>
+						</div>
+					</div>
+					<div id="response-holder">
+						@{
+							Html.RenderPartial("_UsersDetails", Model);
+						}
+					</div>					
                 </div>
             </div>
         </div>
     </div>
-
+	
     <script>
         $(".user-link").click(function () {
             var url = $(this).attr("data-href");
 
             if (url != undefined && url != "") {
-                //$(".modal-loader").show();
+            	$("#dtLoader").show();
+            	$("#response-holder").html("");
+
                 $(".user-link").removeClass("active");
                 $(this).addClass("active");
 
@@ -71,7 +80,7 @@
 				    url: url,
 			    })
 			    .done(function (response) {
-                    $(".modal-loader").hide();
+			    	$("#dtLoader").hide();
                     $("#response-holder").html(response);
 			    });
             }

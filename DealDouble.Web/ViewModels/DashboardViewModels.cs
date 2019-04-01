@@ -33,8 +33,14 @@ namespace DealDouble.Web.ViewModels
     public class UserDetailsViewModel : PageViewModel
     {
         public DealDoubleUser User { get; set; }
-    }
 
+        public string ID { get; set; }
+        public string FullName { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string Address { get; set; }
+    }
+    
     public class UserRolesViewModel : PageViewModel
     {
         public List<IdentityRole> AvailableRoles { get; set; }
