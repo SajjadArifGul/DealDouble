@@ -39,6 +39,7 @@ namespace DealDouble.Web.ViewModels
     {
         public List<IdentityRole> AvailableRoles { get; set; }
         public List<IdentityRole> UserRoles { get; set; }
+        public DealDoubleUser User { get; internal set; }
     }
 
     public class RolesViewModel : PageViewModel

@@ -124,11 +124,11 @@ namespace DealDouble.Web.Controllers
 
             if(isPartial || Request.IsAjaxRequest())
             {
-                return PartialView("_UsersDetails", model);
+                return PartialView("_UsersDetails", model); //_UsersDetails.cshtml
             }
             else
             {
-                return View(model);
+                return View(model); //"UserDetails.cshtml"
             }
         }
 
@@ -138,19 +138,59 @@ namespace DealDouble.Web.Controllers
 
             model.AvailableRoles = RoleManager.Roles.ToList();
 
-            if(string.IsNullOrEmpty(userID))
+            if(!string.IsNullOrEmpty(userID))
             {
-                var user = await UserManager.FindByIdAsync(userID);
+                model.User = await UserManager.FindByIdAsync(userID);
 
-                if(user != null)
+                if(model.User != null)
                 {
-                    model.UserRoles = user.Roles.Select(userRole => model.AvailableRoles.FirstOrDefault(role => role.Id == userRole.RoleId)).ToList();
+                    model.UserRoles = model.User.Roles.Select(userRole => model.AvailableRoles.FirstOrDefault(role => role.Id == userRole.RoleId)).ToList();
                 }
             }
 
             return PartialView("_UsersRoles", model);
         }
 
+
+        public async Task<ActionResult> AssignUserRole(string userID, string roleID)
+        {
+            if(!string.IsNullOrEmpty(userID) && !string.IsNullOrEmpty(roleID))
+            {
+               var user = await UserManager.FindByIdAsync(userID);
+
+                if(user != null)
+                {
+                    var role = await RoleManager.FindByIdAsync(roleID);
+
+                    if(role != null)
+                    {
+                        await UserManager.AddToRoleAsync(userID, role.Name);
+                    }
+                }
+            }
+
+            return RedirectToAction("UsersRoles", new { userID= userID });
+        }
+        
+        public async Task<ActionResult> DeleteUserRole(string userID, string roleID)
+        {
+            if (!string.IsNullOrEmpty(userID) && !string.IsNullOrEmpty(roleID))
+            {
+                var user = await UserManager.FindByIdAsync(userID);
+
+                if (user != null)
+                {
+                    var role = await RoleManager.FindByIdAsync(roleID);
+
+                    if (role != null)
+                    {
+                        await UserManager.RemoveFromRoleAsync(userID, role.Name);
+                    }
+                }
+            }
+
+            return RedirectToAction("UsersRoles", new { userID = userID });
+        }
 
         public ActionResult Roles(string searchTerm, int? pageNo)
         {
