@@ -10,12 +10,6 @@ namespace DealDouble.Services
 {
     public class DashboardService
     {
-        public int GetUserCount()
-        {
-            DealDoubleContext context = new DealDoubleContext();
-
-            return context.Users.Count();
-        }
         public int GetAuctionCount()
         {
             DealDoubleContext context = new DealDoubleContext();
@@ -27,6 +21,30 @@ namespace DealDouble.Services
             DealDoubleContext context = new DealDoubleContext();
 
             return context.Bids.Count();
+        }
+        public int GetCommentsCount()
+        {
+            DealDoubleContext context = new DealDoubleContext();
+
+            return context.Comments.Count();
+        }
+        public int GetUserCount()
+        {
+            DealDoubleContext context = new DealDoubleContext();
+
+            return context.Users.Count();
+        }
+        public int GetRolesCount()
+        {
+            DealDoubleContext context = new DealDoubleContext();
+
+            return context.Roles.Count();
+        }
+        public int GetCategoriesCount()
+        {
+            DealDoubleContext context = new DealDoubleContext();
+
+            return context.Categories.Count();
         }
     }
 }

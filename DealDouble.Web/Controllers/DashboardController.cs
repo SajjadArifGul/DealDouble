@@ -3,6 +3,7 @@ using DealDouble.Web.Code.Enums;
 using DealDouble.Web.Models;
 using DealDouble.Web.ViewModels;
 using Microsoft.AspNet.Identity.Owin;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -58,9 +59,12 @@ namespace DealDouble.Web.Controllers
 
             model.Page = Pages.Dashboard;
 
-            model.UserCount = service.GetUserCount();
             model.AuctionsCount = service.GetAuctionCount();
             model.BidsCount = service.GetBidsCount();
+            model.CommentsCount = service.GetCommentsCount();
+            model.UserCount = service.GetUserCount();
+            model.RolesCount = service.GetRolesCount();
+            model.CategoriesCount = service.GetCategoriesCount();
 
             return View(model);
         }
@@ -161,10 +165,10 @@ namespace DealDouble.Web.Controllers
             return jResult;        
         }
 
+        [HttpPost]
         public async Task<JsonResult> DeleteUserDetails(string userID)
         {
             JsonResult jResult = new JsonResult();
-            jResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
             if (!string.IsNullOrEmpty(userID))
             {
@@ -183,8 +187,7 @@ namespace DealDouble.Web.Controllers
             jResult.Data = new { Success = false };
             return jResult;
         }
-
-
+        
         public async Task<ActionResult> UsersRoles(string userID)
         {
             UserRolesViewModel model = new UserRolesViewModel();
@@ -277,10 +280,104 @@ namespace DealDouble.Web.Controllers
 
             model.Roles = roles.OrderBy(x => x.Name).Skip(skipCount).Take(pageSize).ToList();
 
-            model.Pager = new Pager(roles.Count(), pageNo, pageSize);
+            model.Pager = new Pager(RoleManager.Roles.Count(), pageNo, pageSize);
 
             return PartialView(model);
         }
 
+        public async Task<ActionResult> RoleDetails(string roleID)
+        {
+            RoleDetailsViewModel model = new RoleDetailsViewModel();
+
+            var role = await RoleManager.FindByIdAsync(roleID);
+            
+            if (role != null)
+            {
+                model.Role = role;
+            }
+
+            if(Request.IsAjaxRequest())
+            {
+                return PartialView("_RoleDetails", model);
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+
+        public async Task<ActionResult> RoleUsers(string roleID, int? pageNo)
+        {
+            var pageSize = 1;
+
+            RoleUsersViewModel model = new RoleUsersViewModel();
+
+            var role = await RoleManager.FindByIdAsync(roleID);
+
+            if (role != null)
+            {
+                model.RoleID = role.Id;
+                pageNo = pageNo ?? 1;
+
+                var skipCount = (pageNo.Value - 1) * pageSize;
+                var users = role.Users.OrderBy(x => x.UserId).Skip(skipCount).Take(pageSize);
+
+                model.RoleUsers = new List<Entities.DealDoubleUser>();
+                foreach (var user in users)
+                {
+                    model.RoleUsers.Add(await UserManager.FindByIdAsync(user.UserId));
+                }
+
+                model.Pager = new Pager(role.Users.Count(), pageNo, pageSize);
+            }
+
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> UpdateRoleDetails(string roleID, string roleName)
+        {
+            JsonResult result = new JsonResult();
+
+            if (!string.IsNullOrEmpty(roleID) && !string.IsNullOrEmpty(roleName))
+            {
+                var role = await RoleManager.FindByIdAsync(roleID);
+
+                if (role != null && !role.Name.ToLower().Equals("administrator"))
+                {
+                    role.Name = roleName;
+
+                    var res = await RoleManager.UpdateAsync(role);
+
+                    result.Data = new { Success = res.Succeeded, Message = string.Join(", ", res.Errors) };
+                    return result;
+                }
+            }
+
+            result.Data = new { Success = false, Message = "An error has occured while updating Role Details." };
+            return result;
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> DeleteRoleDetails(string roleID)
+        {
+            JsonResult result = new JsonResult();
+
+            if (!string.IsNullOrEmpty(roleID))
+            {
+                var role = await RoleManager.FindByIdAsync(roleID);
+
+                if (role != null && !role.Name.ToLower().Equals("administrator"))
+                {
+                    var res = await RoleManager.DeleteAsync(role);
+
+                    result.Data = new { Success = res.Succeeded, Message = string.Join(", ", res.Errors) };
+                    return result;
+                }
+            }
+
+            result.Data = new { Success = false, Message = "An error has occured while deleting Role Details." };
+            return result;
+        }
     }
 }

@@ -9,9 +9,12 @@ namespace DealDouble.Web.ViewModels
 {
     public class DashboardViewModel : PageViewModel
     {
-        public int UserCount { get; set; }
         public int AuctionsCount { get; set; }
         public int BidsCount { get; set; }
+        public int CommentsCount { get; set; }
+        public int CategoriesCount { get; set; }
+        public int UserCount { get; set; }
+        public int RolesCount { get; set; }
     }
     
     public class UsersViewModel : PageViewModel
@@ -59,5 +62,21 @@ namespace DealDouble.Web.ViewModels
         public List<IdentityRole> Roles { get; set; }
         public Pager Pager { get; set; }
         public string SearchTerm { get; set; }
+    }
+
+    public class RoleDetailsViewModel : PageViewModel
+    {
+        public IdentityRole Role { get; set; }
+
+        public string ID { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class RoleUsersViewModel : PageViewModel
+    {
+        public List<DealDoubleUser> RoleUsers { get; set; }
+
+        public Pager Pager { get; set; }
+        public string RoleID { get; internal set; }
     }
 }

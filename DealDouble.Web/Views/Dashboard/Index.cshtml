@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<div class="jumbotron jumbotron-fluid">
+<div class="jumbotron jumbotron-fluid my-0">
 	<div class="container">
 		<h1 class="display-4">Hello, @User.Identity.Name!</h1>
 		<p class="lead">
@@ -13,16 +13,7 @@
 	</div>
 </div>
 
-<div class="card-deck text-primary">
-    <div class="card text-center ">
-        <h1 class="card-title display-2 align-middle">
-            @Model.UserCount
-        </h1>
-        <div class="card-footer display-4">
-            <a href="@Url.Action("Users", "Dashboard")">Users</a>
-        </div>
-    </div>
-
+<div class="card-deck text-primary mt-4">
     <div class="card text-center ">
         <h1 class="card-title display-2 align-middle">
             @Model.AuctionsCount
@@ -40,4 +31,41 @@
             <a href="@Url.Action("Index", "Bids")">Bids</a>
         </div>
     </div>
+	<div class="card text-center ">
+		<h1 class="card-title display-2 align-middle">
+			@Model.CommentsCount
+		</h1>
+		<div class="card-footer display-4">
+			<a href="@Url.Action("Comments", "Dashboard")">Comments</a>
+		</div>
+	</div>
+
+</div>
+<div class="card-deck text-primary my-4">
+	<div class="card text-center ">
+		<h1 class="card-title display-2 align-middle">
+			@Model.UserCount
+		</h1>
+		<div class="card-footer display-4">
+			<a href="@Url.Action("Users", "Dashboard")">Users</a>
+		</div>
+	</div>
+
+	<div class="card text-center ">
+		<h1 class="card-title display-2 align-middle">
+			@Model.RolesCount
+		</h1>
+		<div class="card-footer display-4">
+			<a href="@Url.Action("Roles", "Dashboard")">Roles</a>
+		</div>
+	</div>
+
+	<div class="card text-center ">
+		<h1 class="card-title display-2 align-middle">
+			@Model.CategoriesCount
+		</h1>
+		<div class="card-footer display-4">
+			<a href="@Url.Action("Index", "Categories")">Categories</a>
+		</div>
+	</div>
 </div>

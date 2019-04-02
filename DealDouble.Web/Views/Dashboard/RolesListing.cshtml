@@ -1,7 +1,7 @@
 ﻿@model DealDouble.Web.ViewModels.RolesListingViewModel
 
 <table class="table table-hover">
-    <thead class="bg-secondary text-white">
+    <thead class="thead-light">
         <tr>
             <th>
                 ID
@@ -33,10 +33,10 @@
                         @role.Users.Count
                     </td>
                     <td>
-                        <button class="moreButton btn btn-primary" data-id="@role.Id">
-                            <i class="fas fa-edit"></i>
+                        <a href="@Url.Action("RoleDetails", "Dashboard", new { roleID = role.Id })" class="btn btn-primary" data-id="@role.Id">
+							<i class="fas fa-user-shield mr-1"></i>
                             More Details
-                        </button>
+                        </a>
                     </td>
                 </tr>
             }
