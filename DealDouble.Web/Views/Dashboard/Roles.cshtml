@@ -16,7 +16,7 @@
                 <input name="searchTerm" type="text" value="@Model.SearchTerm" class="form-control" placeholder="Search with Role Name.">
                 <button type="submit" class="form-control btn btn-primary"><i class="fas fa-search mr-1"></i> Search</button>
                 <a href="@Url.Action("Roles", "Dashboard")" role="button" class="form-control btn btn-primary"><i class="fas fa-redo-alt mr-1"></i> Reset</a>
-				<button type="button" class="form-control btn btn-success" id="createButton"><i class="fas fa-plus"></i> Create Role</button>
+                <button type="button" class="form-control btn btn-success" data-toggle="modal" data-target="#formModal"><i class="fas fa-plus"></i> Create Role</button>
             </div>
             <input type="hidden" name="page" value="1">
             <input type="hidden" name="items" value="10">
@@ -28,20 +28,64 @@
 </div>
 
 <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content" id="contentArea">
-		</div>
-	</div>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" id="contentArea">
+            <div class="modal-header">
+                <h5 class="modal-title">Create New Role</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="role-form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>
+                            Name
+                        </label>
+                        <input id="newRoleName" class="form-control" name="Name" value="" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-success" type="button" id="saveButton">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <script>
-	$("#createButton").click(function () {
-		$.ajax({
-			url: "@Url.Action("CreateRole", "Dashboard")",
-			type: "get"
-		}).done(function (response) {
-			$("#contentArea").html(response);
-			$('#formModal').modal('toggle');
-		});
-	});
+    $("#saveButton").click(function () {
+
+        var name = $("#newRoleName").val();
+
+        if (name != undefined && name != "") {
+            $("#dtLoader").show();
+            $("#response-holder").hide();
+
+            $.ajax({
+                url: "@Url.Action("CreateRole", "Dashboard")",
+                method: "post",
+                data: { roleName: name }
+            })
+            .done(function (response) {
+                $("#dtLoader").hide();
+                $("#response-holder").show();
+
+                if (response.Success) {
+                    location.reload();
+                }
+                else {
+                    swal("Error!", response.Message, "error");
+                }
+            });
+        }
+        else {
+            swal("Warning!", "Please add a valid Role Name.", "warning");
+        }
+    });
+
+    $("#role-form").submit(function (event) { event.preventDefault(); });
 </script>

@@ -2,6 +2,7 @@
 using DealDouble.Web.Code.Enums;
 using DealDouble.Web.Models;
 using DealDouble.Web.ViewModels;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
 using System.Linq;
@@ -334,9 +335,21 @@ namespace DealDouble.Web.Controllers
             return PartialView(model);
         }
 
-        public ActionResult CreateRole()
+        [HttpPost]
+        public async Task<JsonResult> CreateRole(string roleName)
         {
-            return View();
+            JsonResult result = new JsonResult();
+
+            if (!string.IsNullOrEmpty(roleName))
+            {
+                var res = await RoleManager.CreateAsync(new IdentityRole() { Name = roleName });
+
+                result.Data = new { Success = res.Succeeded, Message = string.Join(", ", res.Errors) };
+                return result;
+            }
+
+            result.Data = new { Success = false, Message = "An error has occured while creating Role." };
+            return result;
         }
 
         [HttpPost]
