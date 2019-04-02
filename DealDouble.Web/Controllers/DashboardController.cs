@@ -334,6 +334,11 @@ namespace DealDouble.Web.Controllers
             return PartialView(model);
         }
 
+        public ActionResult CreateRole()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<JsonResult> UpdateRoleDetails(string roleID, string roleName)
         {
