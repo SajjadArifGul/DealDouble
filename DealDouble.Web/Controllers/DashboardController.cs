@@ -1,4 +1,5 @@
-﻿using DealDouble.Services;
+﻿using DealDouble.Entities;
+using DealDouble.Services;
 using DealDouble.Web.Code.Enums;
 using DealDouble.Web.Models;
 using DealDouble.Web.ViewModels;
@@ -15,7 +16,8 @@ namespace DealDouble.Web.Controllers
     public class DashboardController : Controller
     {
         DashboardService service = new DashboardService();
-        
+        AuctionsService auctionsService = new AuctionsService();
+
         private DealDoubleUserManager _userManager;
 
         private DealDoubleRoleManager _roleManager;
@@ -397,5 +399,30 @@ namespace DealDouble.Web.Controllers
             result.Data = new { Success = false, Message = "An error has occured while deleting Role Details." };
             return result;
         }
+
+        public async Task<ActionResult> UsersComments(string userID)
+        {
+            UserCommentsViewModel model = new UserCommentsViewModel();
+
+            if (!string.IsNullOrEmpty(userID))
+            {
+                model.User = await UserManager.FindByIdAsync(userID);
+
+                if (model.User != null)
+                {
+                    model.UserComments = service.GetCommentsByUser(userID, (int)EntityEnums.Auction);
+
+                    if (model.UserComments != null && model.UserComments.Count > 0)
+                    {
+                        var auctionIDs = model.UserComments.Select(x => x.RecordID).ToList();
+
+                        model.CommentedAuctions = auctionsService.GetAuctionsByIDs(auctionIDs);
+                    }
+                }
+            }
+
+            return PartialView("_UsersComments", model);
+        }
+
     }
 }

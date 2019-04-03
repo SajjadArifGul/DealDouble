@@ -1,0 +1,61 @@
+﻿@using DealDouble.Web.Code;
+@model DealDouble.Web.ViewModels.UserCommentsViewModel
+
+@if (Model != null && Model.UserComments != null && Model.UserComments.Count > 0)
+{
+    foreach (var comment in Model.UserComments)
+    {
+        var defaultStars = 5 - comment.Rating;
+
+        var commentedAuction = Model.CommentedAuctions != null ? Model.CommentedAuctions.FirstOrDefault(x => x.ID == comment.RecordID) : null;
+
+        <div class="row">
+            <div class="col-md-2">
+                <img src="/Content/images/site/user-default-avatar.png" class="img rounded-circle img-fluid" style="height:105px; width:105px;">
+            </div>
+            <div class="col-md-10">
+                <p>
+                    <a class="float-left" href="#">
+                        <strong>
+                            @Model.User.UserName
+                        </strong>
+                    </a>
+                    <span class="float-right mb-2">
+                        @comment.TimeStamp
+                    </span>
+                </p>
+                <div class="clearfix"></div>
+                <p>
+                    @comment.Text
+                </p>
+                <span class="text-warning">
+                    @for (int i = 1; i <= comment.Rating; i++)
+                    {
+                        <i class="fas fa-star"></i>
+                    }
+
+                    @for (int i = 1; i <= defaultStars; i++)
+                    {
+                        <i class="far fa-star"></i>
+                    }
+                </span>
+
+                @if (commentedAuction != null)
+                {
+                    <span class="float-right">
+                        <a href="@Url.Action("Details", "Auctions", new { ID = comment.RecordID, category = commentedAuction.Category.Name.ToLower().SanitizeString() })" target="_blank">
+                            @commentedAuction.Title
+                        </a>
+                    </span>
+                }
+            </div>
+        </div>
+        <hr />
+    }
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        This user doesn't have any comments yet.
+    </div>
+}

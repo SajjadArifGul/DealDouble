@@ -73,6 +73,14 @@ namespace DealDouble.Services
             return context.Auctions.Find(ID);
         }
 
+
+        public List<Auction> GetAuctionsByIDs(List<int> IDs)
+        {
+            DealDoubleContext context = new DealDoubleContext();
+
+            return IDs.Select(id => context.Auctions.Find(id)).ToList();
+        }
+
         public void SaveAuction(Auction auction)
         {
             DealDoubleContext context = new DealDoubleContext();

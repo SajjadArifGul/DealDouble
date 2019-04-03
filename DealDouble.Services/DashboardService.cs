@@ -46,5 +46,12 @@ namespace DealDouble.Services
 
             return context.Categories.Count();
         }
+
+        public List<Comment> GetCommentsByUser(string userID, int entityID)
+        {
+            DealDoubleContext context = new DealDoubleContext();
+
+            return context.Comments.Where(x => x.UserID == userID).Where(x=>x.EntityID == entityID).OrderByDescending(x => x.TimeStamp).ToList();
+        }
     }
 }
