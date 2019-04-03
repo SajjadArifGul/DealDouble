@@ -309,7 +309,7 @@ namespace DealDouble.Web.Controllers
 
         public async Task<ActionResult> RoleUsers(string roleID, int? pageNo)
         {
-            var pageSize = 1;
+            var pageSize = 10;
 
             RoleUsersViewModel model = new RoleUsersViewModel();
 

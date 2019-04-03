@@ -27,7 +27,7 @@ namespace DealDouble.Web.ViewModels
         public bool isPartial { get; set; }
 
         public Pager Pager { get; set; }
-
+        public int PageNo { get; set; }
     }
 
     public class AuctionDetailsViewModel : CommentablePageViewModel
@@ -37,8 +37,7 @@ namespace DealDouble.Web.ViewModels
         public decimal BidsAmount { get; set; }
         public DealDoubleUser LatestBidder { get; set; }
     }
-
-
+    
     public class CreateAuctionViewModel : PageViewModel
     {
         public int ID { get; set; }

@@ -18,13 +18,15 @@ namespace DealDouble.Web.ViewModels
         public string SearchTerm { get; set; }
 
         public Pager Pager { get; set; }
+        public int PageNo { get; set; }
+        public List<Category> ParentCategories { get; set; }
+        public int? ParentCategoryID { get; set; }
     }
 
     public class CategoryDetailsViewModel : PageViewModel
     {
         public Category Category { get; set; }
     }
-
 
     public class CategoryViewModel : PageViewModel
     {

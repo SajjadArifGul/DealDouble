@@ -26,6 +26,7 @@ namespace DealDouble.Web.Controllers
 
             model.CategoryID = categoryID;
             model.SearchTerm = searchTerm;
+            model.PageNo = pageNo ?? 1;
 
             model.Categories = categoriesService.GetAllCategories();
 
@@ -39,7 +40,6 @@ namespace DealDouble.Web.Controllers
             AuctionsListingViewModel model = new AuctionsListingViewModel();
 
             model.Auctions = auctionsService.SearchAuctions(categoryID, searchTerm, pageNo, pageSize);
-
             var totalAuctions = auctionsService.GetAuctionCount(categoryID, searchTerm);
 
             model.Pager = new Pager(totalAuctions, pageNo, pageSize);

@@ -15,7 +15,7 @@
             <div class="input-group mb-3">
                 <input name="searchTerm" type="text" value="@Model.SearchTerm" class="form-control" placeholder="Search">
                 <select class="form-control custom-select" name="categoryID">
-                    <option>Select Category...</option>
+                    <option value="0">Select Category...</option>
                     @foreach (var category in Model.Categories)
                     {
                         var selected = category.ID == categoryID ? "selected" : string.Empty;
@@ -31,10 +31,9 @@
         </form>
     </div>
     <div class="col-lg-12" id="listingArea">
-        @{Html.RenderAction("Listing", new { categoryID = Model.CategoryID, searchTerm = Model.SearchTerm });}
+        @{Html.RenderAction("Listing", new { categoryID = Model.CategoryID, searchTerm = Model.SearchTerm, pageNo = Model.PageNo });}
     </div>
 </div>
-
 
 <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">

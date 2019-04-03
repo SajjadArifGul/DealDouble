@@ -34,7 +34,6 @@ namespace DealDouble.Services
             }
 
             pageNo = pageNo ?? 1;
-            //pageNo = pageNo.HasValue ? pageNo.Value : 1;
 
             var skipCount = (pageNo.Value - 1) * pageSize;
 

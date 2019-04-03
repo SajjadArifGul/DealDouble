@@ -13,9 +13,8 @@ namespace DealDouble.Web.Controllers
     public class CategoriesController : Controller
     {
         CategoriesService categoriesService = new CategoriesService();
-
-        [HttpGet]
-        public ActionResult Index()
+        
+        public ActionResult Index(int? parentCategoryID, string searchTerm, int? pageNo)
         {
             CategoriesListingViewModel model = new CategoriesListingViewModel();
 
@@ -23,14 +22,25 @@ namespace DealDouble.Web.Controllers
             model.PageTitle = "Categories";
             model.PageDescription = "Categories Listing Page";
 
+            model.ParentCategoryID = parentCategoryID;
+            model.SearchTerm = searchTerm;
+            model.PageNo = pageNo ?? 1;
+
+            model.ParentCategories = categoriesService.GetAllParentCategories();
+
             return View(model);
         }
 
-        public ActionResult Listing()
+        public ActionResult Listing(int? parentCategoryID, string searchTerm, int? pageNo)
         {
-            CategoriesListingViewModel model = new CategoriesListingViewModel();
+            var pageSize = 3;
 
-            model.Categories = categoriesService.GetAllCategories();
+            CategoriesListingViewModel model = new CategoriesListingViewModel();
+            
+            model.Categories = categoriesService.SearchCategories(parentCategoryID, searchTerm, pageNo, pageSize);
+            var totalCategories = categoriesService.GetCategoriesCount(parentCategoryID, searchTerm);
+
+            model.Pager = new Pager(totalCategories, pageNo, pageSize);
 
             return PartialView(model);
         }
