@@ -79,12 +79,13 @@ namespace DealDouble.Web.ViewModels
         public Pager Pager { get; set; }
         public string RoleID { get; internal set; }
     }
-
-
+    
     public class UserCommentsViewModel : PageViewModel
     {
         public List<Comment> UserComments { get; set; }
         public List<Auction> CommentedAuctions { get; set; }
-        public DealDoubleUser User { get; internal set; }
+        public DealDoubleUser User { get; set; }
+        public Pager Pager { get; set; }
+        public string SearchTerm { get; set; }
     }
 }

@@ -400,8 +400,10 @@ namespace DealDouble.Web.Controllers
             return result;
         }
 
-        public async Task<ActionResult> UsersComments(string userID)
+        public async Task<ActionResult> UsersComments(string userID, string searchTerm, int? pageNo, int entityID = (int)EntityEnums.Auction)
         {
+            var pageSize = 1;
+
             UserCommentsViewModel model = new UserCommentsViewModel();
 
             if (!string.IsNullOrEmpty(userID))
@@ -410,7 +412,9 @@ namespace DealDouble.Web.Controllers
 
                 if (model.User != null)
                 {
-                    model.UserComments = service.GetCommentsByUser(userID, (int)EntityEnums.Auction);
+                    pageNo = pageNo ?? 1;
+
+                    model.UserComments = service.GetCommentsByUser(userID, searchTerm, entityID, pageNo, pageSize);
 
                     if (model.UserComments != null && model.UserComments.Count > 0)
                     {
@@ -418,6 +422,10 @@ namespace DealDouble.Web.Controllers
 
                         model.CommentedAuctions = auctionsService.GetAuctionsByIDs(auctionIDs);
                     }
+
+                    var totalCount = service.GetCommentsTotalCountByUser(userID, searchTerm, entityID);
+
+                    model.Pager = new Pager(totalCount, pageNo, pageSize);
                 }
             }
 

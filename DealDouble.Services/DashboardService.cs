@@ -47,11 +47,42 @@ namespace DealDouble.Services
             return context.Categories.Count();
         }
 
-        public List<Comment> GetCommentsByUser(string userID, int entityID)
+        public List<Comment> GetCommentsByUser(string userID, string searchTerm, int entityID, int? pageNo, int pageSize)
         {
             DealDoubleContext context = new DealDoubleContext();
 
-            return context.Comments.Where(x => x.UserID == userID).Where(x=>x.EntityID == entityID).OrderByDescending(x => x.TimeStamp).ToList();
+            pageNo = pageNo ?? 1;
+            var skipCount = (pageNo.Value - 1) * pageSize;
+
+            var comments = context.Comments.Where(x => x.UserID == userID)
+                                   .Where(x => x.EntityID == entityID)
+                                   .AsQueryable();
+            
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                comments = comments.Where(x => x.Text.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            return comments.OrderByDescending(x => x.TimeStamp)
+                           .Skip(skipCount)
+                           .Take(pageSize)
+                           .ToList();
+        }
+
+        public int GetCommentsTotalCountByUser(string userID, string searchTerm, int entityID)
+        {
+            DealDoubleContext context = new DealDoubleContext();
+            
+            var comments = context.Comments.Where(x => x.UserID == userID)
+                                   .Where(x => x.EntityID == entityID)
+                                   .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                comments = comments.Where(x => x.Text.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            return comments.Count();
         }
     }
 }
