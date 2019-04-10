@@ -47,17 +47,21 @@ namespace DealDouble.Services
             return context.Categories.Count();
         }
 
-        public List<Comment> GetCommentsByUser(string userID, string searchTerm, int entityID, int? pageNo, int pageSize)
+        public List<Comment> GetComments(string userID, string searchTerm, int entityID, int? pageNo, int pageSize)
         {
             DealDoubleContext context = new DealDoubleContext();
 
             pageNo = pageNo ?? 1;
             var skipCount = (pageNo.Value - 1) * pageSize;
 
-            var comments = context.Comments.Where(x => x.UserID == userID)
-                                   .Where(x => x.EntityID == entityID)
+            var comments = context.Comments.Where(x => x.EntityID == entityID)
                                    .AsQueryable();
-            
+
+            if (!string.IsNullOrEmpty(userID))
+            {
+                comments = comments.Where(x => x.UserID == userID);
+            }
+
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 comments = comments.Where(x => x.Text.ToLower().Contains(searchTerm.ToLower()));
@@ -69,13 +73,17 @@ namespace DealDouble.Services
                            .ToList();
         }
 
-        public int GetCommentsTotalCountByUser(string userID, string searchTerm, int entityID)
+        public int GetCommentsTotalCount(string userID, string searchTerm, int entityID)
         {
             DealDoubleContext context = new DealDoubleContext();
             
-            var comments = context.Comments.Where(x => x.UserID == userID)
-                                   .Where(x => x.EntityID == entityID)
+            var comments = context.Comments.Where(x => x.EntityID == entityID)
                                    .AsQueryable();
+
+            if (!string.IsNullOrEmpty(userID))
+            {
+                comments = comments.Where(x => x.UserID == userID);
+            }
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
@@ -84,5 +92,21 @@ namespace DealDouble.Services
 
             return comments.Count();
         }
+
+        public bool DeleteComment(int ID)
+        {
+            DealDoubleContext context = new DealDoubleContext();
+            
+            var comment = context.Comments.Find(ID);
+
+            if(comment != null)
+            {
+                context.Entry(comment).State = System.Data.Entity.EntityState.Deleted;
+                return context.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
     }
 }

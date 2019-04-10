@@ -402,7 +402,8 @@ namespace DealDouble.Web.Controllers
 
         public async Task<ActionResult> UsersComments(string userID, string searchTerm, int? pageNo, int entityID = (int)EntityEnums.Auction)
         {
-            var pageSize = 1;
+            var pageSize = 10;
+            pageNo = pageNo ?? 1;
 
             UserCommentsViewModel model = new UserCommentsViewModel();
 
@@ -412,9 +413,7 @@ namespace DealDouble.Web.Controllers
 
                 if (model.User != null)
                 {
-                    pageNo = pageNo ?? 1;
-
-                    model.UserComments = service.GetCommentsByUser(userID, searchTerm, entityID, pageNo, pageSize);
+                    model.UserComments = service.GetComments(userID, searchTerm, entityID, pageNo, pageSize);
 
                     if (model.UserComments != null && model.UserComments.Count > 0)
                     {
@@ -423,7 +422,7 @@ namespace DealDouble.Web.Controllers
                         model.CommentedAuctions = auctionsService.GetAuctionsByIDs(auctionIDs);
                     }
 
-                    var totalCount = service.GetCommentsTotalCountByUser(userID, searchTerm, entityID);
+                    var totalCount = service.GetCommentsTotalCount(userID, searchTerm, entityID);
 
                     model.Pager = new Pager(totalCount, pageNo, pageSize);
                 }
@@ -432,5 +431,37 @@ namespace DealDouble.Web.Controllers
             return PartialView("_UsersComments", model);
         }
 
+        public ActionResult Comments(string searchTerm, int? pageNo, int entityID = (int)EntityEnums.Auction)
+        {
+            var pageSize = 10;
+            pageNo = pageNo ?? 1;
+
+            CommentsViewModel model = new CommentsViewModel();
+            
+            model.Comments = service.GetComments(null, searchTerm, entityID, pageNo, pageSize);
+
+            if (model.Comments != null && model.Comments.Count > 0)
+            {
+                var auctionIDs = model.Comments.Select(x => x.RecordID).ToList();
+
+                model.CommentedAuctions = auctionsService.GetAuctionsByIDs(auctionIDs);
+            }
+
+            var totalCount = service.GetCommentsTotalCount(null, searchTerm, entityID);
+
+            model.Pager = new Pager(totalCount, pageNo, pageSize);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteComment(int ID)
+        {
+            JsonResult result = new JsonResult();
+
+            result.Data = new { Success = service.DeleteComment(ID) };
+
+            return result;
+        }
     }
 }
