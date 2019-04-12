@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using DealDouble.Web.ViewModels;
 
 namespace DealDouble.Web.Models
 {
-    public class IndexViewModel
+    public class IndexViewModel : PageViewModel
     {
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
