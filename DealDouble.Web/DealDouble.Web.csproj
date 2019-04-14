@@ -235,13 +235,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CategoriesViewModels.cs" />
     <Compile Include="ViewModels\AuctionsViewModels.cs" />
     <Compile Include="ViewModels\BaseViewModels.cs" />
     <Compile Include="ViewModels\DashboardViewModels.cs" />
+    <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="ViewModels\SharedViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -408,6 +408,9 @@
     <Content Include="Views\Dashboard\RoleUsers.cshtml" />
     <Content Include="Views\Dashboard\_UsersComments.cshtml" />
     <Content Include="Views\Dashboard\Comments.cshtml" />
+    <Content Include="Views\Manage\Manage.cshtml" />
+    <Content Include="Views\Manage\_UsersDetails.cshtml" />
+    <Content Include="Views\Manage\_ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

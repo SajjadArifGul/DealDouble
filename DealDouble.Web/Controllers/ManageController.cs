@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DealDouble.Web.Models;
 using DealDouble.Services;
+using DealDouble.Web.ViewModels;
 
 namespace DealDouble.Web.Controllers
 {
@@ -50,9 +51,32 @@ namespace DealDouble.Web.Controllers
                 _userManager = value;
             }
         }
+        
+        public ActionResult Manage()
+        {
+            return View();
+        }
 
-        //
-        // GET: /Manage/Index
+        [HttpGet]
+        public ActionResult UsersDetails()
+        {
+            ManageUserViewModel model = new ManageUserViewModel();
+
+            model.User = UserManager.FindById(User.Identity.GetUserId());
+
+            return PartialView("_UsersDetails", model);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> ChangePassword()
+        {
+            ManageUserViewModel model = new ManageUserViewModel();
+
+            model.User = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+            return PartialView("_ChangePassword", model);
+        }
+
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -73,11 +97,11 @@ namespace DealDouble.Web.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
+
             return View(model);
         }
 
-        //
-        // POST: /Manage/RemoveLogin
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
@@ -216,7 +240,7 @@ namespace DealDouble.Web.Controllers
 
         //
         // GET: /Manage/ChangePassword
-        public ActionResult ChangePassword()
+        public ActionResult ChangePasswordOld()
         {
             return View();
         }

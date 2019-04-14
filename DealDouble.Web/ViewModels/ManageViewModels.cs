@@ -1,11 +1,18 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using DealDouble.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
-using DealDouble.Web.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
 
-namespace DealDouble.Web.Models
+namespace DealDouble.Web.ViewModels
 {
+    public class ManageUserViewModel : PageViewModel
+    {
+        public DealDoubleUser User { get; set; }
+    }
     public class IndexViewModel : PageViewModel
     {
         public bool HasPassword { get; set; }
