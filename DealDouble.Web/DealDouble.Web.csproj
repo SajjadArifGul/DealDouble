@@ -230,6 +230,7 @@
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -242,6 +243,7 @@
     <Compile Include="ViewModels\BaseViewModels.cs" />
     <Compile Include="ViewModels\DashboardViewModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
+    <Compile Include="ViewModels\ProfileViewModels.cs" />
     <Compile Include="ViewModels\SharedViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -411,6 +413,10 @@
     <Content Include="Views\Manage\Manage.cshtml" />
     <Content Include="Views\Manage\_UsersDetails.cshtml" />
     <Content Include="Views\Manage\_ChangePassword.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\_UsersDetails.cshtml" />
+    <Content Include="Views\Profile\_ChangePassword.cshtml" />
+    <Content Include="Views\Profile\_UsersComments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

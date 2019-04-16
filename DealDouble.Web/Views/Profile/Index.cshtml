@@ -1,0 +1,82 @@
+﻿@model DealDouble.Web.ViewModels.ProfileDetailsViewModel
+
+@if (Model != null && Model.User != null)
+{
+    <h1 class="display-4">
+        @Model.PageTitle
+    </h1>
+    <p class="lead">
+        @Model.PageDescription
+    </p>
+    <hr />
+
+    <div class="row mt-2">
+        <div class="col-lg-3">
+            <div class="card">
+                <img src="~/Content/images/site/user-default-avatar.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title m-0">
+                        @Model.User.FullName
+                    </h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" title="Username">
+                        <i class="fas fa-user-alt mr-1"></i>
+                        @Model.User.UserName
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="card">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="user-link nav-link active" data-href="@Url.Action("UsersDetails", "Profile")">Info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="user-link nav-link" data-href="@Url.Action("ChangePassword", "Profile")">Change Password</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="user-link nav-link" data-href="@Url.Action("UsersBids", "Profile")">Bids</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="user-link nav-link" data-href="@Url.Action("UsersComments", "Profile")">Comments</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border m-5" role="status" id="dtLoader" style="display:none">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div id="response-holder">
+                        @{ Html.RenderPartial("_UsersDetails", Model); }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(".user-link").click(function () {
+        var url = $(this).attr("data-href");
+
+        if (url != undefined && url != "") {
+            $("#dtLoader").show();
+            $("#response-holder").html("");
+
+            $(".user-link").removeClass("active");
+            $(this).addClass("active");
+
+            $.ajax({
+                url: url,
+            })
+            .done(function (response) {
+                $("#dtLoader").hide();
+                $("#response-holder").html(response);
+            });
+        }
+    });
+</script>

@@ -406,6 +406,7 @@ namespace DealDouble.Web.Controllers
             pageNo = pageNo ?? 1;
 
             UserCommentsViewModel model = new UserCommentsViewModel();
+            model.SearchTerm = searchTerm;
 
             if (!string.IsNullOrEmpty(userID))
             {
@@ -437,7 +438,8 @@ namespace DealDouble.Web.Controllers
             pageNo = pageNo ?? 1;
 
             CommentsViewModel model = new CommentsViewModel();
-            
+            model.SearchTerm = searchTerm;
+
             model.Comments = service.GetComments(null, searchTerm, entityID, pageNo, pageSize);
 
             if (model.Comments != null && model.Comments.Count > 0)
