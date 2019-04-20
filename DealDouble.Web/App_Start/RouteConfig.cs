@@ -26,6 +26,18 @@ namespace DealDouble.Web
             );
 
             routes.MapRoute(
+                name: "UserComments",
+                url: "Users/Comments/{userID}",
+                defaults: new { controller = "Comments", action = "Index" }
+            );
+
+            routes.MapRoute(
+                name: "Comments",
+                url: "Dashboard/Comments/",
+                defaults: new { controller = "Comments", action = "Index" }
+            );
+            
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

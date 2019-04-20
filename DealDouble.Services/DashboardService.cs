@@ -107,6 +107,5 @@ namespace DealDouble.Services
 
             return false;
         }
-
     }
 }

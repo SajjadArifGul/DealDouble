@@ -89,11 +89,5 @@ namespace DealDouble.Web.ViewModels
         public string SearchTerm { get; set; }
     }
 
-    public class CommentsViewModel : PageViewModel
-    {
-        public string SearchTerm { get; set; }
-        public List<Comment> Comments { get; set; }
-        public List<Auction> CommentedAuctions { get; set; }
-        public Pager Pager { get; set; }
-    }
+    
 }

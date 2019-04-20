@@ -150,49 +150,5 @@ namespace DealDouble.Web.Controllers
 
             return result;
         }
-
-        public async Task<ActionResult> UsersComments(string searchTerm, int? pageNo, int entityID = (int)EntityEnums.Auction)
-        {
-            var pageSize = 10;
-            pageNo = pageNo ?? 1;
-            var userID = User.Identity.GetUserId();
-
-            UserCommentsViewModel model = new UserCommentsViewModel();
-            model.SearchTerm = searchTerm;
-
-            if (!string.IsNullOrEmpty(userID))
-            {
-                model.User = await UserManager.FindByIdAsync(userID);
-
-                if (model.User != null)
-                {
-                    model.UserComments = service.GetComments(userID, searchTerm, entityID, pageNo, pageSize);
-
-                    if (model.UserComments != null && model.UserComments.Count > 0)
-                    {
-                        var auctionIDs = model.UserComments.Select(x => x.RecordID).ToList();
-
-                        model.CommentedAuctions = auctionsService.GetAuctionsByIDs(auctionIDs);
-                    }
-
-                    var totalCount = service.GetCommentsTotalCount(userID, searchTerm, entityID);
-
-                    model.Pager = new Pager(totalCount, pageNo, pageSize);
-                }
-            }
-
-            return PartialView("_UsersComments", model);
-        }
-
-        [HttpPost]
-        public JsonResult DeleteComment(int ID)
-        {
-            JsonResult result = new JsonResult();
-
-            result.Data = new { Success = service.DeleteComment(ID) };
-
-            return result;
-        }
-
     }
 }

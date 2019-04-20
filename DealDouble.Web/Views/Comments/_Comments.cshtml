@@ -1,7 +1,7 @@
 ﻿@model DealDouble.Web.ViewModels.CommentablePageViewModel
 
 @{
-	var haveComments = Model.Comments != null && Model.Comments.Count > 0;
+	var haveComments = Model != null && Model.Comments != null && Model.Comments.Count > 0;
 }
 
 <div class="card card-outline-secondary my-4">
@@ -60,7 +60,6 @@
 	}
 
 	<div class="card-footer">
-
 		@if (User.Identity.IsAuthenticated)
 		{
 			<form id="commentForm">

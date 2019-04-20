@@ -41,7 +41,7 @@
                             <a class="user-link nav-link" data-href="@Url.Action("UsersBids", "Profile")">Bids</a>
                         </li>
                         <li class="nav-item">
-                            <a class="user-link nav-link" data-href="@Url.Action("UsersComments", "Profile")">Comments</a>
+                            <a class="user-link nav-link" data-href="@Url.Action("Index", "Comments", new { userID = Model.User.Id })">Comments</a>
                         </li>
                     </ul>
                 </div>
