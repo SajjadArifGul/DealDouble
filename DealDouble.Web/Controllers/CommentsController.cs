@@ -1,6 +1,7 @@
 ﻿using DealDouble.Entities;
 using DealDouble.Services;
 using DealDouble.Web.ViewModels;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace DealDouble.Web.Controllers
 {
     public class CommentsController : Controller
     {
-        DashboardService dashboardService = new DashboardService();
+        CommentsService commentsService = new CommentsService();
         AuctionsService auctionsService = new AuctionsService();
 
         private DealDoubleUserManager _userManager;
@@ -42,7 +43,7 @@ namespace DealDouble.Web.Controllers
                 model.User = await UserManager.FindByIdAsync(userID);
             }
 
-            model.Comments = dashboardService.GetComments(userID, searchTerm, entityID, pageNo, pageSize);
+            model.Comments = commentsService.GetComments(userID, searchTerm, entityID, pageNo, pageSize);
 
             if (model.Comments != null && model.Comments.Count > 0)
             {
@@ -51,7 +52,7 @@ namespace DealDouble.Web.Controllers
                 model.CommentedAuctions = auctionsService.GetAuctionsByIDs(auctionIDs);
             }
 
-            var totalCount = dashboardService.GetCommentsTotalCount(userID, searchTerm, entityID);
+            var totalCount = commentsService.GetCommentsTotalCount(userID, searchTerm, entityID);
 
             model.Pager = new Pager(totalCount, pageNo, pageSize);
 
@@ -66,11 +67,47 @@ namespace DealDouble.Web.Controllers
         }
 
         [HttpPost]
+        public JsonResult LeaveComment(CommentViewModel model)
+        {
+            JsonResult result = new JsonResult();
+
+            try
+            {
+                var comment = new Comment();
+                comment.Text = model.Text;
+                comment.Rating = model.Rating;
+                comment.EntityID = model.EntityID;
+                comment.RecordID = model.RecordID;
+                comment.UserID = User.Identity.GetUserId();
+                comment.TimeStamp = DateTime.Now;
+
+                var res = commentsService.AddComment(comment);
+
+                result.Data = new { Success = res };
+            }
+            catch (Exception ex)
+            {
+                result.Data = new { Success = false, Message = ex.Message };
+            }
+
+            return result;
+        }
+
+        [HttpPost]
         public JsonResult Delete(int ID)
         {
             JsonResult result = new JsonResult();
 
-            result.Data = new { Success = dashboardService.DeleteComment(ID) };
+            var comment = commentsService.GetComment(ID);
+
+            if (comment != null && User.Identity.IsAuthenticated && (User.IsInRole("Administrator") || comment.UserID == User.Identity.GetUserId()))
+            {
+                result.Data = new { Success = commentsService.DeleteComment(comment), Message = "" };
+            }
+            else
+            {
+                result.Data = new { Success = false, Message = "You are Unauthorized to perform this action." };
+            }
 
             return result;
         }

@@ -14,7 +14,7 @@ namespace DealDouble.Web.Controllers
     {
         AuctionsService auctionsService = new AuctionsService();
         CategoriesService categoriesService = new CategoriesService();
-        SharedService sharedService = new SharedService();
+        CommentsService commentsService = new CommentsService();
 
         public ActionResult Index(int? categoryID, string searchTerm, int? pageNo)
         {
@@ -178,7 +178,7 @@ namespace DealDouble.Web.Controllers
 
             model.EntityID = (int)EntityEnums.Auction;
             model.RecordID = model.Auction.ID;
-            model.Comments = sharedService.GetComments(model.EntityID, model.RecordID);
+            model.Comments = commentsService.GetComments(model.EntityID, model.RecordID);
 
             return View(model);
         }
