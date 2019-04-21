@@ -30,6 +30,11 @@ namespace DealDouble.Web.ViewModels
         public int PageNo { get; set; }
     }
 
+    public class FeaturedAuctionsViewModel
+    {
+        public List<Auction> Auctions { get; set; }
+    }
+
     public class AuctionDetailsViewModel : CommentablePageViewModel
     {
         public Auction Auction { get; set; }

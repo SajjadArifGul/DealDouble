@@ -421,6 +421,7 @@
     <Content Include="Views\Profile\_UsersComments.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\Comments\_UserComments.cshtml" />
+    <Content Include="Views\Auctions\_FeaturedAuctions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

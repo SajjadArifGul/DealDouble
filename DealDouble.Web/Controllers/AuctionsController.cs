@@ -35,7 +35,7 @@ namespace DealDouble.Web.Controllers
 
         public ActionResult Listing(int? categoryID, string searchTerm, int? pageNo)
         {
-            var pageSize = 3;
+            var pageSize = 10;
 
             AuctionsListingViewModel model = new AuctionsListingViewModel();
 
@@ -46,7 +46,16 @@ namespace DealDouble.Web.Controllers
 
             return PartialView(model);
         }
-        
+
+        public ActionResult FeaturedAuctions(int pageSize = 3)
+        {
+            FeaturedAuctionsViewModel model = new FeaturedAuctionsViewModel();
+
+            model.Auctions = auctionsService.SearchFeaturedAuctions(pageSize);
+            
+            return PartialView("_FeaturedAuctions", model);
+        }
+
         #region  CRUD Ops
 
         [HttpGet]
@@ -159,13 +168,14 @@ namespace DealDouble.Web.Controllers
         }
         
         [HttpGet]
-        public ActionResult Details(int ID)
+        public ActionResult Details(int ID, string category)
         {
             AuctionDetailsViewModel model = new AuctionDetailsViewModel();
 
             model.Auction = auctionsService.GetAuctionByID(ID);
 
-            if (model.Auction == null) return HttpNotFound();
+            if (model.Auction == null || !model.Auction.Category.Name.ToLower().Equals(category))
+                return HttpNotFound();
 
             model.BidsAmount = model.Auction.ActualAmount + model.Auction.Bids.Sum(x => x.BidAmount);
 
