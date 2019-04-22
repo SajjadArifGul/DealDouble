@@ -3,15 +3,30 @@
 
 @{
     var haveComments = Model != null && Model.Comments != null && Model.Comments.Count > 0;
+    
+    var defaultRating = 5;
+    var itemRating = haveComments ? Math.Ceiling(Model.Comments.Average(x => x.Rating)) : 0;
 
     var userID = User.Identity.IsAuthenticated ? User.Identity.GetUserId() : "";
 }
 
 <div class="card card-outline-secondary my-4">
     <div class="card-header @(!haveComments ? "border-bottom-0" : string.Empty)">
-        <h5 class="mb-0">
+        <h5 class="mb-0 float-left">
             @string.Format("{0} {1}", haveComments ? Model.Comments.Count : 0, haveComments && Model.Comments.Count > 1 ? "Comments" : "Comment")
         </h5>
+
+        <span class="text-warning float-right align-middle" title="Average of all Ratings.">
+            @for (int i = 1; i <= itemRating; i++)
+            {
+                <i class="fas fa-star"></i>
+            }
+
+            @for (int i = 1; i <= defaultRating - itemRating; i++)
+            {
+                <i class="far fa-star"></i>
+            }
+        </span>
     </div>
 
     @if (haveComments)
@@ -23,7 +38,7 @@
 
                 <div class="row commentRow">
                     <div class="col-md-2">
-                        <img src="~/Content/images/site/user-default-avatar.png" class="img rounded-circle img-fluid" style="height:105px; width:105px;" />
+                        <img src="~/Content/images/site/user-default-avatar.png" class="img rounded-circle img-fluid" style="width:105px;" />
                     </div>
                     <div class="col-md-10">
                         <p>
@@ -167,7 +182,7 @@
 
     $(".btnDeleteComment").click(function () {
         var commentRow = $(this).parents(".commentRow");
-        
+
         swal({
 			title: "Are you sure you want to delete this comment?",
 			icon: "warning",
