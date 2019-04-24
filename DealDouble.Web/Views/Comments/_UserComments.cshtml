@@ -1,8 +1,11 @@
-﻿@using DealDouble.Web.Code;
+﻿@using Microsoft.AspNet.Identity;
+@using DealDouble.Web.Code;
 @model DealDouble.Web.ViewModels.CommentsViewModel
 
-@if (Model != null && Model.Comments != null)
+@if (Model != null && Model.User != null && Model.Comments != null)
 {
+    var canDelete = User.Identity.IsAuthenticated && (User.IsInRole("Administrator") || User.Identity.GetUserId() == Model.User.Id);
+
     <div class="row mt-2">
         <div class="col-md-10">
             <form method="post" id="searchForm">
@@ -31,9 +34,9 @@
                 <div class="col-md-2 text-center">
                     <img src="/Content/images/site/user-default-avatar.png" class="img rounded-circle img-fluid" style="height:105px; width:105px;">
                 </div>
-                <div class="col-md-8">
+                <div class="@(canDelete ? "col-md-8" : "col-md-10")">
                     <p>
-                        <a class="float-left" href="#">
+                        <a class="float-left" href="@Url.Action("UserProfile", "Profile", new { userid = comment.UserID })">
                             <strong>
                                 @comment.User.UserName
                             </strong>
@@ -67,9 +70,13 @@
                         </span>
                     }
                 </div>
-                <div class="col-md-2 text-center">
-                    <button data-id="@comment.ID" class="btn btn-danger m-2 btnDeleteComment"><i class="fas fa-trash-alt mr-1"></i> Delete</button>
-                </div>
+
+                @if (canDelete)
+                {
+                    <div class="col-md-2 text-center">
+                        <button data-id="@comment.ID" class="btn btn-danger m-2 btnDeleteComment"><i class="fas fa-trash-alt mr-1"></i> Delete</button>
+                    </div>
+                }
             </div>
             <hr />
         }

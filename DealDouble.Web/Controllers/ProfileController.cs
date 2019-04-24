@@ -150,5 +150,38 @@ namespace DealDouble.Web.Controllers
 
             return result;
         }
+
+        public ActionResult UserProfile(string userID)
+        {
+            if(userID == User.Identity.GetUserId())
+            {
+                return RedirectToAction("Index", "Profile");
+            }
+
+            ProfileDetailsViewModel model = new ProfileDetailsViewModel();
+
+            model.User = UserManager.FindById(userID);
+
+            if (model.User != null)
+            {
+                model.PageTitle = string.Format("User: {0}", model.User.FullName);
+                model.PageDescription = string.Format("User profile of {0}", model.User.FullName);
+
+                return View(model);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+        
+        public ActionResult UsersDetailsView(string userID)
+        {
+            ProfileDetailsViewModel model = new ProfileDetailsViewModel();
+
+            model.User = UserManager.FindById(userID);
+
+            return PartialView("_UsersDetailsView", model);
+        }
     }
 }

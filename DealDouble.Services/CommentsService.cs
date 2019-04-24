@@ -79,17 +79,17 @@ namespace DealDouble.Services
             return context.Comments.Find(ID);
         }
 
-        public bool DeleteComment(Comment comment)
+        public bool DeleteComment(int ID)
         {
+            DealDoubleContext context = new DealDoubleContext();
+
+            var comment = context.Comments.Find(ID);
+
             if (comment != null)
             {
-                DealDoubleContext context = new DealDoubleContext();
-
                 context.Entry(comment).State = System.Data.Entity.EntityState.Deleted;
-                return context.SaveChanges() > 0;
             }
-
-            return false;
+            return context.SaveChanges() > 0;
         }
     }
 }

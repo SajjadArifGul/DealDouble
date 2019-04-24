@@ -102,7 +102,7 @@ namespace DealDouble.Web.Controllers
 
             if (comment != null && User.Identity.IsAuthenticated && (User.IsInRole("Administrator") || comment.UserID == User.Identity.GetUserId()))
             {
-                result.Data = new { Success = commentsService.DeleteComment(comment), Message = "" };
+                result.Data = new { Success = commentsService.DeleteComment(comment.ID), Message = "" };
             }
             else
             {
