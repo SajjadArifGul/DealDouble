@@ -67,7 +67,8 @@ namespace DealDouble.Web.Controllers
 
             category.Name = model.Name;
             category.Description = model.Description;
-            
+            category.isFeatured = model.isFeatured;
+
             categoriesService.SaveCategory(category);
 
             return RedirectToAction("Listing");
@@ -84,6 +85,7 @@ namespace DealDouble.Web.Controllers
             model.ID = category.ID;
             model.Name = category.Name;
             model.Description = category.Description;
+            model.isFeatured = category.isFeatured;
 
             model.Categories = categoriesService.GetAllCategories();
 
@@ -103,7 +105,8 @@ namespace DealDouble.Web.Controllers
             category.ID = model.ID;
             category.Name = model.Name;
             category.Description = model.Description;
-            
+            category.isFeatured = model.isFeatured;
+
             categoriesService.UpdateCategory(category);
 
             return RedirectToAction("Listing");

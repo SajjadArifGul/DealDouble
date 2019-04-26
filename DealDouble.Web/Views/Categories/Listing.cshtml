@@ -27,6 +27,10 @@
 			{
 				<tr>
 					<td>
+                        @if(category.isFeatured)
+                        {
+                            <i class="text-warning fas fa-star m-1" title="Featured Category"></i>
+                        }
 						@category.Name
 					</td>
 					<td>

@@ -1,4 +1,5 @@
-﻿<!-- Navigation -->
+﻿@using Microsoft.AspNet.Identity
+<!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="@Url.Action("Index", "Home")">
@@ -17,41 +18,49 @@
                         Auctions
                     </a>
                 </li>
-				<li class="nav-item p-2 dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-tags m-1"></i>
-						Categories
-					</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">Action</a>
-						<a class="dropdown-item" href="#">Another action</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Something else here</a>
-					</div>
-				</li>
-				<li class="nav-item p-2">
-					<a class="nav-link" href="@Url.Action("Index", "Help")">
-						<i class="fas fa-hands-helping"></i>
-						Help
-					</a>
-				</li>
+                <li class="nav-item p-2 dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-tags m-1"></i>
+                        Categories
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item p-2">
+                    <a class="nav-link" href="@Url.Action("Index", "Help")">
+                        <i class="fas fa-hands-helping"></i>
+                        Help
+                    </a>
+                </li>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    if (User.IsInRole("Administrator"))
-                    {
-                        <li class="nav-item p-2">
-                            <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
-                                <i class="fas fa-user-shield m-1"></i>
-                                Dashboard
-                            </a>
-                        </li>
-                    }
-
-                    <li class="nav-item p-2 ">
-                        <a id="btnLogOff" class="nav-link" href="#">
-                            <i class="fas fa-sign-out-alt m-1"></i>
-                            LogOff
+                    <li class="nav-item p-2 dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user m-1"></i>
+                            Hi @User.Identity.GetUserName()
                         </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="@Url.Action("Index", "Profile")">
+                                <i class="fas fa-user-cog m-1"></i>
+                                Profile
+                            </a>
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="@Url.Action("Index", "Dashboard")">
+                                    <i class="fas fa-user-shield m-1"></i>
+                                    Dashboard
+                                </a>
+                            }
+                            <a id="btnLogOff" class="dropdown-item" href="#">
+                                <i class="fas fa-sign-out-alt m-1"></i>
+                                LogOff
+                            </a>
+                        </div>
                     </li>
                 }
                 else

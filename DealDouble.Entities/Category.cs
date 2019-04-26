@@ -12,8 +12,10 @@ namespace DealDouble.Entities
         public string Name { get; set; }
         public string Summary { get; set; }
         public string Description { get; set; }
+        public bool isFeatured { get; set; }
 
         public virtual Category ParentCategory { get; set; }
         public virtual List<Auction> Auctions { get; set; }
+
     }
 }

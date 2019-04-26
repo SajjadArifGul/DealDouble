@@ -7,37 +7,47 @@
 	</button>
 </div>
 <form id="editForm" method="post">
-	<div class="modal-body">
-		<input type="hidden" name="ID" value="@Model.ID" />
-		
-		<div class="form-group">
-			<label>
-				Parent Category
-			</label>
-			<select class="form-control" name="ParentCategoryID">
-				<option value="0">- None -</option>
-				@foreach (var category in Model.Categories)
-				{
-					var selected = Model.ParentCategoryID == category.ID ? "selected" : string.Empty;
-					<option value="@category.ID" @selected>@category.Name</option>
-				}
-			</select>
-		</div>
+    <div class="modal-body">
+        <input type="hidden" name="ID" value="@Model.ID" />
 
-		<div class="form-group">
-			<label>
-				Name
-			</label>
-			<input class="form-control" name="Name" value="@Model.Name" />
-		</div>
+        <div class="form-group">
+            <label>
+                Parent Category
+            </label>
+            <select class="form-control" name="ParentCategoryID">
+                <option value="0">- None -</option>
+                @foreach (var category in Model.Categories)
+            {
+                var selected = Model.ParentCategoryID == category.ID ? "selected" : string.Empty;
+                <option value="@category.ID" @selected>@category.Name</option>
+        }
+            </select>
+        </div>
 
-		<div class="form-group">
-			<label>
-				Description
-			</label>
-			<textarea class="form-control" name="Description" placeholder="Add Description." rows="3">@Model.Description</textarea>
-		</div>
-	</div>
+        <div class="form-group">
+            <label>
+                Name
+            </label>
+            <input class="form-control" name="Name" value="@Model.Name" />
+        </div>
+
+        <div class="form-group">
+            <label>
+                Description
+            </label>
+            <textarea class="form-control" name="Description" placeholder="Add Description." rows="3">@Model.Description</textarea>
+        </div>
+
+        <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="isFeatured" id="isFeatured" @(Model.isFeatured ? "checked" : string.Empty) />
+                <input type="hidden" value="@Model.isFeatured" name="isFeatured" />
+                <label class="form-check-label" for="isFeatured">
+                    Featured
+                </label>
+            </div>
+        </div>
+    </div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 		<button class="btn btn-success" type="button" id="saveButton">
