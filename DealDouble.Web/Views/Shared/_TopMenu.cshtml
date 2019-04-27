@@ -28,15 +28,17 @@
                 </li>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <li class="nav-item p-2 dropdown">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user m-1"></i>
-                            Hi @User.Identity.GetUserName()
+                            @*<i class="fas fa-user m-1"></i>
+                            Hi @User.Identity.GetUserName()*@
+
+                            @Html.Picture("", "image rounded-circle", style: "width: 40px; height: 40px", alt: "User Avatar")
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="@Url.Action("Index", "Profile")">
                                 <i class="fas fa-user-cog m-1"></i>
-                                Profile
+                                Profile @User.Identity.GetUserName("")
                             </a>
                             @if (User.IsInRole("Administrator"))
                             {

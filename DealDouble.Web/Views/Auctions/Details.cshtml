@@ -1,12 +1,5 @@
 ﻿@model DealDouble.Web.ViewModels.AuctionDetailsViewModel
 
-@{
-    //var haveComments = Model.Comments != null && Model.Comments.Count > 0;
-
-    //var defaultRating = 5;
-    //var auctionRating = haveComments ? Math.Ceiling(Model.Comments.Average(x => x.Rating)) : 0;
-}
-
 <div class="row">
     <div class="col-lg-8">
         <div class="card">
@@ -30,11 +23,9 @@
                         @foreach (var auctionPicture in Model.Auction.AuctionPictures)
                         {
                             var active = auctionPicture == firstAuctionPicture ? "active" : string.Empty;
-
-                            var picURL = "/Content/images/" + auctionPicture.Picture.URL;
-
+                            
                             <div class="carousel-item @active text-center">
-                                <img class="img-fluid" src="@picURL">
+                                @Html.Picture(auctionPicture.Picture, "img-fluid", alt: "Auction Picture")
                             </div>
                         }
                     </div>
@@ -58,12 +49,12 @@
             </div>
             <div class="card-footer text-muted">
                 <span class="float-left">
-                    Actual Amount: $@Model.Auction.ActualAmount
+                    Starting Price: $@Model.Auction.ActualAmount
                 </span>
                 @if (Model.LatestBidder != null)
                 {
                     <span class="float-right">
-                        Bid Amount: $@Model.BidsAmount
+                        Bidded Price: $@Model.BidsAmount
                     </span>
                 }
             </div>

@@ -23,5 +23,8 @@ namespace DealDouble.Entities
             // Add custom user claims here
             return userIdentity;
         }
+
+        public int? PictureID { get; set; }
+        public virtual Picture Picture { get; set; }
     }
 }

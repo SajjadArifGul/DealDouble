@@ -19,19 +19,32 @@ namespace DealDouble.Web.Controllers
         AuctionsService auctionsService = new AuctionsService();
 
         private DealDoubleUserManager _userManager;
-
         private DealDoubleRoleManager _roleManager;
+        private DealDoubleSignInManager _signInManager;
 
         public DashboardController()
         {
         }
 
-        public DashboardController(DealDoubleUserManager userManager, DealDoubleRoleManager roleManager)
+        public DashboardController(DealDoubleUserManager userManager, DealDoubleRoleManager roleManager, DealDoubleSignInManager signInManager)
         {
             UserManager = userManager;
             RoleManager = roleManager;
+            SignInManager = signInManager;
         }
-        
+
+        public DealDoubleSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<DealDoubleSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
         public DealDoubleUserManager UserManager
         {
             get
@@ -180,7 +193,7 @@ namespace DealDouble.Web.Controllers
                 if (user != null)
                 {
                     var result = await UserManager.DeleteAsync(user);
-
+                    
                     jResult.Data = new { Success = result.Succeeded };
 
                     return jResult;
@@ -223,6 +236,8 @@ namespace DealDouble.Web.Controllers
                     if(role != null)
                     {
                         await UserManager.AddToRoleAsync(userID, role.Name);
+                        
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     }
                 }
             }
@@ -243,6 +258,8 @@ namespace DealDouble.Web.Controllers
                     if (role != null)
                     {
                         await UserManager.RemoveFromRoleAsync(userID, role.Name);
+
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     }
                 }
             }

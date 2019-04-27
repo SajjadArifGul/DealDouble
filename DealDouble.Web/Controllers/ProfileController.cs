@@ -151,6 +151,46 @@ namespace DealDouble.Web.Controllers
             return result;
         }
 
+        public async Task<ActionResult> ChangeAvatar()
+        {
+            ProfileDetailsViewModel model = new ProfileDetailsViewModel();
+
+            model.User = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+            return PartialView("_ChangeAvatar", model);
+        }
+
+        public async Task<JsonResult> UpdateAvatar(int pictureID)
+        {
+            JsonResult result = new JsonResult();
+
+            if (pictureID <= 0)
+            {
+                result.Data = new { Success = false, Message = "Invalid Data" };
+            }
+            else
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+                if (user != null)
+                {
+                    user.PictureID = pictureID;
+
+                    var updateOp = await UserManager.UpdateAsync(user);
+
+                    result.Data = new { Success = updateOp.Succeeded, Message = string.Join("\n", updateOp.Errors) };
+
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                else
+                {
+                    result.Data = new { Success = false, Message = "Invalid User" };
+                }
+            }
+
+            return result;
+        }
+
         public ActionResult UserProfile(string userID)
         {
             if(userID == User.Identity.GetUserId())

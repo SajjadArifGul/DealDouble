@@ -16,12 +16,11 @@
                     @foreach (var auction in Model.Auctions.Skip(i).Take(3))
 					{
 						groupItem++;
-						var picURL = auction.AuctionPictures != null && auction.AuctionPictures.Count > 0 ?
-										 "/Content/images/" + auction.AuctionPictures.First().Picture.URL : "http://placehold.it/700x400";
+						var auctionPicture = auction.AuctionPictures != null && auction.AuctionPictures.Count > 0 ? auction.AuctionPictures.First().Picture : new DealDouble.Entities.Picture();
 
                         <div class="card @classes" relf-item="@groupItem">
                             <a href="@Url.Action("Details", "Auctions", new { category = auction.Category.Name.ToLower().SanitizeString(), ID = auction.ID })">
-                                <img class="card-img-top" src="@picURL" alt="@auction.Title" style="height:300px;">
+                                @Html.Picture(auctionPicture, "card-img-top", style: "height:300px;", alt: auction.Title)
                             </a>
                             <hr />
                             <div class="card-body">
