@@ -30,7 +30,10 @@
 			{
 				<tr>
 					<td>
-						<input type="hidden" value="@auction.ID" />
+                        @if(auction.isFeatured)
+                        {
+                            <i class="text-warning fas fa-star m-1" title="Featured Auction"></i>
+                        }
 						@auction.Title
 					</td>
 					<td>

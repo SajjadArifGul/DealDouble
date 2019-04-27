@@ -21,6 +21,8 @@ namespace DealDouble.Entities
         public DateTime? StartingTime { get; set; }
         public DateTime? EndingTime { get; set; }
 
+        public bool isFeatured { get; set; }
+
         public virtual List<AuctionPicture> AuctionPictures { get; set; }
         public virtual List<Bid> Bids { get; set; }
     }

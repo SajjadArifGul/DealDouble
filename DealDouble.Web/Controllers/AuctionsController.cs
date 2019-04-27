@@ -47,6 +47,7 @@ namespace DealDouble.Web.Controllers
             return PartialView(model);
         }
 
+        [OutputCache(Duration = 1000, VaryByParam = "pageSize")]
         public ActionResult FeaturedAuctions(int pageSize = 3)
         {
             FeaturedAuctionsViewModel model = new FeaturedAuctionsViewModel();
@@ -84,6 +85,7 @@ namespace DealDouble.Web.Controllers
                 auction.ActualAmount = model.ActualAmount;
                 auction.StartingTime = model.StartingTime;
                 auction.EndingTime = model.EndingTime;
+                auction.isFeatured = model.isFeatured;
 
                 //check if we have AuctionPictureIDs posted back from form
                 if (!string.IsNullOrEmpty(model.AuctionPictures))
@@ -123,6 +125,7 @@ namespace DealDouble.Web.Controllers
             model.ActualAmount = auction.ActualAmount;
             model.StartingTime = auction.StartingTime;
             model.EndingTime = auction.EndingTime;
+            model.isFeatured = auction.isFeatured;
 
             model.Categories = categoriesService.GetAllCategories();
             model.AuctionPicturesList = auction.AuctionPictures;
@@ -142,6 +145,7 @@ namespace DealDouble.Web.Controllers
             auction.ActualAmount = model.ActualAmount;
             auction.StartingTime = model.StartingTime;
             auction.EndingTime = model.EndingTime;
+            auction.isFeatured = model.isFeatured;
 
             if (!string.IsNullOrEmpty(model.AuctionPictures))
             {

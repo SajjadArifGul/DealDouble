@@ -132,5 +132,12 @@ namespace DealDouble.Web.Controllers
 
             return View(model);
         }
+
+        [OutputCache(Duration = 1000, VaryByParam = "none")]
+        public ActionResult FeaturedCategories()
+        {
+            return PartialView("_FeaturedCategoriesMenuItem", categoriesService.GetFeaturedCategories());
+        }
+
     }
 }

@@ -21,7 +21,7 @@ namespace DealDouble.Services
         {
             DealDoubleContext context = new DealDoubleContext();
 
-            return context.Auctions.OrderByDescending(x => x.StartingTime).Take(pageSize).ToList();
+            return context.Auctions.Where(a=>a.isFeatured).OrderByDescending(x => x.StartingTime).Take(pageSize).ToList();
         }
 
         public List<Auction> SearchAuctions(int? categoryID, string searchTerm, int? pageNo, int pageSize)

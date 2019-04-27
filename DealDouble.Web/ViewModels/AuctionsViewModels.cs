@@ -74,6 +74,8 @@ namespace DealDouble.Web.ViewModels
 
         public string AuctionPictures { get; set; }
 
+        public bool isFeatured { get; set; }
+
         public List<Category> Categories { get; set; }
         public List<AuctionPicture> AuctionPicturesList { get; set; }
     }

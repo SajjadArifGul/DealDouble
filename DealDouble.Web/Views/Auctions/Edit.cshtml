@@ -23,11 +23,11 @@
             </label>
             <select class="form-control" name="CategoryID">
                 @foreach (var category in Model.Categories)
-                {
-                    var selected = category.ID == Model.CategoryID ? "selected" : string.Empty;
+            {
+                var selected = category.ID == Model.CategoryID ? "selected" : string.Empty;
 
-                    <option value="@category.ID" @selected>@category.Name</option>
-                }
+                <option value="@category.ID" @selected>@category.Name</option>
+        }
             </select>
         </div>
 
@@ -67,18 +67,29 @@
         </div>
 
         <div class="form-group">
+            <div class="form-check">
+                <input type="checkbox" name="isFeatured" value="true" class="form-check-input" id="isFeatured" @(Model.isFeatured ? "checked" : string.Empty)>
+                <input type="hidden" name="isFeatured" value="false">
+
+                <label class="form-check-label" for="isFeatured">
+                    Featured
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
             <label>
                 Select Pictures
             </label>
             <input id="auctionPictures" class="form-control" name="AuctionPictures" type="file" multiple />
             <div id="picturesArea" class="mt-2">
                 @if (Model.AuctionPicturesList != null && Model.AuctionPicturesList.Count > 0)
+            {
+                foreach (var picture in Model.AuctionPicturesList)
                 {
-                    foreach (var picture in Model.AuctionPicturesList)
-                    {
-                        <img class='image img-thumbnail' src='/content/images/@picture.Picture.URL' data-id="@picture.PictureID" style="width: 200px; height: 200px;" />
-                    }
-                }
+                    <img class='image img-thumbnail' src='/content/images/@picture.Picture.URL' data-id="@picture.PictureID" style="width: 200px; height: 200px;" />
+            }
+        }
             </div>
             <input type="hidden" name="AuctionPictures" id="pictureIDs" />
         </div>

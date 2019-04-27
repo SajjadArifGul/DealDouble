@@ -17,6 +17,13 @@ namespace DealDouble.Services
             return context.Categories.ToList();
         }
 
+        public List<Category> GetFeaturedCategories(int recordSize = 5)
+        {
+            DealDoubleContext context = new DealDoubleContext();
+
+            return context.Categories.Where(x=>x.isFeatured).Take(recordSize).ToList();
+        }
+
         public List<Category> GetAllParentCategories()
         {
             DealDoubleContext context = new DealDoubleContext();

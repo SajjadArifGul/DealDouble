@@ -111,6 +111,10 @@
     <Compile Include="Migrations\201904261801495_isfeaturedCategory.Designer.cs">
       <DependentUpon>201904261801495_isfeaturedCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904270815444_isfeaturedauction.cs" />
+    <Compile Include="Migrations\201904270815444_isfeaturedauction.Designer.cs">
+      <DependentUpon>201904270815444_isfeaturedauction.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -163,6 +167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904261801495_isfeaturedCategory.resx">
       <DependentUpon>201904261801495_isfeaturedCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904270815444_isfeaturedauction.resx">
+      <DependentUpon>201904270815444_isfeaturedauction.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

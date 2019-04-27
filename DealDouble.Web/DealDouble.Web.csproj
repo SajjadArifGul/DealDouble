@@ -424,6 +424,7 @@
     <Content Include="Views\Auctions\_FeaturedAuctions.cshtml" />
     <Content Include="Views\Profile\UserProfile.cshtml" />
     <Content Include="Views\Profile\_UsersDetailsView.cshtml" />
+    <Content Include="Views\Categories\_FeaturedCategoriesMenuItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
