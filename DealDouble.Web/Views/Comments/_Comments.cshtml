@@ -38,7 +38,7 @@
 
                 <div class="row commentRow">
                     <div class="col-md-2">
-                        <img src="~/Content/images/site/user-default-avatar.png" class="img rounded-circle img-fluid" style="width:105px;" />
+                        @Html.UserAvatar(comment.User.Picture, "img rounded-circle img-fluid", style: "height:105px;", alt: "User Avatar")
                     </div>
                     <div class="col-md-10">
                         <p>

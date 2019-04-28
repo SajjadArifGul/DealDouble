@@ -30,15 +30,12 @@
                 {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @*<i class="fas fa-user m-1"></i>
-                            Hi @User.Identity.GetUserName()*@
-
-                            @Html.Picture("", "image rounded-circle", style: "width: 40px; height: 40px", alt: "User Avatar")
+                            @Html.UserAvatar(new DealDouble.Entities.Picture(), "image rounded-circle", style: "width: 40px; height: 40px", alt: string.Format("Hi {0}!", User.Identity.GetUserName()))
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="@Url.Action("Index", "Profile")">
                                 <i class="fas fa-user-cog m-1"></i>
-                                Profile @User.Identity.GetUserName("")
+                                Profile
                             </a>
                             @if (User.IsInRole("Administrator"))
                             {

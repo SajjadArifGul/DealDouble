@@ -13,7 +13,7 @@
     <div class="row mt-2">
         <div class="col-lg-3">
             <div class="card">
-                @Html.Picture(Model.User.Picture, "card-img-top", "width: 100%", "User Avatar")
+                @Html.UserAvatar(Model.User.Picture, "card-img-top", "width: 100%", "User Avatar")
                 <div class="card-body">
                     <h5 class="card-title m-0">
                         @Model.User.FullName
