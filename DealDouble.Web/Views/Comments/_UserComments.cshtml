@@ -32,7 +32,7 @@
 
             <div class="row">
                 <div class="col-md-2 text-center">
-                    <img src="/Content/images/site/user-default-avatar.png" class="img rounded-circle img-fluid" style="height:105px; width:105px;">
+                    @Html.UserAvatar(comment.User.Picture, "img rounded-circle img-fluid", style: "height:105px; width:105px;", alt: "User Avatar")
                 </div>
                 <div class="@(canDelete ? "col-md-8" : "col-md-10")">
                     <p>

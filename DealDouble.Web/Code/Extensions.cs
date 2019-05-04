@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Text.RegularExpressions;
 using System.Web;
 
@@ -21,6 +23,12 @@ namespace DealDouble.Web.Code
             }
 
             return sanitizedString;
+        }
+        public static string GetUserPicture(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).FindFirst("Picture");
+
+            return (claim != null) ? claim.Value : string.Empty;
         }
     }
 }

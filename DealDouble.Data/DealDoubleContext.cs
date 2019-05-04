@@ -27,10 +27,5 @@ namespace DealDouble.Data
         {
             return new DealDoubleContext();
         }
-
-
-        //CreateDatabaseIfNotExist -- Default
-        //DropCreateDatabaseIfModelChanges
-        //DropCreateDatabaseAlways
     }
 }

@@ -67,7 +67,6 @@
                             <div class="card-body">
                                 <h5 class="card-title">
                                     <a href="@Url.Action("Details", "Auctions", new { category = auction.Category.Name.ToLower().SanitizeString(), ID = auction.ID })">@auction.Title</a>
-                                    <span class="badge badge-success text-white">New</span>
                                 </h5>
                                 <p class="card-text">
                                     @(!string.IsNullOrEmpty(auction.Summary) && auction.Summary.Length >= 200 ? auction.Summary.Substring(0, 200) : auction.Summary)

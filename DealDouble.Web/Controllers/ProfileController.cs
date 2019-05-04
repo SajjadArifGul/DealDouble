@@ -118,7 +118,7 @@ namespace DealDouble.Web.Controllers
             ProfileDetailsViewModel model = new ProfileDetailsViewModel();
 
             model.User = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-
+            
             return PartialView("_ChangePassword", model);
         }
 
