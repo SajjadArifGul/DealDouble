@@ -119,6 +119,10 @@
     <Compile Include="Migrations\201904271108584_userpicture.Designer.cs">
       <DependentUpon>201904271108584_userpicture.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905041837162_configurations.cs" />
+    <Compile Include="Migrations\201905041837162_configurations.Designer.cs">
+      <DependentUpon>201905041837162_configurations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -177,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904271108584_userpicture.resx">
       <DependentUpon>201904271108584_userpicture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905041837162_configurations.resx">
+      <DependentUpon>201905041837162_configurations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

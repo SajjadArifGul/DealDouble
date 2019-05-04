@@ -23,6 +23,17 @@ namespace DealDouble.Web.Controllers
             return View(model);
         }
 
+        public ActionResult HomeSliders()
+        {
+            HomeSlidersViewModel model = new HomeSlidersViewModel();
+
+            ConfigurationsService configurationsService = new ConfigurationsService();
+
+            model.SlidersConfigurations = configurationsService.GetSlidersConfigurations();
+
+            return PartialView("_HomeSliders", model);
+        }
+
         public ActionResult Search(int? categoryID, string q, int? pageNo, bool isPartial = false)
         {
             var pageSize = 6;

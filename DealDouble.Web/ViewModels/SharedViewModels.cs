@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DealDouble.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,5 +15,10 @@ namespace DealDouble.Web.ViewModels
         public int EntityID { get; set; }
 
         public int RecordID { get; set; }
+    }
+
+    public class HomeSlidersViewModel
+    {
+        public List<Configuration> SlidersConfigurations { get; set; }
     }
 }

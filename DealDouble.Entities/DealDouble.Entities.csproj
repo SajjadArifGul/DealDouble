@@ -91,6 +91,8 @@
     <Compile Include="Bid.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Comment.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="ConfigurationType.cs" />
     <Compile Include="DealDoubleUser.cs" />
     <Compile Include="EntityEnums.cs" />
     <Compile Include="Picture.cs" />
