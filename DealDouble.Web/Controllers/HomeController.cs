@@ -1,4 +1,5 @@
-﻿using DealDouble.Services;
+﻿using DealDouble.Entities;
+using DealDouble.Services;
 using DealDouble.Web.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace DealDouble.Web.Controllers
 
             ConfigurationsService configurationsService = new ConfigurationsService();
 
-            model.SlidersConfigurations = configurationsService.GetSlidersConfigurations();
+            model.SlidersConfigurations = configurationsService.GetConfigurationsByType((int)ConfigurationType.HomeSliders);
 
             return PartialView("_HomeSliders", model);
         }

@@ -45,6 +45,35 @@ namespace DealDouble.Web.Controllers
             result.Data = picturesJSON;
 
             return result;
-        }        
+        }
+
+        [HttpPost]
+        public JsonResult UploadPicturesWithoutDatabase(string subFolder, bool isSiteFolder = false)
+        {
+            JsonResult result = new JsonResult();
+
+            List<object> picturesJSON = new List<object>();
+
+            var pictures = Request.Files;
+
+            for (int i = 0; i < pictures.Count; i++)
+            {
+                var picture = pictures[i];
+
+                var fileName = Guid.NewGuid() + Path.GetExtension(picture.FileName);
+
+                var folderPath = string.Format("~/Content/images/{0}{1}", isSiteFolder ? "site/" : string.Empty, !string.IsNullOrEmpty(subFolder) ? subFolder + "/" : string.Empty);
+
+                var path = Server.MapPath(folderPath) + fileName;
+
+                picture.SaveAs(path);
+
+                picturesJSON.Add(new { pictureURL = string.Format("{0}{1}", folderPath.Replace("~", ""), fileName), pictureValue = string.Format("{0}{1}", folderPath.Replace("~/Content/images/", ""), fileName) });
+            }
+
+            result.Data = picturesJSON;
+
+            return result;
+        }
     }
 }

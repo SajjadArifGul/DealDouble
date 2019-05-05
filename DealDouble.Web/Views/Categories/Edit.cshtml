@@ -1,10 +1,10 @@
 ﻿@model DealDouble.Web.ViewModels.CategoryViewModel
 
 <div class="modal-header">
-	<h5 class="modal-title">Edit Category</h5>
-	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		<span aria-hidden="true">&times;</span>
-	</button>
+    <h5 class="modal-title">Edit Category</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
 <form id="editForm" method="post">
     <div class="modal-body">
@@ -17,10 +17,10 @@
             <select class="form-control" name="ParentCategoryID">
                 <option value="0">- None -</option>
                 @foreach (var category in Model.Categories)
-            {
-                var selected = Model.ParentCategoryID == category.ID ? "selected" : string.Empty;
-                <option value="@category.ID" @selected>@category.Name</option>
-        }
+                {
+                    var selected = Model.ParentCategoryID == category.ID ? "selected" : string.Empty;
+                    <option value="@category.ID" @selected>@category.Name</option>
+                }
             </select>
         </div>
 
@@ -49,12 +49,12 @@
             </div>
         </div>
     </div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		<button class="btn btn-success" type="button" id="saveButton">
-			Save
-		</button>
-	</div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button class="btn btn-success" type="button" id="saveButton">
+            Save
+        </button>
+    </div>
 </form>
 
 <script>

@@ -1,0 +1,118 @@
+﻿
+@model DealDouble.Entities.Configuration
+
+<div class="modal-header">
+    <h5 class="modal-title">Edit Configuration @(Model != null ? string.Format(": {0}", Model.Key) : string.Empty)</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@if (Model != null)
+{
+    <form id="editForm" method="post">
+        <div class="modal-body">
+            <input type="hidden" name="Key" value="@Model.Key" />
+            <input type="hidden" name="ConfigurationType" value="@Model.ConfigurationType" />
+
+            <div class="form-group">
+                <label>
+                    Select Slider Picture
+                </label>
+                <input id="sliderPicture" class="form-control" name="SliderPicture" type="file" />
+                <div id="pictureArea">
+                    @Html.Picture(Model.Value, "image img-thumbnail", "width: 100%", "Home Slider")
+                </div>
+                <input type="hidden" class="form-control" name="Value" value="@Model.Value" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button class="btn btn-success" type="button" id="saveButton">
+                Save
+            </button>
+        </div>
+    </form>
+
+    <input type="hidden" id="sliderUploadURL" value="@Url.Action("UploadPicturesWithoutDatabase", "Shared", new { isSiteFolder = true, subFolder = "slider" })" />
+
+    <script>
+
+
+    $("#sliderPicture").change(function () {
+
+		var pictures = this.files;
+
+		var picsData = new FormData();
+
+		for (var i = 0; i < pictures.length; i++) {
+			picsData.append("Picture", pictures[i]);
+		}
+
+        $.ajax({
+            url: $("#sliderUploadURL").val(),
+			type: "post",
+			data: picsData,
+			dateType: "json",
+			processData: false,
+			contentType: false
+		})
+        .done(function (responses) {
+                debugger;
+            if (responses != undefined) {
+                var picResponse = responses[0];
+                AttachNewImage(picResponse.pictureURL, picResponse.pictureValue);
+            }
+		});
+    });
+
+    function AttachNewImage(pictureURL, pictureValue) {
+        var $newimgHTML = $("#sliderTemplate").clone();
+
+        $newimgHTML.find(".image").attr("src", pictureURL);
+
+        $("input[name=Value]").val(pictureValue);
+
+        $("#pictureArea").html($newimgHTML.html());
+    }
+
+	$("#editForm").validate({
+		errorClass: "alert alert-danger",
+		errorElement: "div",
+        rules: {
+            Value: {
+                required: true,
+            }
+		},
+        messages: {
+            Value: {
+                required: "Please select a valid slider picture.",
+            }
+		},
+		highlight: function (element, errorClass) {
+			$(element).removeClass(errorClass);
+		}
+	});
+
+	$("#saveButton").click(function () {
+		if ($("#editForm").valid())
+		{
+			$.ajax({
+			    url: "@Url.Action("Edit", "Configurations")",
+			    method: "post",
+			    data: $("#editForm").serialize()
+			})
+			.done(function (response) {
+				$("#listingArea").html(response);
+				$('#formModal').modal('toggle');
+			});
+		}
+	});
+
+    </script>
+}
+else
+{
+    <div class="alert alert-danger" role="alert">
+        Sorry. No Configuration found.
+    </div>
+}

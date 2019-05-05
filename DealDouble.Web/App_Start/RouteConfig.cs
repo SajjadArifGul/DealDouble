@@ -42,7 +42,13 @@ namespace DealDouble.Web
                 url: "Dashboard/Comments/",
                 defaults: new { controller = "Comments", action = "Index" }
             );
-            
+
+            routes.MapRoute(
+                name: "Configurations",
+                url: "Dashboard/Configurations/",
+                defaults: new { controller = "Configurations", action = "Index" }
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

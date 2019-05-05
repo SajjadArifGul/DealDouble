@@ -228,6 +228,7 @@
     <Compile Include="Controllers\BidsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\ConfigurationsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -244,6 +245,7 @@
     <Compile Include="ViewModels\AuctionsViewModels.cs" />
     <Compile Include="ViewModels\BaseViewModels.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
+    <Compile Include="ViewModels\ConfigurationsViewModels.cs" />
     <Compile Include="ViewModels\DashboardViewModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="ViewModels\ProfileViewModels.cs" />
@@ -433,6 +435,10 @@
     <Content Include="Views\Categories\_FeaturedCategoriesMenuItem.cshtml" />
     <Content Include="Views\Profile\_ChangeAvatar.cshtml" />
     <Content Include="Views\Home\_HomeSliders.cshtml" />
+    <Content Include="Views\Configurations\Index.cshtml" />
+    <Content Include="Views\Configurations\_Listing.cshtml" />
+    <Content Include="Views\Configurations\_Edit.cshtml" />
+    <Content Include="Views\Configurations\_HomeSlidersEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
