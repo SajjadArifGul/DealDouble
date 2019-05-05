@@ -36,7 +36,7 @@ namespace DealDouble.Web.Controllers
             return PartialView("_HomeSliders", model);
         }
 
-        public ActionResult Search(int? categoryID, string q, int? pageNo, bool isPartial = false)
+        public ActionResult Search(string category, int? categoryID, string q, int? pageNo, bool isPartial = false)
         {
             var pageSize = 6;
 
@@ -44,7 +44,8 @@ namespace DealDouble.Web.Controllers
             model.PageTitle = "Search Auctions";
             model.PageDescription = "Search Latest Auctions on DealDouble";
 
-            model.CategoryID = categoryID;
+            model.CategoryID = categoryID.HasValue ? categoryID.Value : !string.IsNullOrEmpty(category) ? categoriesService.GetCategoryByName(category).ID : 0;
+
             model.SearchTerm = q;
             model.isPartial = isPartial;
 

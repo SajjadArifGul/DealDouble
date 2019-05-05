@@ -38,6 +38,13 @@ namespace DealDouble.Services
             return context.Categories.Find(ID);
         }
 
+        public Category GetCategoryByName(string name)
+        {
+            DealDoubleContext context = new DealDoubleContext();
+
+            return context.Categories.FirstOrDefault(x=>x.Name.SanitizeString() == name);
+        }
+
         public void SaveCategory(Category category)
         {
             DealDoubleContext context = new DealDoubleContext();
