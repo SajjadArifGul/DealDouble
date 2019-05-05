@@ -24,6 +24,7 @@ namespace DealDouble.Web.Controllers
             return View(model);
         }
 
+        [OutputCache(Duration = 5000)]
         public ActionResult HomeSliders()
         {
             HomeSlidersViewModel model = new HomeSlidersViewModel();

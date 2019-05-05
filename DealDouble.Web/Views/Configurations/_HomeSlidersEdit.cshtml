@@ -57,7 +57,6 @@
 			contentType: false
 		})
         .done(function (responses) {
-                debugger;
             if (responses != undefined) {
                 var picResponse = responses[0];
                 AttachNewImage(picResponse.pictureURL, picResponse.pictureValue);
