@@ -221,7 +221,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Code\Enums\Pages.cs" />
-    <Compile Include="Code\Extensions.cs" />
     <Compile Include="Code\Helpers\PictureHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuctionsController.cs" />
@@ -459,6 +458,10 @@
     <ProjectReference Include="..\DealDouble.Services\DealDouble.Services.csproj">
       <Project>{E507758E-F0F1-4185-902A-94A49CAA2EBD}</Project>
       <Name>DealDouble.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DealDouble.Shared\DealDouble.Shared.csproj">
+      <Project>{5636e76a-27c4-4f20-b5b5-32e4a0f9fbc4}</Project>
+      <Name>DealDouble.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

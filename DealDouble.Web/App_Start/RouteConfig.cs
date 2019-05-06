@@ -15,8 +15,8 @@ namespace DealDouble.Web
 
             routes.MapRoute(
                 name: "SearchAuction",
-                url: "search",
-                defaults: new { controller = "Home", action = "Search" }
+                url: "search/{category}",
+                defaults: new { controller = "Home", action = "Search", category = UrlParameter.Optional }
             );
 
             routes.MapRoute(

@@ -106,6 +106,10 @@
       <Project>{941D7B99-BE56-4AB8-BDFF-663A201A004C}</Project>
       <Name>DealDouble.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DealDouble.Shared\DealDouble.Shared.csproj">
+      <Project>{5636e76a-27c4-4f20-b5b5-32e4a0f9fbc4}</Project>
+      <Name>DealDouble.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

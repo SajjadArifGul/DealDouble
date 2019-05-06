@@ -1,5 +1,6 @@
 ﻿using DealDouble.Data;
 using DealDouble.Entities;
+using DealDouble.Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,11 +39,11 @@ namespace DealDouble.Services
             return context.Categories.Find(ID);
         }
 
-        public Category GetCategoryByName(string name)
+        public Category GetCategoryByName(string sanitizedCategoryName)
         {
             DealDoubleContext context = new DealDoubleContext();
 
-            return context.Categories.FirstOrDefault(x=>x.Name.SanitizeString() == name);
+            return context.Categories.FirstOrDefault(x=>x.Name.SanitizeString().Equals(sanitizedCategoryName));
         }
 
         public void SaveCategory(Category category)

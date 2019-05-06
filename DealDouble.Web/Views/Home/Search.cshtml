@@ -23,7 +23,7 @@
                         foreach (var category in Model.Categories)
                         {
                             var selected = Model.CategoryID == category.ID ? "selected" : string.Empty;
-                            <option data-url="@Url.Action("Search", "Home", new { categoryID = category.ID })" value="@category.ID" @selected>@category.Name</option>
+                            <option data-url="@Url.Action("Search", "Home", new { category = category.Name.SanitizeString() })" value="@category.ID" @selected>@category.Name</option>
                         }
                     }
                 </select>
