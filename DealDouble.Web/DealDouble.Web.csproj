@@ -240,6 +240,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\BidsViewModels.cs" />
     <Compile Include="ViewModels\CategoriesViewModels.cs" />
     <Compile Include="ViewModels\AuctionsViewModels.cs" />
     <Compile Include="ViewModels\BaseViewModels.cs" />
@@ -438,10 +439,11 @@
     <Content Include="Views\Configurations\_Listing.cshtml" />
     <Content Include="Views\Configurations\_Edit.cshtml" />
     <Content Include="Views\Configurations\_HomeSlidersEdit.cshtml" />
+    <Content Include="Views\Bids\Index.cshtml" />
+    <Content Include="Views\Bids\_Listing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Bids\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

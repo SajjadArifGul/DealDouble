@@ -101,7 +101,7 @@ namespace DealDouble.Data
                 ModifiedOn = DateTime.Now
             };
             
-            Configuration DashboardRecordsSizePerPageConfig = new Configuration()
+            Configuration dashboardRecordsSizePerPageConfig = new Configuration()
             {
                 Key = "DashboardRecordsSizePerPage",
                 Value = "10",
@@ -109,7 +109,7 @@ namespace DealDouble.Data
                 ModifiedOn = DateTime.Now
             };
             
-            Configuration FrontendRecordsSizePerPageConfig = new Configuration()
+            Configuration frontendRecordsSizePerPageConfig = new Configuration()
             {
                 Key = "FrontendRecordsSizePerPage",
                 Value = "6",
@@ -117,7 +117,7 @@ namespace DealDouble.Data
                 ModifiedOn = DateTime.Now
             };
             
-            Configuration FeaturedRecordsSizePerPageConfig = new Configuration()
+            Configuration featuredRecordsSizePerPageConfig = new Configuration()
             {
                 Key = "FeaturedRecordsSizePerPage",
                 Value = "3",
@@ -125,7 +125,7 @@ namespace DealDouble.Data
                 ModifiedOn = DateTime.Now
             };
 
-            context.Configurations.AddRange(new List<Configuration> { slider1Config, slider2Config, slider3Config, slider4Config });
+            context.Configurations.AddRange(new List<Configuration> { slider1Config, slider2Config, slider3Config, slider4Config, dashboardRecordsSizePerPageConfig, frontendRecordsSizePerPageConfig, featuredRecordsSizePerPageConfig });
 
             context.SaveChanges();
         }
