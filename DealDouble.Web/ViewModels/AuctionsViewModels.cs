@@ -22,6 +22,7 @@ namespace DealDouble.Web.ViewModels
         public List<Auction> Auctions { get; set; }
 
         public int? CategoryID { get; set; }
+        public string CategoryName { get; set; }
         public string SearchTerm { get; set; }
 
         public bool isPartial { get; set; }

@@ -72,7 +72,7 @@ namespace DealDouble.Data
             Configuration slider1Config = new Configuration()
             {
                 Key = "Slider1",
-                Value = "site/slider/photo-1454496522488-7a8e488e8606.jpg",
+                Value = "site/slider/slider1.png",
                 ConfigurationType = (int)ConfigurationType.HomeSliders,
                 ModifiedOn = DateTime.Now
             };
@@ -80,7 +80,7 @@ namespace DealDouble.Data
             Configuration slider2Config = new Configuration()
             {
                 Key = "Slider2",
-                Value = "site/slider/photo-1465892848208-7850a13afc51.jpg",
+                Value = "site/slider/slider2.png",
                 ConfigurationType = (int)ConfigurationType.HomeSliders,
                 ModifiedOn = DateTime.Now
             };
@@ -88,7 +88,7 @@ namespace DealDouble.Data
             Configuration slider3Config = new Configuration()
             {
                 Key = "Slider3",
-                Value = "site/slider/photo-1455998620455-89e5484db07d.jpg",
+                Value = "site/slider/slider3.png",
                 ConfigurationType = (int)ConfigurationType.HomeSliders,
                 ModifiedOn = DateTime.Now
             };
@@ -96,8 +96,32 @@ namespace DealDouble.Data
             Configuration slider4Config = new Configuration()
             {
                 Key = "Slider4",
-                Value = "site/slider/photo-1519405530001-3b5e82ba4dac.jpg",
+                Value = "site/slider/slider4.png",
                 ConfigurationType = (int)ConfigurationType.HomeSliders,
+                ModifiedOn = DateTime.Now
+            };
+            
+            Configuration DashboardRecordsSizePerPageConfig = new Configuration()
+            {
+                Key = "DashboardRecordsSizePerPage",
+                Value = "10",
+                ConfigurationType = (int)ConfigurationType.Other,
+                ModifiedOn = DateTime.Now
+            };
+            
+            Configuration FrontendRecordsSizePerPageConfig = new Configuration()
+            {
+                Key = "FrontendRecordsSizePerPage",
+                Value = "6",
+                ConfigurationType = (int)ConfigurationType.Other,
+                ModifiedOn = DateTime.Now
+            };
+            
+            Configuration FeaturedRecordsSizePerPageConfig = new Configuration()
+            {
+                Key = "FeaturedRecordsSizePerPage",
+                Value = "3",
+                ConfigurationType = (int)ConfigurationType.Other,
                 ModifiedOn = DateTime.Now
             };
 

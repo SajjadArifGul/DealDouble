@@ -19,3 +19,20 @@ insert into Configurations
 ([Key], [Value], [ConfigurationType])
 values
 ('Slider4', 'site/slider/photo-1519405530001-3b5e82ba4dac.jpg', 1)
+
+
+insert into Configurations
+([Key], [Value], [ConfigurationType])
+values
+('DashboardRecordsSizePerPage', '10', 3)
+
+insert into Configurations
+([Key], [Value], [ConfigurationType])
+values
+('FrontendRecordsSizePerPage', '9', 3)
+
+insert into Configurations
+([Key], [Value], [ConfigurationType])
+values
+('FeaturedRecordsSizePerPage', '3', 3)
+

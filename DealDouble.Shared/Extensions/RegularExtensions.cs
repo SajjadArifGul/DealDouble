@@ -23,5 +23,10 @@ namespace DealDouble.Shared.Extensions
 
             return sanitizedString;
         }
+
+        public static string SanitizeLowerString(this string str)
+        {
+            return str.SanitizeString().ToLower();
+        }
     }
 }

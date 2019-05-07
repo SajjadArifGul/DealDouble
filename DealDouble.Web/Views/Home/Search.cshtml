@@ -17,26 +17,26 @@
         <div class="border p-2">
             <div class="float-left">
                 <select id="sltCategories" class="form-control">
-                    <option data-url="@Url.Action("Search", "Home")" value="0">All Categories</option>
+                    <option data-url="@Url.Action("Search", "Home", new { category = string.Empty })" value="0">All Categories</option>
                     @if (Model.Categories != null)
                     {
                         foreach (var category in Model.Categories)
                         {
                             var selected = Model.CategoryID == category.ID ? "selected" : string.Empty;
-                            <option data-url="@Url.Action("Search", "Home", new { category = category.Name.SanitizeString() })" value="@category.ID" @selected>@category.Name</option>
+                            <option data-url="@Url.Action("Search", "Home", new { category = category.SanitizedName })" value="@category.ID" @selected>@category.Name</option>
                         }
                     }
                 </select>
             </div>
             <div class="float-right">
-                <form class="form-inline" action="@Url.Action("Search", "Home", new { categoryID = Model.CategoryID })">
-                    <input name="categoryID" value="@Model.CategoryID" type="hidden">
+                <form class="form-inline" action="@Url.Action("Search", "Home", new { category = Model.CategoryName })">
+                    <input name="category" value="@Model.CategoryName" type="hidden">
                     <input name="q" value="@Model.SearchTerm" type="search" placeholder="Search Auctions" class="form-control mr-sm-2" required>
                     
 
                     <div class="btn-group" role="group">
                         <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Search</button>
-                        <a href="@Url.Action("Search", "Home")" class="btn btn-outline-success my-2 my-sm-0">Reset</a>
+                        <a href="@Url.Action("Search", "Home", new { category = string.Empty })" class="btn btn-outline-success my-2 my-sm-0">Reset</a>
                     </div>
                 </form>
             </div>
@@ -60,13 +60,13 @@
                                          "/Content/images/" + auction.AuctionPictures.First().Picture.URL : "http://placehold.it/700x400";
 
                         <div class="card @classes" relf-item="@groupItem">
-                            <a href="@Url.Action("Details", "Auctions", new { category = auction.Category.Name.ToLower().SanitizeString(), ID = auction.ID })">
+                            <a href="@Url.Action("Details", "Auctions", new { category = auction.Category.SanitizedName, ID = auction.ID })">
                                 <img class="card-img-top" src="@picURL" alt="@auction.Title" style="height:300px;">
                             </a>
                             <hr />
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    <a href="@Url.Action("Details", "Auctions", new { category = auction.Category.Name.ToLower().SanitizeString(), ID = auction.ID })">@auction.Title</a>
+                                    <a href="@Url.Action("Details", "Auctions", new { category = auction.Category.SanitizedName, ID = auction.ID })">@auction.Title</a>
                                 </h5>
                                 <p class="card-text">
                                     @(!string.IsNullOrEmpty(auction.Summary) && auction.Summary.Length >= 200 ? auction.Summary.Substring(0, 200) : auction.Summary)
@@ -75,7 +75,7 @@
                             <ul class="list-group list-group-flush ">
                                 <li class="list-group-item">
                                     <i class="fas fa-tags mr-1"></i>
-                                    <a href="@Url.Action("Search", "Home", new { categoryID = auction.Category.ID })" class="card-link">
+                                    <a href="@Url.Action("Search", "Home", new { category = auction.Category.SanitizedName })" class="card-link">
                                         @auction.Category.Name
                                     </a>
                                 </li>
@@ -117,7 +117,7 @@
                         else
                         {
                             <li class="page-item">
-                                <a href="@Url.Action("Search", "Home", new { pageNo = Model.Pager.CurrentPage - 1, q = !string.IsNullOrEmpty(Model.SearchTerm) ? Model.SearchTerm : string.Empty, categoryID = Model.CategoryID.HasValue && Model.CategoryID.Value > 0 ? Model.CategoryID.ToString() : string.Empty })">
+                                <a href="@Url.Action("Search", "Home", new { pageNo = Model.Pager.CurrentPage - 1, q = !string.IsNullOrEmpty(Model.SearchTerm) ? Model.SearchTerm : string.Empty, category = Model.CategoryName })">
                                     <span class="page-link">Previous</span>
                                 </a>
                             </li>
@@ -128,7 +128,7 @@
                             var active = page == Model.Pager.CurrentPage ? "active" : string.Empty;
 
                             <li class="page-item @active">
-                                <a href="@Url.Action("Search", "Home", new { pageNo = page , q = !string.IsNullOrEmpty(Model.SearchTerm) ? Model.SearchTerm : string.Empty, categoryID = Model.CategoryID.HasValue && Model.CategoryID.Value > 0 ? Model.CategoryID.ToString() : string.Empty })">
+                                <a href="@Url.Action("Search", "Home", new { pageNo = page , q = !string.IsNullOrEmpty(Model.SearchTerm) ? Model.SearchTerm : string.Empty, category = Model.CategoryName })">
                                     <span class="page-link">@page</span>
                                 </a>
                             </li>
@@ -143,7 +143,7 @@
                         else
                         {
                             <li class="page-item">
-                                <a href="@Url.Action("Search", "Home", new { pageNo = Model.Pager.CurrentPage + 1, q = !string.IsNullOrEmpty(Model.SearchTerm) ? Model.SearchTerm : string.Empty, categoryID = Model.CategoryID.HasValue && Model.CategoryID.Value > 0 ? Model.CategoryID.ToString() : string.Empty })">
+                                <a href="@Url.Action("Search", "Home", new { pageNo = Model.Pager.CurrentPage + 1, q = !string.IsNullOrEmpty(Model.SearchTerm) ? Model.SearchTerm : string.Empty, category = Model.CategoryName })">
                                     <span class="page-link">Next</span>
                                 </a>
                             </li>
@@ -165,6 +165,7 @@
 
 <script>
     $("#sltCategories").change(function () {
+        debugger;
         window.location.href = $(this).children("option:selected").attr("data-url");
     });
 </script>

@@ -1,5 +1,6 @@
 ﻿using DealDouble.Entities;
 using DealDouble.Services;
+using DealDouble.Shared.Extensions;
 using DealDouble.Web.Code.Enums;
 using DealDouble.Web.ViewModels;
 using System;
@@ -33,7 +34,7 @@ namespace DealDouble.Web.Controllers
 
         public ActionResult Listing(int? parentCategoryID, string searchTerm, int? pageNo)
         {
-            var pageSize = 3;
+            var pageSize = 10;
 
             CategoriesListingViewModel model = new CategoriesListingViewModel();
             
@@ -66,6 +67,7 @@ namespace DealDouble.Web.Controllers
             }
 
             category.Name = model.Name;
+            category.SanitizedName = model.Name.SanitizeLowerString();
             category.Description = model.Description;
             category.isFeatured = model.isFeatured;
 
@@ -104,6 +106,7 @@ namespace DealDouble.Web.Controllers
 
             category.ID = model.ID;
             category.Name = model.Name;
+            category.SanitizedName = model.Name.SanitizeLowerString();
             category.Description = model.Description;
             category.isFeatured = model.isFeatured;
 

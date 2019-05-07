@@ -43,7 +43,7 @@ namespace DealDouble.Services
         {
             DealDoubleContext context = new DealDoubleContext();
 
-            return context.Categories.FirstOrDefault(x=>x.Name.SanitizeString().Equals(sanitizedCategoryName));
+            return context.Categories.FirstOrDefault(x=>x.SanitizedName.Equals(sanitizedCategoryName));
         }
 
         public void SaveCategory(Category category)

@@ -123,6 +123,10 @@
     <Compile Include="Migrations\201905041837162_configurations.Designer.cs">
       <DependentUpon>201905041837162_configurations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905071230396_SanitizedNameForCategories.cs" />
+    <Compile Include="Migrations\201905071230396_SanitizedNameForCategories.Designer.cs">
+      <DependentUpon>201905071230396_SanitizedNameForCategories.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -184,6 +188,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905041837162_configurations.resx">
       <DependentUpon>201905041837162_configurations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905071230396_SanitizedNameForCategories.resx">
+      <DependentUpon>201905071230396_SanitizedNameForCategories.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

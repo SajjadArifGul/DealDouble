@@ -261,10 +261,10 @@
     <Content Include="Content\css\site.css" />
     <Content Include="Content\images\site\deal-double-logo-svg.svg" />
     <Content Include="Content\images\site\default-picture.png" />
-    <Content Include="Content\images\site\slider\photo-1454496522488-7a8e488e8606.jpg" />
-    <Content Include="Content\images\site\slider\photo-1455998620455-89e5484db07d.jpg" />
-    <Content Include="Content\images\site\slider\photo-1465892848208-7850a13afc51.jpg" />
-    <Content Include="Content\images\site\slider\photo-1519405530001-3b5e82ba4dac.jpg" />
+    <Content Include="Content\images\site\slider\slider1.png" />
+    <Content Include="Content\images\site\slider\slider2.png" />
+    <Content Include="Content\images\site\slider\slider3.png" />
+    <Content Include="Content\images\site\slider\slider4.png" />
     <Content Include="Content\images\site\user-default-avatar.png" />
     <Content Include="Content\js\dashboard.js" />
     <Content Include="Content\js\site.js" />

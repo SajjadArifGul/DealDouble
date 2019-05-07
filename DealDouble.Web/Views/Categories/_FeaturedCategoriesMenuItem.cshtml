@@ -11,7 +11,7 @@
         <div class="dropdown-menu">
             @foreach (var category in Model)
             {
-                <a class="dropdown-item" href="@Url.Action("Search", "Home", new { categoryID = category.ID })">
+                <a class="dropdown-item" href="@Url.Action("Search", "Home", new { category = category.SanitizedName })">
                     @category.Name
                 </a>
             }

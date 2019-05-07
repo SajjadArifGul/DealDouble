@@ -44,7 +44,21 @@ namespace DealDouble.Web.Controllers
             model.PageTitle = "Search Auctions";
             model.PageDescription = "Search Latest Auctions on DealDouble";
 
-            model.CategoryID = categoryID.HasValue ? categoryID.Value : !string.IsNullOrEmpty(category) ? categoriesService.GetCategoryByName(category).ID : 0;
+            model.CategoryID = categoryID;
+            model.CategoryName = category;
+
+            var selectedCategory = model.CategoryID.HasValue ? categoriesService.GetCategoryByID(model.CategoryID.Value) :
+                                   !string.IsNullOrEmpty(model.CategoryName) ? categoriesService.GetCategoryByName(model.CategoryName) : null;
+
+            if (model.CategoryID.HasValue || !string.IsNullOrEmpty(model.CategoryName)) //if category wise auction searching
+            {
+                if (selectedCategory == null) return HttpNotFound();
+                else
+                {
+                    model.CategoryID = selectedCategory.ID;
+                    model.CategoryName = selectedCategory.SanitizedName;
+                }
+            }
 
             model.SearchTerm = q;
             model.isPartial = isPartial;
@@ -52,11 +66,11 @@ namespace DealDouble.Web.Controllers
             model.Categories = categoriesService.GetAllCategories();
             model.Auctions = auctionsService.SearchAuctions(model.CategoryID, model.SearchTerm, pageNo, pageSize);
 
-            var totalAuctions = auctionsService.GetAuctionCount(categoryID, q);
+            var totalAuctions = auctionsService.GetAuctionCount(model.CategoryID, q);
 
             model.Pager = new Pager(totalAuctions, pageNo, pageSize);
 
-            if(model.isPartial)
+            if (model.isPartial)
             {
                 return PartialView(model);
             }
