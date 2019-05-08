@@ -29,8 +29,7 @@
                         </a>
                     </td>
                     <td>
-
-                        <a class="link" href="@Url.Action("UserDetails", "Dashboard", new { userID = bid.UserID })" role="button" target="_blank">
+                        <a class="link" href="@Url.Action("UsersDetails", "Dashboard", new { userID = bid.UserID })" role="button" target="_blank">
                             @bid.User.FullName
                         </a>
                     </td>
@@ -71,7 +70,7 @@
             else
             {
                 <li class="page-item">
-                    <a class="page-link" href="@Url.Action("Index", "Categories", new { pageNo = Model.Pager.CurrentPage - 1, searchTerm = Model.SearchTerm })">Previous</a>
+                    <a class="page-link" href="@Url.Action("Index", "Bids", new { UserID = Model.UserID, AuctionID = Model.AuctionID, pageNo = Model.Pager.CurrentPage - 1 })">Previous</a>
                 </li>
             }
 
@@ -80,7 +79,7 @@
                 var active = page == Model.Pager.CurrentPage ? "active" : string.Empty;
 
                 <li class="page-item @active">
-                    <a class="page-link" href="@Url.Action("Index", "Categories", new { pageNo = page, searchTerm = Model.SearchTerm  })">
+                    <a class="page-link" href="@Url.Action("Index", "Bids", new { UserID = Model.UserID, AuctionID = Model.AuctionID, pageNo = page  })">
                         @page
                     </a>
                 </li>
@@ -95,7 +94,7 @@
             else
             {
                 <li class="page-item">
-                    <a class="page-link" href="@Url.Action("Index", "Categories", new { pageNo = Model.Pager.CurrentPage + 1, searchTerm = Model.SearchTerm  })">Next</a>
+                    <a class="page-link" href="@Url.Action("Index", "Bids", new { UserID = Model.UserID, AuctionID = Model.AuctionID, pageNo = Model.Pager.CurrentPage + 1  })">Next</a>
                 </li>
             }
 
@@ -104,21 +103,36 @@
 }
 
 <script>
-	$(".editButton").click(function () {
-		$.ajax({
-			url: "@Url.Action("Edit", "Categories")",
-			method: "get",
-			data: {
-				ID: $(this).attr("data-id")
-			}
-		}).done(function (response) {
-			$("#contentArea").html(response);
-			$('#formModal').modal('toggle');
-		});
-	});
+    $(".deleteButton").click(function () {
 
-	$(".deleteButton").click(function () {
-		$('#deleteModal').modal('toggle');
-		$('#mDeleteButton').attr("data-recordID", $(this).attr("data-id"));
+        swal({
+				title: "Are you sure you want to delete this bid?",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+			.then((willDelete) => {
+				if (willDelete) {
+					$.ajax({
+		            	url: "@Url.Action("Delete", "Bids")",
+		            	method: "post",
+		            	data: {
+		            		ID: $(this).attr("data-id")
+		            	}
+                    }).done(function (response) {
+                        if (response != null) {
+                            if (response.Success) {
+                                ReloadListing();
+                            }
+                            else {
+                                swal("Error!", response.Message, "error");
+                            }
+                        }
+                        else {
+                            swal("Error!", "no response from server", "error");
+                        }
+                    });
+				}
+			});
 	});
 </script>

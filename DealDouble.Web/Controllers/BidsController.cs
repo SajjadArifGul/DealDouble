@@ -15,31 +15,28 @@ namespace DealDouble.Web.Controllers
         BidsService bidsService = new BidsService();
         CategoriesService categoriesService = new CategoriesService();
 
-        public ActionResult Index(int? categoryID, int? auctionID, string searchTerm, int? pageNo)
+        public ActionResult Index(string userID, int? auctionID, int? pageNo)
         {
             BidsListingViewModel model = new BidsListingViewModel();
 
             model.PageTitle = "Bids";
             model.PageDescription = "Bids Listing Page";
 
-            model.CategoryID = categoryID;
+            model.UserID = userID;
             model.AuctionID = auctionID;
-            model.SearchTerm = searchTerm;
             model.PageNo = pageNo ?? 1;
-
-            model.Categories = categoriesService.GetAllParentCategories();
-
+            
             return View(model);
         }
 
-        public ActionResult Listing(int? categoryID, int? auctionID, string searchTerm, int? pageNo)
+        public ActionResult Listing(string userID, int? auctionID, int? pageNo)
         {
             var pageSize = 10;
 
             BidsListingViewModel model = new BidsListingViewModel();
 
-            model.Bids = bidsService.SearchBids(categoryID, auctionID, searchTerm, pageNo, pageSize);
-            var totalBids = bidsService.GetBidsCount(categoryID, auctionID, searchTerm);
+            model.Bids = bidsService.SearchBids(userID, auctionID, pageNo, pageSize);
+            var totalBids = bidsService.GetBidsCount(userID, auctionID);
 
             model.Pager = new Pager(totalBids, pageNo, pageSize);
 
@@ -72,6 +69,31 @@ namespace DealDouble.Web.Controllers
             else
             {
                 result.Data = new { Success = false, Message = "User needs to login for bids." };
+            }
+
+            return result;
+        }
+
+        [HttpPost]
+        public JsonResult Delete(int ID)
+        {
+            JsonResult result = new JsonResult();
+
+            var bid = bidsService.GetBidByID(ID);
+            if (bid != null)
+            {
+                var bidResult = bidsService.DeleteBid(ID);
+
+                if (bidResult)
+                {
+                    result.Data = new { Success = bidResult };
+                }
+                else
+                    result.Data = new { Success = false, Message = "Unable to delete bid." };
+            }
+            else
+            {
+                result.Data = new { Success = false, Message = "Bid not found." };
             }
 
             return result;

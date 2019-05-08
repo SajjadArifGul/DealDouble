@@ -9,11 +9,9 @@ namespace DealDouble.Web.ViewModels
     public class BidsListingViewModel : PageViewModel
     {
         public List<Bid> Bids { get; set; }
-        public List<Category> Categories { get; set; }
 
+        public string UserID { get; set; }
         public int? AuctionID { get; set; }
-        public int? CategoryID { get; set; }
-        public string SearchTerm { get; set; }
 
         public bool isPartial { get; set; }
 

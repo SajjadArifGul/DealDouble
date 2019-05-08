@@ -1,71 +1,38 @@
 ﻿@model DealDouble.Web.ViewModels.BidsListingViewModel
 @{
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
-    var categoryID = Model.CategoryID.HasValue ? Model.CategoryID.Value : 0;
 }
 
 <div class="row mt-2">
     <div class="col-lg-12 col-md-12">
-        <h2>Categories</h2>
+        <h2>Bids</h2>
         <hr />
     </div>
     <div class="col-md-10">
-        <form method="post">
+        <form method="get">
             <div class="input-group mb-3">
-                <input name="searchTerm" type="text" value="@Model.SearchTerm" class="form-control" placeholder="Search">
-                <select class="form-control custom-select" name="CategoryID">
-                    <option value="0">Select Category...</option>
-                    @foreach (var category in Model.Categories)
-                    {
-                        var selected = category.ID == categoryID ? "selected" : string.Empty;
-                        <option value="@category.ID" @selected>@category.Name</option>
-                    }
-                </select>
+                <input name="UserID" type="text" value="@Model.UserID" class="form-control" placeholder="Search by User">
+                <input name="AuctionID" type="text" value="@Model.AuctionID" class="form-control" placeholder="Search by Auction">
 
                 <button type="submit" class="form-control btn btn-primary"><i class="fas fa-search"></i> Search</button>
                 <a href="@Url.Action("Index", "Bids")" role="button" class="form-control btn btn-primary"><i class="fas fa-redo-alt"></i> Reset</a>
             </div>
-            <input type="hidden" name="page" value="1">
+            <input type="hidden" name="pageNo" value="1">
             <input type="hidden" name="items" value="10">
         </form>
     </div>
     <div class="col-lg-12" id="listingArea">
-        @{Html.RenderAction("Listing", new { CategoryID = Model.CategoryID, AuctionID = Model.AuctionID, searchTerm = Model.SearchTerm, pageNo = Model.PageNo });}
+        @{Html.RenderAction("Listing", new { UserID = Model.UserID, AuctionID = Model.AuctionID, pageNo = Model.PageNo });}
     </div>
 </div>
 
 <script>
-	$("#createButton").click(function () {
-		$.ajax({
-			url: "@Url.Action("Create", "Categories")",
-			type: "get"
-		}).done(function (response) {
-			$("#contentArea").html(response);
-			$('#formModal').modal('toggle');
-		});
-	});
-
-	$("#mDeleteButton").click(function () {
-		$.ajax({
-			url: "@Url.Action("Delete", "Categories")",
-			type: "post",
-			data: {
-				ID: $(this).attr("data-recordID")
-			}
-		})
-		.done(function (response) {
-			$("#listingArea").html(response);
-			$('#deleteModal').modal('toggle');
-		});
-	});
-
 	function ReloadListing() {
 		$.ajax({
-			url: "@Url.Action("Listing", "Auctions")",
+			url: "@Url.Action("Listing", "Bids")",
 			type: "get"
 		}).done(function (response) {
 			$("#listingArea").html(response);
 		});
 	}
-
 </script>

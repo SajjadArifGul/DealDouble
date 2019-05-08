@@ -11,25 +11,20 @@ namespace DealDouble.Services
     public class BidsService
     {
 
-        public List<Bid> SearchBids(int? categoryID, int? auctionID, string searchTerm, int? pageNo, int pageSize)
+        public List<Bid> SearchBids(string userID, int? auctionID, int? pageNo, int pageSize)
         {
             DealDoubleContext context = new DealDoubleContext();
 
             var bids = context.Bids.AsQueryable();
 
-            if (categoryID.HasValue && categoryID.Value > 0)
+            if (!string.IsNullOrEmpty(userID))
             {
-                bids = bids.Where(x => x.Auction.CategoryID == categoryID.Value);
+                bids = bids.Where(x => x.UserID == userID);
             }
 
             if (auctionID.HasValue && auctionID.Value > 0)
             {
                 bids = bids.Where(x => x.Auction.ID == auctionID.Value);
-            }
-
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                bids = bids.Where(x => x.Auction.Title.ToLower().Contains(searchTerm.ToLower()));
             }
 
             pageNo = pageNo ?? 1;
@@ -38,15 +33,15 @@ namespace DealDouble.Services
             return bids.OrderByDescending(x => x.ID).Skip(skipCount).Take(pageSize).ToList();
         }
 
-        public int GetBidsCount(int? categoryID, int? auctionID, string searchTerm)
+        public int GetBidsCount(string userID, int? auctionID)
         {
             DealDoubleContext context = new DealDoubleContext();
 
             var bids = context.Bids.AsQueryable();
 
-            if (categoryID.HasValue && categoryID.Value > 0)
+            if (!string.IsNullOrEmpty(userID))
             {
-                bids = bids.Where(x => x.Auction.CategoryID == categoryID.Value);
+                bids = bids.Where(x => x.UserID == userID);
             }
 
             if (auctionID.HasValue && auctionID.Value > 0)
@@ -54,12 +49,14 @@ namespace DealDouble.Services
                 bids = bids.Where(x => x.Auction.ID == auctionID.Value);
             }
 
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                bids = bids.Where(x => x.Auction.Title.ToLower().Contains(searchTerm.ToLower()));
-            }
-
             return bids.Count();
+        }
+
+        public Bid GetBidByID(int ID)
+        {
+            DealDoubleContext context = new DealDoubleContext();
+
+            return context.Bids.Find(ID);
         }
 
         public bool AddBid(Bid bid)
@@ -69,6 +66,17 @@ namespace DealDouble.Services
             context.Bids.Add(bid);
 
             return context.SaveChanges() > 0;
-        }        
+        }
+
+        public bool DeleteBid(int ID)
+        {
+            DealDoubleContext context = new DealDoubleContext();
+
+            var bid = context.Bids.Find(ID);
+
+            context.Entry(bid).State = System.Data.Entity.EntityState.Deleted;
+
+            return context.SaveChanges() > 0;
+        }
     }
 }

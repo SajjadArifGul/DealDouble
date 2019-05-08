@@ -44,6 +44,12 @@ namespace DealDouble.Web
             );
 
             routes.MapRoute(
+                name: "Bids",
+                url: "Dashboard/Bids/",
+                defaults: new { controller = "Bids", action = "Index" }
+            );
+
+            routes.MapRoute(
                 name: "Configurations",
                 url: "Dashboard/Configurations/",
                 defaults: new { controller = "Configurations", action = "Index" }
